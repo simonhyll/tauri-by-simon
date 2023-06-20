@@ -30,24 +30,34 @@
   - [Leptos](./frontend/leptos.md)
   - [Yew](./frontend/yew.md)
 
-- [Concepts](./concepts.md)
+- [Tauri Concepts](./tauri_concepts.md)
 
-  - [State management](./concepts/state_management.md)
-  - [Custom URI schema](./concepts/custom_uri_schema.md)
-  - [Async and threads](./concepts/async_and_threads.md)
-  - [Commands](./concepts/commands.md)
-  - [IPC](./concepts/ipc.md)
-  - [Plugins](./concepts/plugins.md)
-  - [Sidecar](./concepts/sidecar.md)
-  - [Service worker](./concepts/service_worker.md)
-  - [Web workers](./concepts/web_workers.md)
-  - [Networking](./concepts/networking.md)
-  - [Filesystem](./concepts/filesystem.md)
-  - [Resources](./concepts/resources.md)
-  - [CSP](./concepts/csp.md)
-  - [CORS](./concepts/cors.md)
-  - [Paths](./concepts/paths.md)
-  - [.taurignore](./concepts/taurignore.md)
+  - [State management](./tauri_concepts/state_management.md)
+  - [Custom URI schema](./tauri_concepts/custom_uri_schema.md)
+  - [Commands](./tauri_concepts/commands.md)
+  - [IPC](./tauri_concepts/ipc.md)
+  - [Plugins](./tauri_concepts/plugins.md)
+  - [Sidecar](./tauri_concepts/sidecar.md)
+  - [Networking](./tauri_concepts/networking.md)
+  - [Filesystem](./tauri_concepts/filesystem.md)
+  - [Resources](./tauri_concepts/resources.md)
+  - [Paths](./tauri_concepts/paths.md)
+  - [.taurignore](./tauri_concepts/taurignore.md)
+
+- [Rust Concepts](./rust_concepts.md)
+
+  - [Ownership](./rust_concepts/ownership.md)
+  - [Async and threads](./rust_concepts/async_and_threads.md)
+  - [Macros](./rust_concepts/macros.md)
+  - [std](./rust_concepts/std.md)
+    - [process](./rust_concepts/std/process.md)
+
+- [Web Concepts](./web_concepts.md)
+
+  - [Service worker](./web_concepts/service_worker.md)
+  - [Web workers](./web_concepts/web_workers.md)
+  - [CSP](./web_concepts/csp.md)
+  - [CORS](./web_concepts/cors.md)
 
 - [Developing](./developing.md)
 
@@ -111,15 +121,16 @@
 
 - [Practise project: Todo](./practise_project_todo.md)
 
-  - [Project structure](./practise_project_todo/project_structure_todo.md)
-  - [Infrastructure](./practise_project_todo/infrastructure_todo.md)
-  - [Project management](./practise_project_todo/project_management_todo.md)
+  - [Project planning](./practise_project_todo/project_planning.md)
+  - [Project structure](./practise_project_todo/project_structure.md)
+  - [Infrastructure](./practise_project_todo/infrastructure.md)
+  - [Project management](./practise_project_todo/project_management.md)
   - [Test development](./practise_project_todo/test_development.md)
-  - [Nuxt frontend](./practise_project_todo/nuxt_frontend.md)
+  - [Frontend](./practise_project_todo/frontend.md)
   - [Tauri backend](./practise_project_todo/tauri_backend.md)
   - [Adding a REST API](./practise_project_todo/adding_a_rest_api.md)
   - [License management](./practise_project_todo/license_management.md)
-  - [Distributing](./practise_project_todo/distributing_todo.md)
+  - [Distributing](./practise_project_todo/distributing.md)
 
 - [Plugins](./plugins.md)
 
@@ -127,7 +138,7 @@
 
 - [Crates.io](./crates_io.md)
 
-  - [windows](./crates_io/windows_plugin.md)
+  - [windows](./crates_io/windows.md)
 
 - [Architecture](./architecture.md)
 
@@ -155,17 +166,13 @@
   - [Electron](./migrating/electron_migration.md)
   - [Flutter](./migrating/flutter_migration.md)
   - [Cordova](./migrating/cordova_migration.md)
-  - [Wails](./migrating/wails_migration.md)
-
-- [State of the project](./state_of_the_project.md)
-
-  - [Github Project](./state_of_the_project/github_project.md)
-  - [Alternative webviews](./state_of_the_project/alternative_webviews.md)
+  - [Wails](./migrating/wails_migration.md)alternative_webviews.md)
 
 - [Contributing](./contributing.md)
 
   - [Where to begin](./contributing/where_to_begin.md)
   - [For non-developers](./contributing/for_non_developers.md)
 
+- [State of the project](./state_of_the_project.md)
 - [Other resources](./other_resources.md)
 - [Getting help](./getting_help.md)
