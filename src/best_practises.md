@@ -1,1 +1,3 @@
 # Best practises
+
+Some of these are actual best practises, some are just my opinions on how you should develop stuff.

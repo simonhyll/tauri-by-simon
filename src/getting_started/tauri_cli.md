@@ -13,3 +13,9 @@ Note that whenever we talk about Tauri commands being ran, e.g. `tauri dev` or `
 ## tauri android dev
 
 ## tauri ios dev
+
+## tauri info
+
+> Note: `@tauri-apps/cli` from the output is deceptively not only the NPM version, but also the Cargo version.
+
+This command is really useful for debugging purposes.

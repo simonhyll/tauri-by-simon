@@ -1,5 +1,7 @@
 # Async and threads
 
+The `async` keyword is just syntactic sugar for a function that returns a `Future`.
+
 ## Tokio
 
 ### #[tokio::main] / #[actix_web::main]

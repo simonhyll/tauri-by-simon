@@ -1,1 +1,3 @@
 # Dependencies
+
+A list of all of the current dependencies of Tauri. Meant partly to give you an idea of what all dependencies are used for and how they interlink, but also to highlight your legal responsibilities as well as just how many people you _actually_ have to thank for your projects success.

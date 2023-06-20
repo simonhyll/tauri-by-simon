@@ -1,1 +1,3 @@
 # Repositories
+
+This is a list of the `tauri-apps` active public repositories. I mainly want to make this to give you a better idea of how the project is organized and where you can find what.

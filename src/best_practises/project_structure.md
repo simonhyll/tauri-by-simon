@@ -1,1 +1,3 @@
 # Project structure
+
+## Cargo workspace

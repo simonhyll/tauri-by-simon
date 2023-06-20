@@ -46,6 +46,9 @@
 
 - [Rust Concepts](./rust_concepts.md)
 
+  - [Cargo](./rust_concepts/crates_io.md)
+    - [Docs.rs](./rust_concepts/cargo/docs_rs.md)
+    - [Crates.io](./rust_concepts/cargo/crates_io.md)
   - [Ownership](./rust_concepts/ownership.md)
   - [Async and threads](./rust_concepts/async_and_threads.md)
   - [Macros](./rust_concepts/macros.md)
@@ -58,6 +61,14 @@
   - [Web workers](./web_concepts/web_workers.md)
   - [CSP](./web_concepts/csp.md)
   - [CORS](./web_concepts/cors.md)
+  - [SSL/HTTPS/TLS](./web_concepts/ssl_https_tls.md)
+
+- [Legal Concepts](./legal_concepts.md)
+
+  - [Licenses](./legal_concepts/licenses.md)
+  - [GDPR](./legal_concepts/gdpr.md)
+  - [Trademarks](./legal_concepts/trademarks.md)
+  - [Branding](./legal_concepts/branding.md)
 
 - [Developing](./developing.md)
 
@@ -98,6 +109,7 @@
   - [Rust first](./best_practises/rust_first.md)
   - [Project structure](./best_practises/project_structure.md)
   - [Pick a framework](./best_practises/pick_a_framework.md)
+  - [Security mindset](./best_practises/security_mindset.md)
 
 - [Cookbook](./cookbook.md)
 

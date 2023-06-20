@@ -4,6 +4,10 @@ This is a book about Tauri.
 
 It's very early work in progress!
 
+It's highly opinionated.
+
+Its categories aren't alphabetical but rather I've attempted to sort them based on when you're ready to know something. Read it from start to finish for the most complete experience, not jumping around as you see fit.
+
 ## About Simon
 
 Hi! Simon here, some guy from Sweden with a passion for programming. Here's some form of summary of my time with Tauri:
@@ -17,10 +21,6 @@ Hi! Simon here, some guy from Sweden with a passion for programming. Here's some
 - Started making contributions to the "real" projects with mainly bug fixes and documentation improvements
 - Created a Youtube channel where I primarily talk about Tauri
 - Writing this book in 2023
-
-## About the book
-
-A lot of what you find here is going to be opinionated.
 
 ## Disclaimer
 
