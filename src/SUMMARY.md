@@ -166,3 +166,6 @@
 
   - [Where to begin](./contributing/where_to_begin.md)
   - [For non-developers](./contributing/for_non_developers.md)
+
+- [Other resources](./other_resources.md)
+- [Getting help](./getting_help.md)
