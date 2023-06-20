@@ -20,6 +20,7 @@
 - [Frontend](./frontend.md)
 
   - [Frontend agnostic](./frontend/frontend_agnostic.md)
+  - [Benchmarks](./frontend/benchmarks.md)
   - [Egui](./frontend/egui.md)
   - [Vite](./frontend/vite.md)
   - [Nuxt](./frontend/nuxt.md)
@@ -29,6 +30,7 @@
   - [Sycamore](./frontend/sycamore.md)
   - [Leptos](./frontend/leptos.md)
   - [Yew](./frontend/yew.md)
+  - [Bevy](./frontend/bevy.md)
 
 - [Tauri Concepts](./tauri_concepts.md)
 
