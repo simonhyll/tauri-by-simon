@@ -1,0 +1,15 @@
+[book]
+authors = ["Simon Hyll"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Tauri by Simon"
+
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+
+[output.html.fold]
+enable = true
+
+
