@@ -40,9 +40,11 @@
   - [IPC](./tauri_concepts/ipc.md)
   - [Plugins](./tauri_concepts/plugins.md)
   - [Sidecar](./tauri_concepts/sidecar.md)
+  - [Events](./tauri_concepts/events.md)
   - [Networking](./tauri_concepts/networking.md)
   - [Filesystem](./tauri_concepts/filesystem.md)
   - [Resources](./tauri_concepts/resources.md)
+  - [Window dragging](./tauri_concepts/window_dragging.md)
   - [Paths](./tauri_concepts/paths.md)
   - [.taurignore](./tauri_concepts/taurignore.md)
 
@@ -54,6 +56,7 @@
   - [Ownership](./rust_concepts/ownership.md)
   - [Async and threads](./rust_concepts/async_and_threads.md)
   - [Macros](./rust_concepts/macros.md)
+  - [.env](./rust_concepts/env.md)
   - [std](./rust_concepts/std.md)
     - [process](./rust_concepts/std/process.md)
 
@@ -132,6 +135,7 @@
   - [Glue library](./cookbook/glue_library.md)
   - [Admin permissions](./cookbook/admin_permissions.md)
   - [Secure token handling](./cookbook/secure_token_handling.md)
+  - [Transaction chain](./cookbook/transaction_chain.md)
 
 - [Practise project: Todo](./practise_project_todo.md)
 
@@ -145,6 +149,10 @@
   - [Adding a REST API](./practise_project_todo/adding_a_rest_api.md)
   - [License management](./practise_project_todo/license_management.md)
   - [Distributing](./practise_project_todo/distributing.md)
+
+- [Practise project: Flashcards](./practise_project_flashcards.md)
+
+  - [Project planning](./practise_project_flashcards/project_planning.md)
 
 - [Plugins](./plugins.md)
 
