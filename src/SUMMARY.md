@@ -68,6 +68,10 @@
   - [CORS](./web_concepts/cors.md)
   - [SSL/HTTPS/TLS](./web_concepts/ssl_https_tls.md)
 
+- [Javascript Concepts](./javascript_concepts.md)
+
+  - [Async and Promises](./javascript_concepts/async_and_promises.md)
+
 - [Legal Concepts](./legal_concepts.md)
 
   - [Licenses](./legal_concepts/licenses.md)
@@ -112,6 +116,7 @@
 - [Best practises](./best_practises.md)
 
   - [Rust first](./best_practises/rust_first.md)
+  - [Documentation ready](./best_practises/documentation_ready.md)
   - [Project structure](./best_practises/project_structure.md)
   - [Pick a framework](./best_practises/pick_a_framework.md)
   - [Security mindset](./best_practises/security_mindset.md)
