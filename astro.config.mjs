@@ -10,6 +10,12 @@ export default defineConfig({
 			social: {
 				github: 'https://github.com/withastro/starlight',
 			},
+			head: [{
+			  tag: 'script',
+			  attrs: {
+				src: '/navigate.js'
+			  }
+			}],
 			sidebar: [
 				{
 					label: 'Getting Started',
