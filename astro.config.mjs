@@ -11,10 +11,10 @@ export default defineConfig({
 				github: 'https://github.com/withastro/starlight',
 			},
 			head: [{
-			  tag: 'script',
-			  attrs: {
-				src: '/navigate.js'
-			  }
+				tag: 'script',
+				attrs: {
+					src: '/tauri-by-simon/navigate.js'
+				}
 			}],
 			sidebar: [
 				{
