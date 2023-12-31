@@ -13,7 +13,7 @@
       case "ArrowLeft":
         e.preventDefault();
         let previousButton = document.querySelector('a[rel="prev"]');
-        if (!previousButton && window.location.pathname !== "/") previousButton = { href: "/" }
+        if (!previousButton && window.location.pathname !== "/tauri-by-simon/") previousButton = { href: "/tauri-by-simon/" }
 
         if (document.referrer.includes(window.location.host))
           if (previousButton && steps === 1) {
@@ -29,7 +29,7 @@
       case "ArrowRight":
         e.preventDefault();
         let nextButton = document.querySelector('a[rel="next"]');
-        if (!nextButton && window.location.pathname === "/") nextButton = { href: "/quickstart/" }
+        if (!nextButton && window.location.pathname === "/tauri-by-simon/") nextButton = { href: "/tauri-by-simon/getting_started/" }
 
         if (nextButton && steps === 1) {
           window.location.href = nextButton.href;
