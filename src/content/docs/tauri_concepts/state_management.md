@@ -1,0 +1,511 @@
+---
+title: State Management
+sidebar:
+  badge:
+    text: v1
+    variant: success
+---
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe style="position: absolute; top:0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/e51A_IsGZWQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
+
+# State Management
+
+How to use a Tauri "State" and what it is exactly isn't covered very well in the current documentation, even though it's one of the most powerful tools you have in your Tauri arsenal.
+
+## What is a "State"?
+
+A State is any data structure you create in Rust with the goal of storing data for the duration of your applications runtime. Using a State you can get very easy access to the value both in commands as well as anywhere you have access to an AppHandle.
+
+Before we get into the more nitty gritty details on how Tauri handles your State and how to use them, lets get a bit better understanding first for related topics that will be important for later on when we decide to use State's in practice.
+
+## How does "serde" work with a State?
+
+The name "serde" comes from the words "serialize" and "deserialize", and it's what the library helps you implement for your data structures.
+
+Serialization is when you take a value from its original form and turn it into something else, usually a string. In Tauri's case this is what we use for turning your Rust value into a Javascript value. If you need to pass data from the backend to the frontend it has to be serializeable.
+
+Deserialization is when you take a serialized value, usually a string, and turn it back into its original format, which in Rusts case is turning it back into a struct. In Tauri's case this is how we turn inputs to commands from Javascript back into their Rust format. If you need to pass data from the frontend to the backend it has to be deserializeable.
+
+When you create a State you can choose to derive from Serialize, Deserialize or both, depending on which directions your struct needs to support.
+
+Something I use a lot for my structs is the macro `#[serde(skip_serializing)]`. Lets say I have a struct called `AuthState`. In that state I'm keeping an authentication token. I however am building a very security critical application, so I don't want to pass the token to the frontend. However, keeping that token in a separate struct would be very annoying to do. So what I do is simply instruct serde that certain specific properties in the struct should be excluded from serialization, thus ensuring that I can return the `AuthState` safely to the frontend and serde will ensure that any security critical data is never passed back to the frontend.
+
+```rust!
+use serde::Serialize;
+
+#[derive(Serialize)]
+pub(crate) struct AuthState {
+    #[serde(skip_serializing)]
+    token: Option<String>,
+    logged_in: bool,
+}
+```
+
+Here you can see me create an `AuthState` where the token is an `Option`, since we might not yet have a token to use, and in the event I want to communicate the current state of authentication with the frontend I have skipped serializing that property, meaning if we passed that struct over to the frontend then Javascript would receive an object like so `{ logged_in: false }`.
+
+## What is a Mutex?
+
+Mutex is short for "mutually exclusive". When you're passing a value between threads in Rust you will need to ensure that two threads aren't accessing the same value at the same time. To do this we wrap values in a Mutex so that we can lock that value to a single thread, and then unlock the value once the value is dropped.
+
+If we try to manipulate the same value in multiple threads there will be issues.
+
+```rust!
+let my_mutex = 42
+std::thread::spawn(|| {
+  my_lock = 69;
+})
+std::thread::spawn(|| {
+  my_lock = 24;
+})
+// The compiler saves you from this by complaining about moved values, but in
+// theory what would happen here is that multiple threads might write to the same
+// location in memory at the same time, causing the program to crash
+```
+
+If we instead use a Mutex we ensure that only one thread can mutate the state at the same time. Note that this code wouldn't work either because we need an Arc, but I'm going to talk about that right after this.
+
+```rust!
+let my_mutex = Mutex::new(42);
+std::thread::spawn(|| {
+  let mut my_lock = my_mutex.lock().unwrap();
+  my_lock = 69;
+})
+std::thread::spawn(|| {
+  let mut my_lock = my_mutex.lock().unwrap();
+  my_lock = 24;
+})
+// The value can be 42, 69 or 24 now depending on various factors, but
+// at least it can no longer crash
+```
+
+**Important note on locking**: Make sure you don't end up locking your thread forever.
+
+```rust!
+// Locks forever because the lock is dropped at the end of the function
+// only to immediately create another lock in the next iteration
+loop {
+  let my_val = my_mutex.lock().unwrap();
+  std::thread::sleep(std::time::Duration::from_secs(1));
+}
+// Doesn't lock forever because the lock is dropped immediately
+loop {
+  std::thread::sleep(std::time::Duration::from_secs(1));
+  let my_val = my_mutex.lock().unwrap();
+}
+// Doesn't lock forever because we're manually dropping the lock
+loop {
+  let my_val = my_mutex.lock().unwrap();
+  drop(my_val)
+  std::thread::sleep(std::time::Duration::from_secs(1));
+}
+```
+
+### Async vs Sync Mutex
+
+> Contrary to popular belief, it is ok and often preferred to use the ordinary Mutex from the standard library in asynchronous code ...
+> The primary use case for the async mutex is to provide shared mutable access to IO resources such as a database connection
+
+In short, the most important differences between `std::sync::Mutex` and `tauri::async_runtime::Mutex` (which a re-export of `tokio::sync::Mutex`) are that if you use the async variant you'll 1. need to use it within an async function, and 2. you'll call `.await` in order for it to perform the locking instead of `?`. Using the async variant is more costly performance wise and generally speaking isn't necessary to do what you want.
+
+> Additionally, when you do want shared access to an IO resource, it is often better to spawn a task to manage the IO resource, and to use message passing to communicate with that task.
+
+In other words, if you need to use the async variant, you most likely should be switching how you do it instead.
+
+> Note that in contrast to std::sync::Mutex, this implementation does not poison the mutex when a thread holding the MutexGuard panics. In such a case, the mutex will be unlocked. If the panic is caught, this might leave the data protected by the mutex in an inconsistent state.
+
+Which basically means that there are situations, albeit few, when the data the Mutex protects might be in a bad state if you use the async variant. When you use the sync variant it'll raise a PoisonError.
+
+For these reasons I would recommend you always use `std::sync::Mutex` instead, it performs better, is safer to use, and if you need the async Mutex you're probably doing something wrong anyway.
+
+## What is an Arc?
+
+An Arc is a reference counter. Normally in Rust values only exist in one place at one time. What languages will normally do is keep a reference counter on a variable in order to know when all references to that value are gone so it knows that it's safe to drop. You can essentially see it as that in Rust that reference counter is by default just 1, you have a single reference to a value, once it's gone it's gone forever.
+
+Using an Arc you can create a reference counter for your variable, allowing you to keep creating more references to the same value so that the original references value doesn't get cleaned up.
+
+So if we look at the example from before with Mutex and add an Arc.
+
+```rust!
+// Create an Arc<Mutex<i32>>
+let my_mutex = Arc::new(Mutex::new(42));
+// 1 reference
+// Create a new reference
+let arced_mutex = Arc::clone(my_mutex);
+// 2 references
+std::thread::spawn(move || {
+  // The reference is now moved to the thread, but the actual value remains in the main thread
+  let mut my_lock = arced_mutex.lock().unwrap();
+  my_lock = 69;
+  // -1 reference
+})
+// We construct one reference per thread
+let arced_mutex = Arc::clone(my_mutex);
+// 3 references
+std::thread::spawn(|| {
+  let mut my_lock = arced_mutex.lock().unwrap();
+  my_lock = 24;
+  // -1 reference
+})
+// -1 reference
+// 3 references - 3 = 0 references, the original value can be dropped
+```
+
+## Do we have to use `Arc<Mutex<T>>`?
+
+The Arc allows us to get a reference to a value across threads, and a Mutex gives us the ability to access that value in a thread safe manner.
+
+However, the State itself gives us something very close to what Arc gives us!
+
+So why did we bother going over what an Arc is? Well, because if you create a State that needs to be accessed and manipulated anywhere that Tauri can't provide it to you easily, then you would create the Arc yourself.
+
+So in most cases, if you don't have an advanced use-case, you may very well get away with just creating a `Mutex<MyState>>`
+
+An example of a case where you would need an Arc is if you are spawning a separate thread for your State and need to handle it in a non-Tauri manner. For example, we'll be creating a simple SystemState later for checking the current power level of your computer where we want to update the value in the state entirely separate from any commands that Tauri is running.
+
+## Shortly about errors
+
+I won't go too in-depth on error handling for commands here, that deserves its own article along with tracing. This is the error I'm going to use for now. The most noteworthy things here are that for you to return an error from Rust to Javascript you'll need to implement serialization for that as well just like with your struct, and I'm implementing `PoisonError` for this error, which is an error that may be raised when you lock a `Mutex`.
+
+```rust!
+#[derive(Debug, thiserror::Error)]
+enum Error {
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    #[error("the mutex was poisoned")]
+    PoisonError(String),
+}
+
+impl serde::Serialize for Error {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::ser::Serializer,
+    {
+        serializer.serialize_str(self.to_string().as_ref())
+    }
+}
+
+impl<T> From<std::sync::PoisonError<T>> for Error {
+    fn from(err: std::sync::PoisonError<T>) -> Self {
+        Error::PoisonError(err.to_string())
+    }
+}
+```
+
+## So what is a State?
+
+Tauri uses a crate called `state` to create a `Container`, which is "global type-based state" where "A container can store at most one instance of given type as well as n thread-local instances of a given type.".
+
+What Tauri does is little more than give you a higher level interface with the functionality provided by that Container, and the way it works in simple terms is that it has a global HashMap where values you push to it get stored, and you can later on access them by simply specifying the type `T` that you want to fetch from it.
+
+## Managing a State
+
+So now that we have a better understanding of what a State is and some related technologies, lets look at something a bit more pratical!
+
+We're going to focus on my example of an AuthState since it's most likely the most commonly needed State for any project.
+
+```rust!
+use serde::Serialize;
+
+#[derive(Serialize)]
+pub(crate) struct AuthState {
+    #[serde(skip_serializing)]
+    token: Option<String>,
+    logged_in: bool,
+}
+
+impl Default for AuthState {
+    fn default() -> Self {
+        Self {
+            token: None,
+            logged_in: false,
+        }
+    }
+}
+
+fn main() {
+  tauri::Builder::default()
+    // Create a new Mutex for Tauri to manage
+    .manage(Mutex::new(AuthState::default()))
+    .run(tauri::generate_context!())
+    .expect("failed to run app");
+}
+```
+
+And that's it! You have now registered a new Mutex guarded State with Tauri and can access it in your commands.
+
+One seldom used way of managing a state is using an AppHandle. It's a perfectly valid way to let Tauri handle more States that you create later on.
+
+```rust!
+.setup(|app| {
+    let handle = app.handle();
+    handle.manage(Mutex::new(AuthState::default()));
+    Ok(())
+})
+```
+
+Remember, any value you tell Tauri to "manage" is essentially just a high level access to a globally stored HashMap. There's not much magic to it, you're pushing a value to a HashMap that can be accessed later by specifying the type you want to fetch from it. The main reason it's a good idea to register all the ones you want to use at the start of your application is because they are all type unique and should all be known and accessible during setup, but that doesn't mean you _can't_ push them later on in the run of your app, just that if you don't `.manage()` the State before you try to access it you'll end up with a panic.
+
+**Important note:** If you tell Tauri to manage multiple states of the same type `T`, only the first one registered will actually be used and retrieved. So for example, it's perfectly fine to tell it to manage `AuthState` and `SystemState`, but if I tried to push multiple versions of `AuthState` then only the first one would be what actually gets registered. If you feel a need to use multiple of the same State type you should reconsider how you do it, such as creating a Vec within a State. Treat each State as if their type `T` is unique (because it is). Most likely if you think you need multiple states, what you actually want is a single state that has a dynamically sized property inside it.
+
+## Accessing the State
+
+### Commands
+
+If you are developing a Tauri command you would access the state in the followng manner. Note the \`\_ lifetime we specify for the Mutex. The reason we have to add that is because we're using an `async fn`, in a regular `fn` that part can be skipped. But we are good sensible developers here, so we always use `async fn` for commands!
+
+Note that you don't have to do anything special before this. Tauri takes care of fetching the corresponding State you have specified as long as you've managed it beforehand.
+
+```rust!
+#[tauri::command]
+async fn login(state_mutex: State<'_, Mutex<AuthState>>) -> Result<AuthState, Error> {
+    println!("Logging in");
+    let mut state = state_mutex.lock()?;
+    state.logged_in = true;
+    Ok(state.clone())
+}
+```
+
+### AppHandle
+
+The AppHandle is the most useful thing you can imagine for your app and really serves as a hub for your entire application. Here you can see use fetching the state manually from the AppHandle instead of getting it magically as an argument to your command. Note that the AppHandle itself can be fetched easily in commands using the same kind of magic as a state.
+
+```rust!
+app.state::<Mutex<AuthState>>();
+```
+
+If the syntax is new to you let me explain briefly what's going on: AppHandle has a function called `.state()`. That function is capable of fetching a State. But in order to fetch a state, it needs to know which state it should fetch. It knows this by checking for a State that has the type `T`, where type `T` is Rust lingo for a generic type. So, for `.state()` to be capable of fetching something of type `T`, that type has to be specified, and the Rust syntax for specifying type T for functions is using `::<T>`, which in this case is `::<Mutex<AuthState>>`. Clear? Ok, let's see what it looks like in a Command!
+
+```rust!
+#[tauri::command]
+async fn login(app: tauri::AppHandle) -> Result<AuthState, Error> {
+    println!("Logging in");
+    let state_mutex = app.state::<Mutex<AuthState>>();
+    let mut state = state_mutex.lock()?;
+    // Login logic
+    state.logged_in = true;
+    Ok(state.clone())
+}
+```
+
+### Elsewhere
+
+There are two options for you to access a State somewhere that isn't within a command. You can either use an `Arc` like discussed previously, or you can pass around an `AppHandle`. Which approach you choose is entirely up to you and they both have their own merits.
+
+The most notable difference is that if you pass around an `AppHandle` not only can you access States without having to use an Arc, but also you can add new structs to be managed later on down the line. For simplicity sake I tend to pass around AppHandle's.
+
+## Putting it all together
+
+Now I can't stress enough how this isn't meant to be an example of a "perfect" application. This is a starting point and there's more that you can do with it. For example, I'm not setting up ensuring that the setup function is only ran once per window, so currently we'll be spawning a new thread every time we `invoke('setup')`. There's multiple ways you can go about ensuring a function is only ran once per window. We also don't set up tracing here and have no actual login logic. It's just a short example to illustrate State management.
+
+```rust!
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
+
+// Give us easier access to some values
+use serde::Serialize;
+use std::sync::{Arc, Mutex, PoisonError};
+use tauri::{generate_handler, State};
+// This needs to be in scope sometimes as a hint to the compiler to resolve some types
+use tauri::Manager;
+
+// Create a SystemState struct with the properties we want it to manage
+#[derive(Serialize, Clone)]
+pub(crate) struct SystemState {
+    // An integer from 0 - 100 indicating the power percentage
+    power: i32,
+}
+// Allow us to run SystemState::default()
+impl Default for SystemState {
+    fn default() -> Self {
+        // Default to 100% power
+        Self { power: 100 }
+    }
+}
+
+// Create an AuthState to manage whether we are authenticated or not
+#[derive(Serialize, Clone)]
+pub(crate) struct AuthState {
+    // Ensure the token isn't passed to the frontend
+    #[serde(skip_serializing)]
+    token: Option<String>,
+    // It's perfectly fine to just use a boolean to indicate logged_in
+    logged_in: bool,
+}
+// Allow us to run AuthState::default()
+impl Default for AuthState {
+    fn default() -> Self {
+        Self {
+            // Before we log in we don't have a token
+            token: None,
+            // and we're not logged in
+            logged_in: false,
+        }
+    }
+}
+// Create a custom Error that we can return in Results
+#[derive(Debug, thiserror::Error)]
+enum Error {
+    // Implement std::io::Error for our Error enum
+    #[error(transparent)]
+    Io(#[from] std::io::Error),
+    // Add a PoisonError, but we implement it manually later
+    #[error("the mutex was poisoned")]
+    PoisonError(String),
+}
+// Implement Serialize for the error
+impl serde::Serialize for Error {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::ser::Serializer,
+    {
+        serializer.serialize_str(self.to_string().as_ref())
+    }
+}
+// Implement From<PoisonError> for Error to convert it to something we have set up serialization for
+impl<T> From<PoisonError<T>> for Error {
+    fn from(err: PoisonError<T>) -> Self {
+        // We "just" convert the error to a string here
+        Error::PoisonError(err.to_string())
+    }
+}
+
+// Create a command that logs us in
+#[tauri::command]
+async fn login(state_mutex: State<'_, Mutex<AuthState>>) -> Result<AuthState, Error> {
+    println!("Logging in");
+    let mut state = state_mutex.lock()?;
+    // Login logic
+    state.logged_in = true;
+    // Send back a clone of the State
+    Ok(state.clone())
+}
+
+// Create a command that logs us out
+#[tauri::command]
+async fn logout(state_mutex: State<'_, Mutex<AuthState>>) -> Result<AuthState, String> {
+    println!("Logging out");
+    let mut state = state_mutex.lock().unwrap();
+    // Logout logic
+    state.logged_in = false;
+    // Send back a clone of the State
+    Ok(state.clone())
+}
+
+// Setup command, intended to be ran once for each window created
+#[tauri::command]
+async fn setup(
+    window: tauri::Window,
+    system_state_mutex: State<'_, Arc<Mutex<SystemState>>>,
+) -> Result<(), Error> {
+    println!("Setting up listeners");
+    // Arc the value so we can pass it to the new thread
+    let state = Arc::clone(&system_state_mutex);
+    // Spawn a new thread
+    std::thread::spawn(move || -> Result<(), Error> {
+        // Create an infinite loop
+        loop {
+            // Synchronize the state once per second
+            std::thread::sleep(std::time::Duration::from_secs(1));
+            // Emit an event with the SystemState as its payload
+            window
+                // Like a good developer you don't use `.unwrap()` on a Result
+                .emit("system_state_update", state.lock()?.clone())
+                .unwrap();
+        }
+    });
+    Ok(())
+}
+
+// Return a result because using .expect() is a sin
+fn main() -> Result<(), tauri::Error> {
+    // Create the SystemState
+    let system_state = Arc::new(Mutex::new(SystemState::default()));
+    // Create a new reference to it
+    let arced_state = Arc::clone(&system_state);
+    // Pass the reference into a new background thread that increments the power by 1 once per second, just so we can see that it's doing something
+    std::thread::spawn(move || loop {
+        std::thread::sleep(std::time::Duration::from_secs(1));
+        let mut state = arced_state.lock().unwrap();
+        state.power = state.power + 1;
+    });
+    tauri::Builder::default()
+        // Manage the AuthState
+        .manage(Mutex::new(AuthState::default()))
+        // Manage our arced SystemState
+        .manage(system_state)
+        // Remember to add the commands!
+        .invoke_handler(generate_handler![login, logout, setup])
+        // Run the app
+        .run(tauri::generate_context!())
+}
+
+```
+
+Now in your frontend (in this case Nuxt) you might do something along these lines in order to synchronize the SystemState.
+
+```html!
+<template>
+  <div>
+    <NuxtWelcome />
+  </div>
+</template>
+
+<script>
+import { invoke } from '@tauri-apps/api/tauri'
+import { listen } from '@tauri-apps/api/event'
+export default {
+  data() {
+    return {
+      unlisten: null,
+      systemState: null
+    }
+  },
+  beforeUnmount() {
+    this.unlisten()
+  },
+  async mounted() {
+    const self = this
+    self.unlisten = await listen('system_state_update', (event) => {
+      self.systemState = event.payload
+    })
+    await invoke('setup')
+  }
+}
+</script>
+```
+
+## Today we learned...
+
+- **Tauri State**: A storage of variables that can be accessed based on type where each type stored is unique on a first-come first-serve basis. We can either access it in commands using magic, or fetch it manually from an AppHandle.
+- **Generic type `T`**: In Rust we don't have polymorphism. But we do have generic types. Generic types can have any letter(s) you want, it's just common practise to use `T`.
+- **Mutex**: Mutually Exclusive variables that allow variables to be accessed in a thread safe manner.
+- **Async Mutex**: If you need to use it you're doing something wrong.
+- **Arc**: A reference counter mechanism in Rust that allows variables to continue living even when they go out of scope.
+- **Serialization**: Turning a variable from on state into another, usually a struct into a string.
+- **Deserialization**: Turning a variable back from some other state into a Rust variable, usually from a string to a struct.
+
+## Questions
+
+### When should I create a State?
+
+Ask yourself the following:
+
+- Is the information unique to the entire app and not just the window?
+- Does the information have to be accessed from multiple commands or parts of the program?
+
+### When should I use `Arc<Mutex<T>>`?
+
+Ask yourself the following:
+
+- Do you need to access the value somewhere not managed by Tauri.?
+
+### When should I be passing along an `AppHandle` for `State` management?
+
+Ask yourself the following:
+
+- Do you need the full power of an AppHandle elsewhere?
+- Do you need to initialize the State struct before you have access to an AppHandle?

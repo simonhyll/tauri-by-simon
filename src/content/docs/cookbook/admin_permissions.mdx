@@ -1,0 +1,40 @@
+---
+title: Admin Permissions
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+---
+
+# Admin permissions
+
+An app that requires admin permissions is generally considered a bad thing. There are legitimate use cases for it, but in my experience most of the people that wanted admin privileges to do thing were people that shouldn't be trusted with admin privileges, trying to do things like storing data files in the apps installation directory.
+
+## The issue with admin
+
+## Permissions on different platforms
+
+I won't go TOO in-depth into how the permission systems function, but you do need to have some level of knowledge about how they function before you go ahead and ask for admin privileges so you understand what the deal with permissions is.
+
+### Linux
+
+In Linux, there are a couple concepts of permissions you need to be aware of:
+
+- **user**: This is the leaf in the permission tree. It doesn't have to be a person, a user is simply any collection of permissions tied to an authentication. All people using a machine will have their own user, but applications can have their own users as well. Docker for example has its own user on the system to have more granular control of access to it. This would for example be my user, `simon`.
+- **group**: If a user is a leaf then a group is a branch in the tree. Many users can be tied to the same group in order to inherit permissions. There's no additional authentication required because you can't log into a group, you log into a user who's part of a group. Access to a user who's a member of a number of groups gives you access to all the assets those groups control. Users also tend to have a group attached to them, so for example, I would normally be the `simon` user that's a member of the `simon` group.
+- **root**: In our tree analogy, the sudo user would be the trunk of the tree that everything else relies on. It is a user account but at the system level that has ultimate control over everything, in other words, the holy grail of administrator accounts. You will never need access to this. In fact, on most systems you can't access it unless a sudo user explicitly enables it.
+- **sudo**: Sudo, sometimes called "super users", is essentially the group of the root user. That's not entirely accurate as the root user actually does have a root group as well, but while using the root user is extremely rare, using the root group I would say is even more rare. Being a member of the root group would effectively make your user a 24/7 admin user, which is a terrible idea. Sudo on the other hand is a group that simply controls access to the sudo command. As a member of this group you are able to run sudo, which is a way of gaining root level access to resources temporarily. This is the highest level of access you should ever require for almost literally any operation on the system. As a member of the sudo group you are considered an administrator on the system.
+
+When making an application you should consider whether or not your application can run as admin as well as whether or not it actually needs it.
+
+### Mac
+
+### Windows
+
+## CLI approach
+
+## Service approach
+
+## Today we learned...
+
+## Questions

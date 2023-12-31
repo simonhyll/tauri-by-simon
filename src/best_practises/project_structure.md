@@ -1,3 +1,0 @@
-# Project structure
-
-Set yourself up in a workspace and prepare for using many small projects. Big monolithic projects are very hard to maintain and get into. Splitting it up into many smaller projects in a workspace is just so much better. In fact, for a single organization you should really only have a single monolithing repository, and that repository should contain all that organizations sub projects. Splitting things up over multiple repositories can be a good way of managing access for employees, but all those repositories should be places somewhere within the monolithic repository so that developers only have to check out a single repository to get started working.

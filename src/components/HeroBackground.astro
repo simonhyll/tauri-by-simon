@@ -1,0 +1,148 @@
+<style>
+  :root {
+    --grid-color: rgb(45, 45, 45);
+  }
+  :root[data-theme="light"] {
+    --grid-color: rgb(210, 210, 210);
+  }
+  hero-background {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    top: var(--sl-nav-height);
+    width: 100%;
+    height: calc(100vh - var(--sl-nav-height));
+    left: 0;
+    z-index: -1;
+  }
+
+  hero-background canvas.fade-in {
+    opacity: 0;
+  }
+
+  hero-background canvas {
+    width: 100%;
+    height: 100%;
+    opacity: 1; /* target opacity */
+    transition: opacity 0.5s ease-in-out; /* 2-second fade-in */
+  }
+
+  hero-background::after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--sl-nav-height) * 3); /* height of the fade */
+    background: linear-gradient(
+      to top,
+      var(--sl-color-black),
+      transparent
+    ); /* color of the fade */
+  }
+</style>
+
+<hero-background>
+  <canvas class="fade-in"></canvas>
+</hero-background>
+
+<script>
+  import * as THREE from "three";
+
+  class HeroBackground extends HTMLElement {
+    private renderer: THREE.WebGLRenderer;
+    private scene: THREE.Scene;
+    private camera: THREE.PerspectiveCamera;
+    private canvas: HTMLCanvasElement;
+    private grid: THREE.GridHelper;
+
+    constructor() {
+      super();
+      this.canvas = this.children[0]! as HTMLCanvasElement;
+      this.grid = new THREE.GridHelper();
+
+      // Create scene and camera
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      this.camera.position.set(0, 25, 0);
+      this.camera.lookAt(0, 0, 0);
+
+      // Create WebGL renderer and set background color
+      this.renderer = new THREE.WebGLRenderer({
+        canvas: this.canvas,
+        antialias: true,
+      });
+      // Set the renderer size to match the canvas
+      this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
+      this.renderer.setClearColor(0x000000, 0);
+
+      // Add the canvas to the custom element
+      this.appendChild(this.renderer.domElement);
+
+      this.onWindowResize();
+
+      // Remove the fade-in class after the page is loaded
+      const self = this;
+      window.addEventListener("load", () => {
+        self.canvas.classList.remove("fade-in");
+      });
+      // Listen for changes to the prefers-color-scheme media query
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      mediaQuery.addEventListener("change", this.updateGridColor);
+
+      const root = document.querySelector(":root");
+      if (root)
+        new MutationObserver(() => {
+          this.updateGridColor();
+        }).observe(root, {
+          attributeFilter: ["data-theme"],
+        });
+
+      // Initial setup
+      this.updateGridColor();
+
+      // Call render loop
+      this.renderLoop();
+    }
+
+    getGridColor() {
+      const style = getComputedStyle(this);
+      return style.getPropertyValue("--grid-color"); // or '--grid-color-light'
+    }
+
+    updateGridColor() {
+      const gridColor = this.getGridColor();
+      // Create a wireframe grid
+      this.grid = new THREE.GridHelper(100, 100, gridColor, gridColor);
+      this.grid.name = "grid";
+      this.scene.add(this.grid);
+    }
+
+    renderLoop = () => {
+      requestAnimationFrame(this.renderLoop);
+      this.renderer.render(this.scene, this.camera);
+    };
+
+    connectedCallback() {
+      window.addEventListener("resize", this.onWindowResize, false);
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener("resize", this.onWindowResize, false);
+    }
+
+    private onWindowResize = () => {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+  }
+
+  customElements.define("hero-background", HeroBackground);
+</script>
