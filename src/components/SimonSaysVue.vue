@@ -15,7 +15,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 const props = defineProps({
   title: { type: String, default: "Psst!" },
 });
-const imageSrc = ref("/tauri-by-simon/public/icon.png");
+const imageSrc = ref("/tauri-by-simon/icon.png");
 </script>
 
 <style>
