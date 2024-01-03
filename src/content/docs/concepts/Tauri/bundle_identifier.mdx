@@ -12,3 +12,14 @@ import SimonSays from '../../../../components/SimonSays.astro'
 When you develop a Tauri app you're gonna need your app to be uniquely identifiable for the purposes of e.g. folder creation. You can't use the default `com.tauri.dev` ID because it would be used by many thousands of other apps. It should be in a reverse domain id format, but you don't need to actually own a domain in order to use it. If you do have a domain though it's better to use that, especially if you are developing for a company.
 </SimonSays>
 
+## Reverse Domain Identifier
+
+A reverse domain identifier is when you take a domain name, like `example.com`, reverse it, `com.example`, then add the ID you pick for your app to it, `com.example.my-app`. That's it really.
+
+The benefit of using a reverse domain identifier for your app is that if you own a domain name then it's very easy for you to create ID's that are unique globally. Any other app developer that tries to use your domain after all you have legal recourse to try to force into changing their ID, if you make your app ID be called `com.google.my-app` then sooner or later Google are probably gonna come with their lawyers and can make sure your app is forced to change its ID.
+
+The ID should be lowercase and URL safe.
+
+### What if I don't own a domain?
+
+That's perfectly fine, you don't need to own the domain, no one is going to enforce which domain you pick. You might get issues down the line from picking one you don't own, e.g. if another company decides to shut you down, or if another project uses the same ID as you so when a user installs their app it starts colliding with your app, things like that, but the Tauri CLI just verifies that the ID you use isn't the default one so that apps made with Tauri don't instantly compete with one another, what you pick is entirely up to you, no one actually checks if you own the domain or not unless it becomes an issue elsewhere, like uploading to the Play Store and such.
