@@ -1,9 +1,9 @@
 ---
-import SimonSays from "./SimonSays.vue";
+import SimonSaysVue from "./SimonSaysVue.vue";
 let { title } = Astro.props;
 if (!title) title = "Psst!";
 ---
 
-<SimonSays client:only="vue" title={title}>
+<SimonSaysVue client:only="vue" title={title}>
   <slot />
-</SimonSays>
+</SimonSaysVue>

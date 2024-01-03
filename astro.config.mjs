@@ -4,6 +4,7 @@ import vue from "@astrojs/vue";
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://simonhyll.github.io',
 	base: '/tauri-by-simon',
 	integrations: [vue(),
 	starlight({
