@@ -1,0 +1,44 @@
+---
+title: False Positives
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import SimonSays from '../../../../components/SimonSays.astro'
+
+<SimonSays title="Antiviruses can be annoying">
+Sometimes antiviruses are a bit overly cautious. Tauri apps can sometimes be flagged as a false positive for a Trojan virus when using the NSIS installer. This is a well known upstream issue for NSIS that sadly can't really be fixed because it's the fault of antiviruses and hackers, not the project itself.
+
+You can read more on it here: [NSIS False Positives](https://nsis.sourceforge.io/NSIS_False_Positives)
+</SimonSays>
+
+## Tauri is safe!
+
+You can go through all of Tauri's source code and all its dependencies if you like. Tauri gets audited periodically by a third party entity that ensures Tauri is perfectly safe. There are no trojans added by Tauri or its dependencies.
+
+### What is a false positive?
+
+A false positive is when your antivirus tells you something is a virus when it's not.
+
+### Your computer knows if he file came from the internet
+
+When you download a file through your browser your computer adds some information to the file regarding where it came from. When your antivirus scans the file it sees that metadata and effectively puts on its tin foil hat and does some extra strict scanning of it. That's why a file can be scanned on your own computer as not being a virus, but when sent to your users over the internet they get a virus warning, despite the file having the exact same contents.
+
+To check if this is what's causing the issue you can run these commands **on the users device** in order to remove the metadata on the file. This is not a solution to the issue and you can't add it to CI/CD to fix things, but it can be part of debugging whether it's a false positive.
+
+```bash
+# Windows
+attrib -r <filename>:Zone.Identifier
+# MacOS
+xattr -d com.apple.quarantine <filename>
+```
+
+### How can I be sure it's not a virus?
+
+Send your file to [VirusTotal](https://www.virustotal.com/gui/home/upload) and check which antiviruses are telling you it's a virus. False positives are essentially when the bad providers are triggering but the good ones do not. Once the scan finishes check for providers like Symantec Norton and ESET, they are two of the biggest and most reliable antiviruses, if they say it's not a virus it's pretty much guaranteed not to be one. The fact Windows Defender says it's a virus is really annoying but it doesn't prove anything because it's simply not sophisticated enough to reliably determine if something is a virus.
+
+### Could it be a trojan?
+
+Yes. Not from Tauri, but it could be a true positive. Don't trust your NPM and Cargo dependencies implicitly, they are not just capable of infecting your app, but can even infect your computer if you're not careful. If what you have is an actual virus then it wasn't given to you by anything Tauri made, it'll be from a malicious dependency you've added to your project.
