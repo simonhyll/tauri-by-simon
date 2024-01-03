@@ -1,0 +1,56 @@
+---
+title: The Simon Process
+sidebar:
+  order: 1
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import SimonSays from '../../../components/SimonSays.astro'
+
+<SimonSays title="How I like to develop software">
+If you follow the steps outlined below you'll be developing very high quality software.
+</SimonSays>
+
+## 1. Proposal
+
+The first thing you need when developing software is a proposal for a feature, where a feature is really just anything that you can define as "something the software does" that is one way or another exposed to the outside world, whether it's in the form of a library with public API's or a REST server.
+
+Lets take a REST api as an example, before you add a new endpoint to the server there should be a proposal written up to make the change. The proposal doesn't have to be very formal, but it has to be written down somewhere, usually it's as a ticket in an issue tracking system.
+
+## 2. Notes
+
+Once a proposal has been discussed among project owners and the feature has been decided that it should be added you can start documenting the feature. We do this at the start of the process not just to make sure it actually gets documented, but to make sure that when someone later on is going to develop the feature they have something to read to understand the more theoretical aspects of how the feature they are developing works.
+
+Take making a new AI framework for example, it's a very complicated field with many ins and outs, and it's not certain the developer that writes the code is a full on data scientist. If you write down all the theory first it'll make sure that there are as few questions later about how the feature should work as possible.
+
+The way I tend to do this is by creating Jupyter Notebooks in my projects, generally with the `evcxr` kernel so that I can use Rust code of course. This allows you to essentially write a little article with sample code for how the feature should work. No matter how small the feature it's always good to do, but grouping features together under e.g. the same struct or trait makes sure that the feature doesn't get too granular.
+
+## 3. Specification
+
+Once the proposal has been documented we have a full theoretical grasp of what we're writing from a more high level perspective with all its ins and outs we can write a technical specification that tells developers exactly how on a technical level things should be developed.
+
+What's the difference between the notes and a specification you ask? The difference is that the notes are less formal and doesn't require the same level of uniformity to its structuring. You can think of the note taking process as writing a guide or blog post about a topic, while the specification is a formal document that tells you de-facto how something should function at its lower level in as much detail as possible.
+
+## 4. Feature
+
+With the specification taken care of we can take our first step towards coding by writing a feature file. This is usually a Gherkin feature file since it's such a great syntax to work with. The feature file serves to essentially describe from a more user focused point of view how they might interact with a feature or sets of features in order to perform various actions, where we can later on write steps that perform those actions, and collectively result in a series of tests.
+
+## 5. Interface
+
+With the feature file defined we can use it as inspiration for developing the interface of the feature. The interface is the empty functions and structs, they have the proper inputs and outputs so that valid code can be written that uses them, they just don't execute any code that results in the desired behavior.
+
+By making empty interfaces instead of delving head first into writing code we can instead focus on getting a logical codebase that makes sense first. The interface writing process is done when the project can still compile when it's done and matches what the previous steps have defined.
+
+## 6. Examples
+
+We write examples at this point that uses the interface, both to illustrate to other how the code might be used in practise and to develop our first integration tests. This also helps validate that our interface engineering process has resulted in something that makes sense.
+
+## 7. Unit Tests
+
+Since we have all the interfaces in place we can now go ahead and write unit tests for them. Up until this point the codebase was still compiling and running as per usual, but when we're done writing unit tests the code should be failing in the test suite. The tests we write are based on the specifications and features and aim to catch as many scenarios as possible that ensures that no matter what code someone might write later, if the suite passes, so many scnarios have been caught that just the sheer fact that the suite passes means there can't be any unexpected behaviors.
+
+Simplified example, take a multiplication function. We write a test that says `multiply(2, 2)` should have the result `4`.
+
+## 8. Code

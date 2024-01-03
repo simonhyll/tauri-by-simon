@@ -1,0 +1,9 @@
+---
+import SimonSays from "./SimonSays.vue";
+let { title } = Astro.props;
+if (!title) title = "Psst!";
+---
+
+<SimonSays client:only="vue" title={title}>
+  <slot />
+</SimonSays>
