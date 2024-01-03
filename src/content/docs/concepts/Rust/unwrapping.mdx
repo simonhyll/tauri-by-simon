@@ -1,0 +1,31 @@
+---
+title: Unwrapping
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import SimonSays from '../../../../components/SimonSays.astro'
+
+<SimonSays title="Unwrapping should be few and far apart">
+It's a cardinal sin in Rust to `.unwrap` a `Result` or an `Option`. You should be using things like `if let Some(var)` or `if let Ok(var)` instead, or `match` if you're explicitly handling the `Err`. Otherwise `.unwrap` is just gonna potentially cause you at runtime errors that are hard to debug.
+</SimonSays>
+
+## Unwrapping
+
+When you unwrap a value in Rust what you're doing is taking out the underlying value out of some container. For example, a `Result` can hold either an `Err` or an `Ok`, so unwrapping gets that value out of it. However, some value when unwrapped will cause at runtime panics to be raised, crashing your application.
+
+### What are alternatives to `.unwrap`?
+
+Yes! `if let Some(var)` and `if let Ok(var)` are some of the nicest approaches when you're not going to be handling a `None` or `Err` state explicitly.
+
+Using `match` is really good when you're explicitly wanting to handle both the situation where it's an `Ok` as well as if it's an `Err` in the same location.
+
+The best way of dealing with a `Result` is by using the `?` keyword, which raises the `Err` to the parent context. This can be used inside any function that returns a `Result`. This helps keep your code as clean as possible while limiting the number of locations where you have to add explicit error handling.
+
+### Is it never ok to use `.unwrap`?
+
+There are situations where using `.unwrap` is considered ok to do. For example it can be very neat to use in `Iterator` type functions where you might've first used a `.filter` to get rid of all `Err`ors, then you know for sure that anything that remains is gonna be `Ok`, so then it's ok to `.unwrap` because you've explicitly made sure it can't raise a panic.
+
+Or if you have surrounding code that produces the `Option` or `Err` that you can as a developer 100% guarantee that it won't fail because the surrounding logic simply can't cause issues, but then again any developer that's that certain their code can't fail is probably not the kind of developer you wanna trust with such a statement. 😅
