@@ -42,3 +42,11 @@ Send your file to [VirusTotal](https://www.virustotal.com/gui/home/upload) and c
 ### Could it be a trojan?
 
 Yes. Not from Tauri, but it could be a true positive. Don't trust your NPM and Cargo dependencies implicitly, they are not just capable of infecting your app, but can even infect your computer if you're not careful. If what you have is an actual virus then it wasn't given to you by anything Tauri made, it'll be from a malicious dependency you've added to your project.
+
+### What can I do to fix it?
+
+As of the time of writing, to my knowledge, the `.msi` version of your app won't trigger false positives. So you can rely on using that installer instead of the NSIS installer. Other than that all you can really do is sign the app and/or submit it to antivirus vendors to get them to whitelist your app. Sometimes just rebuilding the app a couple times can also make Windows Defender stop flagging it as a virus, it's the weirdest thing.
+
+Other than that there's not much you can do. It's an upstream issue with the projects Tauri uses, so there's not much Tauri can do about it either. What you can remember with this is that it's not an issue with Tauri per se, it's an issue with the installer projects used, you're gonna face these sorts of issues regardless of what other app framework you look at.
+
+Check out the NSIS information on the subject here: [NSIS False Positives](https://nsis.sourceforge.io/NSIS_False_Positives)
