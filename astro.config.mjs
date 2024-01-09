@@ -75,6 +75,13 @@ export default defineConfig({
 				}
 			},
 			{
+				label: 'Samples',
+				collapsed: true,
+				autogenerate: {
+					directory: 'samples'
+				}
+			},
+			{
 				label: 'Best Practises',
 				collapsed: true,
 				autogenerate: {

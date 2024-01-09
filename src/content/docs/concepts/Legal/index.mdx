@@ -1,0 +1,23 @@
+---
+title: Overview
+sidebar:
+  order: 1
+---
+
+import SimonSays from '../../../../components/SimonSays.astro'
+
+<SimonSays title="I am not a legal expert and this is not legal advise">
+These are legal topics you should get familiar with but keep in mind that I'm not a legal expert, laws may be different where you are and things might've changed since I wrote this.
+
+You **have** to contact a legal expert to get proper legal advise.
+</SimonSays>
+
+import {LinkCard,CardGrid} from '@astrojs/starlight/components'
+import { getCollection, getEntry } from 'astro:content';
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('concepts/legal')).filter(val=>!val.slug.endsWith('/legal'));
+
+<CardGrid>
+{ tauriArticles.map(article=>(
+  <LinkCard title={article.data.title} description={article.data.description} href={'/tauri-by-simon/'+article.slug} />
+)) }
+</CardGrid>

@@ -25,8 +25,6 @@ import {Card,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
 export const articles = (await getCollection('docs')).filter(val=>val.data.title !== 'Overview' && val.slug !== 'index').filter(val=>val.data.sidebar.badge?.text !== 'Planned' && val.data.sidebar.badge?.text !== 'WIP');
 
-{console.log(articles)}
-
 <CardGrid>
 { articles.map(article=>(
   <Card title={article.data.title} icon="document">

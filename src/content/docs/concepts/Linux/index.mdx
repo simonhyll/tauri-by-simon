@@ -1,12 +1,12 @@
 ---
 title: Overview
 sidebar:
-  order: 0
+  order: 2
 ---
 
 import {LinkCard,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
-export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('backend')).filter(val=>!val.slug.endsWith('backend'));
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('concepts/linux')).filter(val=>!val.slug.endsWith('/linux'));
 
 <CardGrid>
 { tauriArticles.map(article=>(

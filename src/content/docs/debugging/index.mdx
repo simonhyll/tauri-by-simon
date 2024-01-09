@@ -4,8 +4,13 @@ sidebar:
   order: 0
 ---
 
-import SimonSays from '../../../components/SimonSays.astro'
+import {LinkCard,CardGrid} from '@astrojs/starlight/components'
+import { getCollection, getEntry } from 'astro:content';
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('debugging')).filter(val=>!val.slug.endsWith('debugging'));
 
-<SimonSays title="">
+<CardGrid>
+{ tauriArticles.map(article=>(
+  <LinkCard title={article.data.title} description={article.data.description} href={'/tauri-by-simon/'+article.slug} />
+)) }
+</CardGrid>
 
-</SimonSays>
