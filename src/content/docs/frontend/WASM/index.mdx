@@ -6,7 +6,7 @@ sidebar:
 
 import {LinkCard,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
-export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('frontend/vue')).filter(val=>!val.slug.endsWith('/vue'));
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('frontend/wasm')).filter(val=>!val.slug.endsWith('/wasm'));
 
 <CardGrid>
 { tauriArticles.map(article=>(
