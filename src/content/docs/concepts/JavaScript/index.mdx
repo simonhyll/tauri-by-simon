@@ -1,0 +1,18 @@
+---
+title: Overview
+sidebar:
+  order: 2
+  badge:
+    text: Planned
+    variant: caution
+---
+
+import {LinkCard,CardGrid} from '@astrojs/starlight/components'
+import { getCollection, getEntry } from 'astro:content';
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('concepts/javascript')).filter(val=>!val.slug.endsWith('/javascript'));
+
+<CardGrid>
+{ tauriArticles.map(article=>(
+  <LinkCard title={article.data.title} description={article.data.description} href={'/tauri-by-simon/'+article.slug} />
+)) }
+</CardGrid>

@@ -1,5 +1,6 @@
 ---
 title: State Management
+description: Non-persistent storage of app-wide variables
 sidebar:
   badge:
     text: v1
@@ -447,7 +448,7 @@ fn main() -> Result<(), tauri::Error> {
 
 Now in your frontend (in this case Nuxt) you might do something along these lines in order to synchronize the SystemState.
 
-```html!
+```html
 <template>
   <div>
     <NuxtWelcome />

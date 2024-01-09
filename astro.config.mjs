@@ -50,7 +50,7 @@ export default defineConfig({
 				label: 'Backend',
 				collapsed: true,
 				autogenerate: {
-					directory: 'empty'
+					directory: 'backend'
 				}
 			},
 			{
