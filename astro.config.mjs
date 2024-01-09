@@ -43,7 +43,7 @@ export default defineConfig({
 				label: 'Frontend',
 				collapsed: true,
 				autogenerate: {
-					directory: 'empty'
+					directory: 'frontend'
 				}
 			},
 			{
@@ -57,21 +57,21 @@ export default defineConfig({
 				label: 'Debugging',
 				collapsed: true,
 				autogenerate: {
-					directory: 'empty'
+					directory: 'debugging'
 				}
 			},
 			{
 				label: 'Testing',
 				collapsed: true,
 				autogenerate: {
-					directory: 'empty'
+					directory: 'testing'
 				}
 			},
 			{
 				label: 'Distributing',
 				collapsed: true,
 				autogenerate: {
-					directory: 'empty'
+					directory: 'distributing'
 				}
 			},
 			{
