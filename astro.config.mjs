@@ -2,10 +2,10 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import vue from "@astrojs/vue";
 
-// https://astro.build/config
 export default defineConfig({
 	site: 'https://simonhyll.github.io',
-	base: '/tauri-by-simon',
+	base: process.env.TAURI_PLATFORM ? '/' : '/tauri-by-simon/',
+	trailingSlash: 'always',
 	integrations: [vue(),
 	starlight({
 		title: 'Tauri by Simon',
@@ -21,7 +21,7 @@ export default defineConfig({
 		head: [{
 			tag: 'script',
 			attrs: {
-				src: '/tauri-by-simon/navigate.js'
+				src: process.env.TAURI_PLATFORM ? '/navigate.js' : '/tauri-by-simon/navigate.js',
 			}
 		}],
 		sidebar: [

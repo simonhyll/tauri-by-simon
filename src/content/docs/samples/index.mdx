@@ -4,12 +4,20 @@ sidebar:
   order: 0
 ---
 
+import SimonSays from '../../../components/SimonSays.astro'
+
+<SimonSays title="Tauri is unopinionated about your project structure">
+The folder that's by default called `src-tauri` is just a Rust crate. It doesn't have to be located anywhere in particular in your project. In fact, I always rename it to something like `backend` and put my frontend in a folder called `frontend`, keeping them separate.
+
+So you can employ standard best practises for Rust project structuring. I recommend looking into using a Cargo workspace if you have multiple Rust based projects in the same repository.
+</SimonSays>
+
 import {LinkCard,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
-export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('samples')).filter(val=>!val.slug.endsWith('samples'));
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('samples')).filter(val=>!val.slug.endsWith('samples')).sort((a, b) => a.data.sidebar.order - b.data.sidebar.order);
 
 <CardGrid>
 { tauriArticles.map(article=>(
-  <LinkCard title={article.data.title} description={article.data.description} href={'/tauri-by-simon/'+article.slug} />
+  <LinkCard title={article.data.title} description={article.data.description} href={import.meta.env.BASE_URL+article.slug} />
 )) }
 </CardGrid>

@@ -6,10 +6,10 @@ sidebar:
 
 import {LinkCard,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
-export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('concepts/docker')).filter(val=>!val.slug.endsWith('/docker'));
+export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('concepts/docker')).filter(val=>!val.slug.endsWith('/docker')).sort((a, b) => a.data.sidebar.order - b.data.sidebar.order);
 
 <CardGrid>
 { tauriArticles.map(article=>(
-  <LinkCard title={article.data.title} description={article.data.description} href={'/tauri-by-simon/'+article.slug} />
+  <LinkCard title={article.data.title} description={article.data.description} href={import.meta.env.BASE_URL+article.slug} />
 )) }
 </CardGrid>

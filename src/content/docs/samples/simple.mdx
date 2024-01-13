@@ -4,12 +4,37 @@ description: Quick and dirty small scale apps
 sidebar:
   order: 1
   badge:
-    text: Planned
-    variant: caution
+    text: WIP
+    variant: tip
 ---
 
 import SimonSays from '../../../components/SimonSays.astro'
 
-<SimonSays title="">
-
+<SimonSays title="Keep It Simple Stupid (KISS)">
+Don't overcomplicate your project structure if you're just making something basic. This simple project structure follows what you get from a standard Tauri template.
 </SimonSays>
+
+## When to use this structure
+
+Small projects without a lot of complexity or projects where the Tauri part of the project is kept small, focusing code on the frontend either because Rust skills are limited or because the project is a web app and native functionality isn't required beyond what Tauri plugins provide.
+
+## The structure
+
+> **Bold:** Part of your source code, add to Git<br/>
+> *Italic:* Build time artifacts, make sure to gitignore
+
+- **.github/:** GitHub specific files and folders
+  - **workflows/:** GitHub Actions workflows
+    - **build.yaml:** Builds your project for release and deploys it
+    - **test.yaml:** Runs your test suite on every commit to a PR branch
+  - **CODEOWNERS:** Required reviewers when updates are made to files/folders
+- *dist/:* The finished built SSG/CSR frontend of your project
+- **src/:** The source code for your frontend project, preferably configure it to not "pollute" outside this folder to keep things "clean"
+- **src-tauri/:**
+  - **icons/:** Icons built by 
+  - *target/:* Build folder for Rust
+  - **Cargo.toml:** Your Rust project metadata, e.g. dependencies
+  - **tauri.conf.json:** Tauri configuration
+- **.gitignore:** Ignore files, e.g. the target and dist directories
+- **package.json:** Some project metadata, e.g. dependencies
+- **README.md:** Introduction to the project, mainly used as a front page for e.g. GitHub, NPM, documentation etc

@@ -4,12 +4,36 @@ description: Scalable and easy to manage
 sidebar:
   order: 2
   badge:
-    text: Planned
-    variant: caution
+    text: WIP
+    variant: tip
 ---
 
 import SimonSays from '../../../components/SimonSays.astro'
 
-<SimonSays title="">
-
+<SimonSays title="Separating responsibilities and scaling">
+This project structure primarily helps you separate your frontend from your backend and allows you to quite easily adapt to the need for more sub projects. There are some variations of this structure but it adheres pretty much to what you might find your average Rust project using.
 </SimonSays>
+
+## When to use this structure
+
+Projects that require sub projects and better separation between the frontend and the backend projects.
+
+## The structure
+
+> **Bold:** Part of your source code, add to Git<br/>
+> *Italic:* Build time artifacts, make sure to gitignore
+
+- **.github/:** GitHub specific files and folders
+  - **workflows/:** GitHub Actions workflows
+    - **build.yaml:** Builds your project for release and deploys it
+    - **test.yaml:** Runs your test suite on every commit to a PR branch
+  - **CODEOWNERS:** Required reviewers when updates are made to files/folders
+- **crates [packages]/:** I always have a crates folder where I put the Tauri backend. If your project leans more towards JavaScript it might be appropriate to also have a `packages/` folder to keep Rust and JavaScript a bit separated, but otherwise I prefer putting one or two JavaScript projects inside the `crates/` folder than adding another folder for just one or two packages.
+  - **backend/:** Your Tauri project, what is usually called `src-tauri/`, that name isn't sacred, simply rename it to `backend/`, it's just a Rust crate as any other as long as you configure things properly in `tauri.conf.json`
+  - **core/:** Optional, I tend to have one, it's where I put primarily Rust code that can be used both in the backend and the frontend, mainly applicable to my WASM based frontend projects
+  - **frontend/:** The actual frontend project using whatever framework you like
+    - **Cargo.toml:** To make easier use of a Cargo workspace I usually put a `Cargo.toml` file inside my frontend project regardless of whether it's a WASM or JavaScript based frontend, it lets you use a wildcard for finding crates in the workspace
+- **.gitignore:** Ignore files, e.g. the target and dist directories
+- **Cargo.toml:** Your Cargo workspace, add `crates/*` as a workspace member and you're good to go. I also recommend getting yourself a good release profile and learning to set as many fields as possible in here that your other crates can then use by simply specifying `.workspace = true`, such as the project version, rust version, dependency versions, things of that nature
+- **package.json [pnpm-workspace.yaml]:** If applicable this is your JavaScript based workspace
+- **README.md:** Introduction to the project, mainly used as a front page for e.g. GitHub, NPM, documentation etc

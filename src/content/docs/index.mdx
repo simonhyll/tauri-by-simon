@@ -23,13 +23,13 @@ import HeroBackground from "../../components/HeroBackground.astro";
 
 import {Card,CardGrid} from '@astrojs/starlight/components'
 import { getCollection, getEntry } from 'astro:content';
-export const articles = (await getCollection('docs')).filter(val=>val.data.title !== 'Overview' && val.slug !== 'index').filter(val=>val.data.sidebar.badge?.text !== 'Planned' && val.data.sidebar.badge?.text !== 'WIP');
+export const articles = (await getCollection('docs')).filter(val=>val.data.title !== 'Overview' && val.slug !== 'index').filter(val=>val.data.sidebar.badge?.text !== 'Planned' && val.data.sidebar.badge?.text !== 'WIP').sort((a, b) => a.data.sidebar.order - b.data.sidebar.order);
 
 <CardGrid>
 { articles.map(article=>(
   <Card title={article.data.title} icon="document">
   {article.data.description}
-  <br/><a href={'/tauri-by-simon/'+article.slug}>Read article</a>
+  <br/><a href={import.meta.env.BASE_URL+article.slug}>Read article</a>
   </Card>
 )) }
 </CardGrid>

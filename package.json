@@ -1,7 +1,7 @@
 {
   "name": "tauri-by-simon",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -13,6 +13,7 @@
     "@astrojs/check": "^0.3.4",
     "@astrojs/starlight": "^0.15.1",
     "@astrojs/vue": "^4.0.6",
+    "@tauri-apps/cli": "^1.5.9",
     "@types/three": "^0.160.0",
     "astro": "^4.0.1",
     "sharp": "^0.32.5",
