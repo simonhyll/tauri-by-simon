@@ -43,6 +43,79 @@
   }
 </style>
 
+<style is:global>
+  @keyframes floating-inverted {
+    0%,
+    4%,
+    8%,
+    12%,
+    16%,
+    20%,
+    24%,
+    28%,
+    32%,
+    36%,
+    40%,
+    44%,
+    48%,
+    60%,
+    64%,
+    68%,
+    72%,
+    76%,
+    80%,
+    84%,
+    88%,
+    92%,
+    96%,
+    100% {
+      transform: translateY(0) rotateY(0deg) scaleX(100%);
+    }
+
+    2%,
+    6%,
+    10%,
+    14%,
+    18%,
+    22%,
+    26%,
+    30%,
+    34%,
+    38%,
+    42%,
+    46%,
+    50%,
+    62%,
+    66%,
+    70%,
+    74%,
+    78%,
+    82%,
+    86%,
+    90%,
+    94%,
+    98% {
+      transform: translateY(-5px) rotateY(0deg) scaleX(95%);
+    }
+
+    52% {
+      transform: translateY(0) rotateY(180deg) rotateZ(20deg);
+    }
+
+    54% {
+      transform: translateY(5px) rotateY(180deg) rotateZ(-20deg);
+    }
+
+    56% {
+      transform: translateY(0) rotateY(180deg) rotateZ(0deg);
+    }
+  }
+
+  .hero > img {
+    animation: floating-inverted 50s ease-in-out infinite;
+  }
+</style>
+
 <hero-background>
   <canvas class="fade-in"></canvas>
 </hero-background>
