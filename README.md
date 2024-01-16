@@ -2,6 +2,6 @@
 
 # Tauri by Simon
 
-[Website](https://simonhyll.github.io/tauri-by-simon/)
+[Website](https://tauri.by.simon.hyll.nu)
 
 </div>
