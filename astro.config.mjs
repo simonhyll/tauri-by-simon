@@ -3,14 +3,14 @@ import starlight from '@astrojs/starlight';
 import vue from "@astrojs/vue";
 
 export default defineConfig({
-	site: 'https://simonhyll.github.io',
-	base: process.env.TAURI_PLATFORM ? '/' : '/tauri-by-simon/',
+	site: 'https://tauri.by.simon.hyll.nu',
 	trailingSlash: 'always',
 	integrations: [vue(),
 	starlight({
 		title: 'Tauri by Simon',
 		social: {
-			github: 'https://github.com/withastro/starlight',
+			github: 'https://github.com/tauri-apps/tauri',
+			discord: 'https://discord.com/invite/tauri'
 		},
 		lastUpdated: true,
 		logo: {
@@ -21,7 +21,7 @@ export default defineConfig({
 		head: [{
 			tag: 'script',
 			attrs: {
-				src: process.env.TAURI_PLATFORM ? '/navigate.js' : '/tauri-by-simon/navigate.js',
+				src: '/navigate.js'
 			}
 		}],
 		sidebar: [
@@ -82,10 +82,10 @@ export default defineConfig({
 				}
 			},
 			{
-				label: 'Best Practises',
+				label: 'Best Practices',
 				collapsed: true,
 				autogenerate: {
-					directory: 'best_practises'
+					directory: 'best_practices'
 				}
 			},
 		],

@@ -4,12 +4,6 @@ sidebar:
   order: 2
 ---
 
-import {LinkCard,CardGrid} from '@astrojs/starlight/components'
-import { getCollection, getEntry } from 'astro:content';
-export const tauriArticles = (await getCollection('docs')).filter(val=>val.slug.includes('frontend/vue')).filter(val=>!val.slug.endsWith('/vue')).sort((a, b) => a.data.sidebar.order - b.data.sidebar.order);
+import OverviewCards from '../../../../components/OverviewCards.astro';
 
-<CardGrid>
-{ tauriArticles.map(article=>(
-  <LinkCard title={article.data.title} description={article.data.description} href={import.meta.env.BASE_URL+article.slug} />
-)) }
-</CardGrid>
+<OverviewCards folder="frontend/vue" />

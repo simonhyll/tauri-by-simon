@@ -1,5 +1,4 @@
-const isTauri = !!window.__TAURI__
-const base = isTauri ? '/tauri-by-simon/' : '/';
+const base = '/';
 
 (function chapterNavigation() {
   document.addEventListener("keydown", function (e) {

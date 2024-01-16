@@ -15,7 +15,7 @@ import { onMounted, onUnmounted, ref } from "vue";
 const props = defineProps({
   title: { type: String, default: "Psst!" },
 });
-const imageSrc = ref(import.meta.env.BASE_URL+"/icon.png");
+const imageSrc = ref("/icon.png");
 </script>
 
 <style>

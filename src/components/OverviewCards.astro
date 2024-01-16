@@ -1,0 +1,21 @@
+---
+const { folder } = Astro.props;
+import { LinkCard, CardGrid } from "@astrojs/starlight/components";
+import { getCollection } from "astro:content";
+const articles = (await getCollection("docs"))
+  .filter((val) => val.slug.includes(folder))
+  .filter((val) => val.slug != folder)
+  .sort((a: any, b: any) => a.data.sidebar.order - b.data.sidebar.order);
+---
+
+<CardGrid>
+  {
+    articles.map((article) => (
+      <LinkCard
+        title={article.data.title}
+        description={article.data.description}
+        href={article.slug}
+      />
+    ))
+  }
+</CardGrid>
