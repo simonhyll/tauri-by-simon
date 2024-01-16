@@ -90,4 +90,14 @@ const imageSrc = ref("/icon.png");
 .features .tip-rue > img {
   animation: none !important;
 }
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0) scaleX(100%);
+  }
+
+  50% {
+    transform: translateY(-3px) scaleX(95%);
+  }
+}
 </style>
