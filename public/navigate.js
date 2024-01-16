@@ -3,7 +3,6 @@ const base = '/';
 function chapterNavigation() {
   let triggered = false
   document.addEventListener("keydown", function (e) {
-    e.preventDefault()
     if (triggered) return
     triggered = true
     setTimeout(() => { triggered = false }, 100)
