@@ -1,6 +1,6 @@
 const base = '/';
 
-(function chapterNavigation() {
+function chapterNavigation() {
   document.addEventListener("keydown", function (e) {
     if (e.altKey || e.ctrlKey || e.metaKey) {
       return;
@@ -44,4 +44,8 @@ const base = '/';
         break;
     }
   });
-})();
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  chapterNavigation()
+})
