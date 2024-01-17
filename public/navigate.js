@@ -53,3 +53,8 @@ function chapterNavigation() {
 window.addEventListener('DOMContentLoaded', () => {
   chapterNavigation()
 })
+
+window.onload = function () {
+  document.body.setAttribute('tabindex', '-1');
+  document.body.focus();
+};
