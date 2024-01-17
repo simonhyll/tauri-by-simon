@@ -7,10 +7,13 @@ sidebar:
     variant: tip
 ---
 
-import SimonSays from '../../../../components/SimonSays.astro'
+import SimonSays from "../../../../components/SimonSays.astro";
 
 <SimonSays title="Why can't we all just get along?">
-There are a lot of ways to style your window based on a bunch of factors. Here are some of the most important ways to make your window look and feel the way you want, arranged by which platform the customization is for and what my recommendations are.
+  There are a lot of ways to style your window based on a bunch of factors. Here
+  are some of the most important ways to make your window look and feel the way
+  you want, arranged by which platform the customization is for and what my
+  recommendations are.
 </SimonSays>
 
 ## Mac
@@ -20,11 +23,13 @@ There are a lot of ways to style your window based on a bunch of factors. Here a
 **Recommendation:** Overlay the titlebar so you preserve the classic Mac traffic lights. Why? Because Mac users need to be reminded constantly of which light they should stop for when they cross the road. Seriously though, they hate not seeing the traffic light, you don't need it for any reason whatsoever, all it offers is available with keybindings, but your average Mac user really, really won't like not having the lights in the corner.
 
 ```json
-// tauri.conf.json
+// tauri.macos.conf.json
+// The configuration based approach
 {
   "tauri": {
     "window": [
       {
+        "title": "",
         "titleBarStyle": "Overlay"
       }
     ]
@@ -33,7 +38,16 @@ There are a lot of ways to style your window based on a bunch of factors. Here a
 ```
 
 ```rust
-
+// lib.rs
+// The Rust based approach
+let mut window = tauri::WindowBuilder::new(app, "main", tauri::WindowUrl::App("index.html".into()));
+#[cfg(target_os = "macos")]
+{
+  window = window
+    .title("")
+    .title_bar_style(tauri::TitleBarStyle::Overlay);
+}
+let main_window = window.build()?;
 ```
 
 ### Decorations
