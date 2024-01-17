@@ -19,6 +19,10 @@ export default defineConfig({
 		},
 		favicon: '/icon.png',
 		customCss: ['./src/styles/theme.css'],
+		components: {
+			Header: './src/components/Header.astro',
+			SocialIcons: './src/components/SocialIcons.astro',
+		},
 		head: [{
 			tag: 'script',
 			attrs: {

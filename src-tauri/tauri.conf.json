@@ -3,7 +3,7 @@
   "build": {
     "beforeBuildCommand": "bun run build",
     "beforeDevCommand": "bun run dev",
-    "devPath": "http://localhost:4321/tauri-by-simon",
+    "devPath": "http://localhost:4321",
     "distDir": "../dist"
   },
   "package": {
@@ -11,7 +11,17 @@
   },
   "tauri": {
     "allowlist": {
-      "all": false
+      "all": false,
+      "shell": {
+        "all": false,
+        "execute": false,
+        "open": true,
+        "scope": [],
+        "sidecar": false
+      },
+      "window": {
+        "all": true
+      }
     },
     "bundle": {
       "active": true,
@@ -63,7 +73,10 @@
         "height": 600,
         "resizable": true,
         "title": "Tauri by Simon",
-        "width": 800
+        "width": 800,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true,
+        "decorations": true
       }
     ]
   }

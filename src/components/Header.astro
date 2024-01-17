@@ -1,0 +1,33 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import Default from "@astrojs/starlight/components/Header.astro";
+---
+
+<Default {...Astro.props}><slot /></Default>
+
+<script>
+  const prevent = (e: any) => {
+    e.preventDefault();
+  };
+  const header = document.getElementsByTagName("header")[0];
+  header.setAttribute("data-tauri-drag-region", "");
+  for (const child of header.children) {
+    child.setAttribute("data-tauri-drag-region", "");
+    child.addEventListener("dragstart", prevent);
+    for (const childAgain of child.children) {
+      childAgain.setAttribute("data-tauri-drag-region", "");
+      childAgain.addEventListener("dragstart", prevent);
+    }
+  }
+</script>
+
+<style is:global>
+  header,
+  header * {
+    user-select: none;
+  }
+  header img,
+  header span {
+    pointer-events: none;
+  }
+</style>

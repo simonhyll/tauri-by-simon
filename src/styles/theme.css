@@ -28,3 +28,17 @@
     --sl-color-gray-7: #f1f7fa;
     --sl-color-black: #ffffff;
 }
+
+html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    overflow: auto;
+}
+
+p {
+    text-align: justify;
+}
