@@ -51,13 +51,6 @@ export default defineConfig({
 				}
 			},
 			{
-				label: 'Concepts',
-				collapsed: true,
-				autogenerate: {
-					directory: 'concepts'
-				}
-			},
-			{
 				label: 'Frontend',
 				collapsed: true,
 				autogenerate: {
@@ -104,6 +97,13 @@ export default defineConfig({
 				collapsed: true,
 				autogenerate: {
 					directory: 'best_practices'
+				}
+			},
+			{
+				label: 'Concepts',
+				collapsed: true,
+				autogenerate: {
+					directory: 'concepts'
 				}
 			},
 		],
