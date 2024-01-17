@@ -1,0 +1,34 @@
+---
+title: Tauri by Simon
+description: How this project was/is developed.
+sidebar:
+  order: 2
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import SimonSays from "../../../components/SimonSays.astro";
+
+<SimonSays title="How this project was/is developed">
+  It's pretty obvious that this project is gonna be one of the sample projects,
+  and it's a good project setup for any sort of documentation type project. I
+  recommend any serious project to have a project similar to this one, not all
+  see the full benefits of going the extra mile of having a developer handbook
+  or api reference presented like this, but those projects are also the ones
+  that tend to suffer the most from the key man principle.
+</SimonSays>
+
+## Web First
+
+### GitHub Pages
+
+The site is hosted (for free) on GitHub Pages. In order to get the domain name right I verified my top domain `hyll.nu` to my user account. In the `tauri-by-simon` repo I set up in the pages settings my custom domain. I had to delete it twice and set it up in order for everything to get registered correctly everywhere in GitHub's backend. I made a `CNAME` entry pointing to `simonhyll.github.io` for `tauri.by.simon.hyll.nu` with a `TTL` of `3600`.
+
+### Conditional compilation
+
+Using conditional compilation I can ensure that the web version and the Tauri app version is built slightly differently, including differing features based on the capabilities available on either platform.
+
+## Tauri app
+
+The app was sort of an afterthought in this case but it made a lot of sense to add it. I keep having issues giving people proper examples of how to do things because most of my projects get scrapped after a while, so there's not _that_ much code to be found after a while. With a project like this I can actually start collecting snippets of code to share with people, and powered by a Tauri app that means I can also actually show off features and point to the repository when people wonder how I did something. Neat huh?
