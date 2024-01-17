@@ -10,8 +10,11 @@ export default defineConfig({
 	starlight({
 		title: 'Tauri by Simon',
 		social: {
-			github: 'https://github.com/tauri-apps/tauri',
-			discord: 'https://discord.com/invite/tauri'
+			rss: 'https://tauri.by.simon.hyll.nu/feed.xml',
+			discord: 'https://discord.com/invite/tauri',
+			linkedin: 'https://linkedin.com/in/simonhyll',
+			youtube: 'https://youtube.com/@hyllsimon',
+			github: 'https://github.com/simonhyll/tauri-by-simon',
 		},
 		lastUpdated: true,
 		logo: {
