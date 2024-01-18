@@ -42,3 +42,24 @@ body {
 p {
     text-align: justify;
 }
+
+.drawio {
+    width: 100%;
+    max-width: 100%;
+}
+
+.drawio>svg {
+    width: 100%;
+}
+
+.drawio path:not([stroke=none]) {
+    stroke: var(--sl-color-white);
+}
+
+.drawio rect:not([stroke=none]) {
+    stroke: var(--sl-color-white);
+}
+
+.drawio div {
+    color: var(--sl-color-white) !important;
+}
