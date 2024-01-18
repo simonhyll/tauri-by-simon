@@ -5,7 +5,6 @@ import { spawnSync } from 'node:child_process';
 
 export async function GET(context) {
     const blog = await getCollection('docs');
-    console.log(context)
     return rss({
         title: 'Tauri by Simon',
         description: 'My unofficial opinionated articles on using Tauri',
