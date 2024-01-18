@@ -1,6 +1,6 @@
 <template>
   <div class="tip-box">
-    <div class="tip-rue">
+    <div class="tip-simon">
       <img :src="imageSrc" />
     </div>
     <div class="tip-content">
@@ -28,12 +28,13 @@ const imageSrc = ref("/icon.png");
   background-color: var(--sl-color-gray-6);
   padding: 10px;
   overflow: hidden;
+  border-radius: 0.5rem;
 }
 .tip-link {
   margin: 0 auto;
   overflow: hidden;
 }
-.tip-rue {
+.tip-simon {
   display: flex;
   flex-direction: column;
   padding-right: 15px;
@@ -62,7 +63,7 @@ const imageSrc = ref("/icon.png");
   font-weight: bold;
   margin-bottom: 0px !important;
 }
-.tip-rue > img {
+.tip-simon > img {
   animation: floating 2s ease-in-out infinite;
 }
 .stagger > *:nth-child(2n) .tip-box {
@@ -80,14 +81,14 @@ const imageSrc = ref("/icon.png");
 .features .tip-content {
   margin-right: 100px !important;
 }
-.features .tip-rue {
+.features .tip-simon {
   position: absolute;
   right: 0;
   animation: none !important;
   height: 100%;
   min-width: 140px !important;
 }
-.features .tip-rue > img {
+.features .tip-simon > img {
   animation: none !important;
 }
 @keyframes floating {
