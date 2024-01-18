@@ -26,6 +26,8 @@ jobs:
           lfs: true
       - name: Fix timestamps
         run: |
+          git log --format=fuller --max-count=1 src/content/docs/best_practices/index.mdx
+          git log --format=fuller --max-count=1 src/content/docs/best_practices/authentication.mdx
           git filter-branch --env-filter 'export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"'
           git log --format=fuller --max-count=1 src/content/docs/best_practices/index.mdx
           git log --format=fuller --max-count=1 src/content/docs/best_practices/authentication.mdx
