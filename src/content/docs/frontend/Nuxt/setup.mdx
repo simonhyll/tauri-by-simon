@@ -1,0 +1,81 @@
+---
+title: Setup
+description: Creating and configuring a new project.
+sidebar:
+  order: 1
+  badge:
+    text: WIP
+    variant: tip
+references:
+  - concepts/nodejs/package_managers
+---
+
+import SimonSays from '../../../../components/SimonSays.astro'
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+
+<SimonSays>
+This should get you up and running with a basic Nuxt based project quick and easy.
+</SimonSays>
+
+## Create a Project
+
+<Tabs>
+  <TabItem label="Bash">
+  
+```bash frame="none"
+# Create a project
+npx nuxi init \
+  && cd nuxt-app \
+  && pnpm add @tauri-apps/cli \
+  && pnpm tauri init
+```
+  
+  </TabItem>
+</Tabs>
+
+## Tauri Configuration
+
+```json title="tauri.conf.json"
+{
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm generate",
+    "devPath": "http://localhost:3000",
+    "distDir": "../dist"
+  }
+}
+```
+
+## Sample Configuration
+
+```js
+// nuxt.config.ts
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  devtools: { enabled: true },
+  ssr: false,
+  vite: {
+    // Better support for Tauri CLI output
+    clearScreen: false,
+    // Enable environment variables
+    // Additional environment variables can be found at
+    // https://tauri.app/2/reference/environment-variables/
+    envPrefix: ['VITE_', 'TAURI_'],
+    server: {
+      // Tauri requires a consistent port
+      strictPort: true,
+      // Enables the development server to be discoverable by other devices for mobile development
+      host: '0.0.0.0',
+      hmr: {
+        // Use websocket for mobile hot reloading
+        protocol: 'ws',
+        // Make sure it's available on the network
+        host: '0.0.0.0',
+        // Use a specific port for hmr
+        port: 5183,
+      },
+    },
+  },
+});
+```

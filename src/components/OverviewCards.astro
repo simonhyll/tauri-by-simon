@@ -1,5 +1,7 @@
 ---
-const { folder } = Astro.props;
+import { getEntryBySlug } from "astro:content";
+const page = (await getEntryBySlug("docs", Astro.params.slug as string)) as any;
+const folder = page.slug;
 import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 import { getCollection } from "astro:content";
 const articles = (await getCollection("docs"))

@@ -24,6 +24,7 @@ export default defineConfig({
 		favicon: '/icon.png',
 		customCss: ['./src/styles/theme.css'],
 		components: {
+			Footer: './src/components/Footer.astro',
 			Header: './src/components/Header.astro',
 			SocialIcons: './src/components/SocialIcons.astro',
 		},

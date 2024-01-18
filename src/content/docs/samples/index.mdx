@@ -1,5 +1,6 @@
 ---
 title: Samples
+description: Tauri is unopinionated about your project structure.
 sidebar:
   order: 0
   label: Overview
@@ -7,7 +8,7 @@ sidebar:
 
 import SimonSays from '../../../components/SimonSays.astro'
 
-<SimonSays title="Tauri is unopinionated about your project structure">
+<SimonSays>
 The folder that's by default called `src-tauri` is just a Rust crate. It doesn't have to be located anywhere in particular in your project. In fact, I always rename it to something like `backend` and put my frontend in a folder called `frontend`, keeping them separate.
 
 So you can employ standard best practises for Rust project structuring. I recommend looking into using a Cargo workspace if you have multiple Rust based projects in the same repository.
@@ -15,4 +16,4 @@ So you can employ standard best practises for Rust project structuring. I recomm
 
 import OverviewCards from '../../../components/OverviewCards.astro';
 
-<OverviewCards folder="samples" />
+<OverviewCards />

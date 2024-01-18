@@ -1,0 +1,29 @@
+---
+import { getEntryBySlug } from "astro:content";
+const page = (await getEntryBySlug("docs", Astro.params.slug as string)) as any;
+
+const promises = page.data.references
+  ? page.data.references.map(
+      async (val: string) => await getEntryBySlug("docs", val)
+    )
+  : [];
+const docs = await Promise.all(promises);
+---
+
+{
+  docs.length > 0 ? (
+    <>
+      <h2>References</h2>
+      <ul>
+        {docs.map((val: any) => (
+          <li>
+            <a href={"/" + val.slug}>{val.data.title}:</a>{" "}
+            {val.data.description}
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : (
+    ""
+  )
+}
