@@ -4,17 +4,17 @@ import { basename, dirname, join } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 export async function GET(context) {
-    const blog = await getCollection('docs');
+    const docs = await getCollection('docs');
     return rss({
         title: 'Tauri by Simon',
         description: 'My unofficial opinionated articles on using Tauri',
         site: context.site,
-        items: blog.map((post) => ({
+        items: docs.map((post) => ({
             title: post.data.title,
             pubDate: getNewestCommitDate(join('src', 'content', 'docs', post.id)),
             description: post.data.description,
             customData: post.data.customData,
-            link: `/blog/${post.slug}/`,
+            link: `/${post.slug}/`,
         })).sort((a, b) => b.pubDate - a.pubDate),
     });
 }
