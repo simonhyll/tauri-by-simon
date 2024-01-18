@@ -34,3 +34,17 @@ export const articles = (await getCollection('docs')).filter(val=>val.data.title
   </Card>
 )) }
 </CardGrid>
+
+
+## Work In Progress
+
+export const wipArticles = (await getCollection('docs')).filter(val=>val.data.title !== 'Overview' && val.slug !== 'index' && val.data.sidebar.label !== 'Overview').filter(val=>val.data.sidebar.badge?.text === 'WIP').sort((a, b) => a.data.sidebar.order - b.data.sidebar.order);
+
+<CardGrid>
+{ wipArticles.map(article=>(
+  <Card title={article.data.title} icon="document">
+  {article.data.description}
+  <br/><a href={article.slug}>Read article</a>
+  </Card>
+)) }
+</CardGrid>
