@@ -1,12 +1,17 @@
 ---
 import { getEntryBySlug } from "astro:content";
-const page = (await getEntryBySlug("docs", Astro.params.slug as string)) as any;
-
-const promises = page.data.references
-  ? page.data.references.map(
-      async (val: string) => await getEntryBySlug("docs", val)
-    )
-  : [];
+let promises = [];
+if (Astro.url.pathname !== "/") {
+  const page = (await getEntryBySlug(
+    "docs",
+    Astro.params.slug as string
+  )) as any;
+  promises = page.data.references
+    ? page.data.references.map(
+        async (val: string) => await getEntryBySlug("docs", val)
+      )
+    : [];
+}
 const docs = await Promise.all(promises);
 ---
 
