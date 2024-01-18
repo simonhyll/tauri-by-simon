@@ -4,7 +4,7 @@ import { LinkCard, CardGrid } from "@astrojs/starlight/components";
 import { getCollection } from "astro:content";
 const articles = (await getCollection("docs"))
   .filter((val) => val.slug.startsWith(folder))
-  .filter((val) => val.data.title !== "Overview")
+  .filter((val) => val.data.sidebar.label !== "Overview")
   .filter((val) => val.slug != folder)
   .sort((a: any, b: any) => a.data.sidebar.order - b.data.sidebar.order);
 ---
