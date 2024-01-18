@@ -1,0 +1,5 @@
+name: IndexNow for Starlight
+description: Submit updated pages to IndexNow
+runs:
+  using: 'node20'
+  main: 'index.cjs'
