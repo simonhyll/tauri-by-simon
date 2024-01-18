@@ -10,9 +10,33 @@ import SimonSays from '../../../components/SimonSays.astro'
 <SimonSays title="Practical examples and various gotchas">
 Tauri is frontend agnostic. In 99.9% of your code what you're doing is just developing in your regular frontend framework, but sometimes you might need some samples of how to set things up with Tauri to be handled efficiently.
 
-These articles are not a replacement for your frontend frameworks own educational material, but a supplement targeting Tauri related topics specifically.
+These articles are not a replacement for your frontend frameworks own educational material, but a supplement targeting Tauri related topics.
 </SimonSays>
 
 ## Framework Picker
 
-If you 
+**Planned:** I'll be making an interactive experience here for recommending a framework to pick.
+
+## Things to Consider
+
+### Benchmarks
+<br/>
+<SimonSays title="Does it go vroom?">
+I am a real sucker for benchmarks. My spirit animal is Jeremy Clarkson.
+
+<p><a href="https://krausest.github.io/js-framework-benchmark/current.html" target="_blank">This is a really good site for checking benchmarks.</a> Start by deselecting all frameworks, add vanillajs, then start adding all frameworks you're interested in. Focus on the color of the bottom row for "weighted geometric mean". The greener the field the more valid a choice it is. If it starts to look yellow it's not an option. It's ok to have yellow or even red fields in specific places as long as the geometric mean is decent.</p>
+</SimonSays>
+
+### Job Market
+<br/>
+<SimonSays title="Can you get hired / are there developers?">
+**Developers:** You wanna get hired? Go check job listings to see which framework is getting mentioned a lot. Sadly most of the time the answer is gonna be React.
+
+**Project managers:** You wanna hire people? Go to developer communities and ask around which frameworks are the most liked among developers. I would rather work with a framework I like than a framework I know.
+</SimonSays>
+
+### Tech Stack
+<br/>
+<SimonSays title="Does it fit in with the rest of the project?">
+It's best to keep your tech stack as slimmed as possible. If all your other stuff is made with TypeScript, don't choose a WASM based frontend framework. If you have another project that uses Svelte, why add Vue to the mix. The smaller the tech stack the better.
+</SimonSays>
