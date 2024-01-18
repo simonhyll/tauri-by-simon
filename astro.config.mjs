@@ -9,6 +9,7 @@ export default defineConfig({
 	integrations: [vue(),
 	starlight({
 		title: 'Tauri by Simon',
+		description: 'My unofficial opinionated articles on using Tauri',
 		social: {
 			rss: 'https://tauri.by.simon.hyll.nu/feed.xml',
 			discord: 'https://discord.com/invite/tauri',
