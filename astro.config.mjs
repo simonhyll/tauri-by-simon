@@ -12,10 +12,11 @@ export default defineConfig({
 		description: 'My unofficial opinionated articles on using Tauri',
 		social: {
 			rss: 'https://tauri.by.simon.hyll.nu/feed.xml',
-			discord: 'https://discord.com/invite/tauri',
+			github: 'https://github.com/sponsors/simonhyll',
 			linkedin: 'https://linkedin.com/in/simonhyll',
+			discord: 'https://discord.com/invite/tauri',
+			stackOverflow: 'https://stackoverflow.com/users/5614602/simon-hyll',
 			youtube: 'https://youtube.com/@hyllsimon',
-			github: 'https://github.com/simonhyll/tauri-by-simon',
 		},
 		lastUpdated: true,
 		logo: {
