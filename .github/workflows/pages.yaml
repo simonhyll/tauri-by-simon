@@ -25,13 +25,6 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - name: Fix timestamps
-        run: |
-          git log --format=fuller --max-count=1 src/content/docs/best_practices/index.mdx
-          git log --format=fuller --max-count=1 src/content/docs/best_practices/authentication.mdx
-          git filter-branch --env-filter 'export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"'
-          git log --format=fuller --max-count=1 src/content/docs/best_practices/index.mdx
-          git log --format=fuller --max-count=1 src/content/docs/best_practices/authentication.mdx
       - uses: oven-sh/setup-bun@v1
       - name: Install dependencies
         run: bun install
