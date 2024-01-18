@@ -26,9 +26,7 @@ jobs:
           lfs: true
       - name: Fix timestamps
         run: |
-          git filter-branch --env-filter '
-            GIT_COMMITTER_DATE=$GIT_AUTHOR_DATE
-          '
+          git filter-branch --env-filter 'export GIT_COMMITTER_DATE="$GIT_AUTHOR_DATE"'
       - uses: oven-sh/setup-bun@v1
       - name: Install dependencies
         run: bun install
