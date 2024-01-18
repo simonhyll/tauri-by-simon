@@ -1,16 +1,125 @@
 ---
 title: GitHub Releases
-description: Using GitHub for distributing updates
+description: Using GitHub for distributing software
 sidebar:
   order: 1
   badge:
-    text: Planned
-    variant: caution
+    text: WIP
+    variant: tip
 ---
 
 import SimonSays from '../../../components/SimonSays.astro'
 
 <SimonSays>
+This is a great alternative for anyone that doesn't want to develop their own custom server implementation. It's free to use and does everything you need.
 
+Simply set up <a href="https://github.com/tauri-apps/tauri-action" target="_blank">tauri-action</a> and it will handle building and pushing releases for you.
 </SimonSays>
 
+## Tauri Configuration
+<br/>
+<SimonSays title="The endpoint must be publicly accessible">
+Make sure you set up your endpoints so that your users can access them. There are advanced techniques available for not making endpoints completely public, but if you gotta ask how to do it you're not ready for it.
+</SimonSays>
+
+```json
+// tauri.conf.json
+{
+  "tauri": {
+    "updater": {
+      "active": true,
+      "endpoints": [
+        "https://github.com/USERNAME/PUBLIC_REPOSITORY/releases/latest/download/latest.json"
+      ],
+      "dialog": true,
+      "pubkey": "YOUR_UPDATER_SIGNATURE_PUBKEY_HERE"
+    }
+  }
+}
+```
+
+## Sample Release Workflow
+<br/>
+<SimonSays title="Drafts don't show up on your front page.">
+If you don't see your release on GitHub make sure to visit the releases page manually to verify if the issue is simply that you're still dealing with a draft release.
+
+https://github.com/USERNAME/PUBLIC_REPOSITORY/releases
+</SimonSays>
+
+```yaml
+# .github/workflows/distribute.yaml
+# Triggers on tagged commits to the main branch starting with "v"
+# `git tag -a v0.1.0 -m "Version 0.1.0"
+name: Publish
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*
+
+jobs:
+  publish:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-20.04, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install frontend dependencies
+        run: pnpm install
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false
+```
+
+## Private Repository
+<br/>
+<SimonSays title="The easiest solution is making a second public repository">
+While it's possible to have a super weird direct GitHub API variant for it the by far easiest solution for private repositories is to just make a separate public repository.
+
+In your GitHub workflow simply ensure the `GITHUB_TOKEN` has access to the public repository, e.g. by using a personal access token, and set the target repository for `tauri-action` manually in its `owner` and `repo` options.
+</SimonSays>
+
+```yaml
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: 'App v__VERSION__'
+          releaseBody: 'See the assets to download this version and install.'
+          releaseDraft: true
+          prerelease: false
+          owner: ORGANIZATION
+          repo: PUBLIC_REPOSITORY
+```
