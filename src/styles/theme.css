@@ -11,6 +11,7 @@
     --sl-color-gray-5: #233c45;
     --sl-color-gray-6: #112b33;
     --sl-color-black: #0f1a1e;
+    --sl-content-inline-start: 0px;
 }
 
 /* Light mode colors. */
@@ -62,4 +63,8 @@ p {
 
 .drawio div {
     color: var(--sl-color-white) !important;
+}
+
+.site-title span {
+    display: none;
 }

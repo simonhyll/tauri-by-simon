@@ -20,7 +20,7 @@ export default defineConfig({
 		},
 		lastUpdated: true,
 		logo: {
-			src: './src/assets/icon.png'
+			src: './src/assets/logo_title.svg'
 		},
 		favicon: '/icon.png',
 		customCss: ['./src/styles/theme.css'],
