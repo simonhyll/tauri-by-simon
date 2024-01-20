@@ -130,16 +130,8 @@ In your GitHub workflow simply ensure the `GITHUB_TOKEN` has access to the publi
 ```yaml
       - uses: tauri-apps/tauri-action@v0
         env:
-          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
-          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_FOR_PUBLIC_REPO }}
         with:
-          tagName: app-v__VERSION__
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: false
-          prerelease: false
-          includeUpdaterJson: true
           owner: ORGANIZATION
           repo: PUBLIC_REPOSITORY
 ```
