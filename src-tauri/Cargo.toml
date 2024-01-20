@@ -1,13 +1,13 @@
 [package]
-name = "app"
-version = "0.1.5"
+name = "tauri-by-simon"
+version = "0.1.6"
 description = "A Tauri App"
-authors = ["you"]
+authors = ["Simon Hyll <hyllsimon@gmail.com>"]
 license = ""
-repository = ""
-default-run = "app"
+repository = "https://github.com/simonhyll/tauri-by-simon"
+default-run = "tauri-by-simon"
 edition = "2021"
-rust-version = "1.60"
+rust-version = "1.74"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
