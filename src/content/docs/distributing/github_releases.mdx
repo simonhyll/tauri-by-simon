@@ -4,8 +4,8 @@ description: Using GitHub for distributing software
 sidebar:
   order: 1
   badge:
-    text: WIP
-    variant: tip
+    text: v1
+    variant: success
 references:
   - https://github.com/tauri-apps/tauri-action
   - https://tauri.app/v1/guides/distribution/updater/
@@ -53,17 +53,15 @@ https://github.com/USERNAME/PUBLIC_REPOSITORY/releases
 # .github/workflows/distribute.yaml
 # Triggers on tagged commits to the main branch starting with "v"
 # `git tag -a v0.1.0 -m "Version 0.1.0"
-name: Publish
+name: Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - v*
 
 jobs:
-  publish:
+  publish-tauri:
     permissions:
       contents: write
     strategy:
@@ -76,14 +74,23 @@ jobs:
       - uses: actions/checkout@v4
         with:
           lfs: true
+          fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Install Rust stable
-        uses: dtolnay/rust-toolchain@stable
+      - name: Setup and run pnpm install
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: |
+            - recursive: true
+              args: [--frozen-lockfile, --strict-peer-dependencies]
 
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
@@ -91,18 +98,25 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: Install frontend dependencies
-        run: pnpm install
-
-      - uses: tauri-apps/tauri-action@v0
+      - name: Build and upload a GitHub release
+        uses: tauri-apps/tauri-action@v0
         env:
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: app-v__VERSION__
-          releaseName: 'App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: true
+          tagName: v__VERSION__
+          releaseName: "App v__VERSION__"
+          releaseBody: |
+            See the assets to download and install this version.
+
+            If you get a virus warning read this article: https://tauri.by.simon.hyll.nu/concepts/security/false_positives/.
+
+            Mac: Extract the .app from the .dmg and run `xattr -d com.apple.quarantine your-app.app`.
+            Windows: Run `attrib -r your-app.msi:Zone.Identifier`.
+          releaseDraft: false
           prerelease: false
+          includeUpdaterJson: true
 ```
 
 ## Private Repository
@@ -116,13 +130,24 @@ In your GitHub workflow simply ensure the `GITHUB_TOKEN` has access to the publi
 ```yaml
       - uses: tauri-apps/tauri-action@v0
         env:
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: app-v__VERSION__
           releaseName: 'App v__VERSION__'
           releaseBody: 'See the assets to download this version and install.'
-          releaseDraft: true
+          releaseDraft: false
           prerelease: false
+          includeUpdaterJson: true
           owner: ORGANIZATION
           repo: PUBLIC_REPOSITORY
 ```
+
+## Troubleshoot
+
+### Error: Resource not accessible by integration
+
+It's still unknown why this happens, but there seems to be something weird going on in GitHubs end. I managed to get past this by running the workflow once using a personal access token with every single permission granted you can imagine. After that something gets unblocked that allows you to revert to a more sane workflow. Again, no idea why it happens, but at least it's a temporary issue, run with an admin PAT once and you should be unblocked.
+
+Simply create a PAT for your user, give it all permissions, then instead of `secrets.GITHUB_TOKEN` you set it to your PAT, e.g. `GH_PAT`. Remember to add the secret to your repository before running the workflow.

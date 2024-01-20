@@ -54,12 +54,12 @@ jobs:
           tagName: v__VERSION__
           releaseName: "App v__VERSION__"
           releaseBody: |
-            See the assets to download this version and install.
+            See the assets to download and install this version.
 
-            If you get a virus warning check read article https://tauri.by.simon.hyll.nu/concepts/security/false_positives/.
+            If you get a virus warning read this article: https://tauri.by.simon.hyll.nu/concepts/security/false_positives/.
 
-            Mac: Extract the .app from the .dmg and run `xattr -d com.apple.quarantine tauri-by-simon.app`
-            Windows: Run `attrib -r tauri-by-simon.msi:Zone.Identifier`
+            Mac: Extract the .app from the .dmg and run `xattr -d com.apple.quarantine tauri-by-simon.app`.
+            Windows: Run `attrib -r tauri-by-simon.msi:Zone.Identifier`.
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
