@@ -3,12 +3,50 @@ title: Package Managers
 description: Which there are, which to choose, how they work.
 sidebar:
   badge:
-    text: Planned
-    variant: caution
+    text: WIP
+    variant: tip
 ---
 
 import SimonSays from '../../../../components/SimonSays.astro'
 
 <SimonSays>
+Choosing between package managers can be a tricky topic, especially if you're new to JavaScript package management. Here are the top picks sorted after how highly I recommend them.
 
+Note that regardless of what you pick all JavaScript package managers get their packages from the same place, [npmjs.com](https://npmjs.com), so you have access to the exact same packages no matter which you pick.
+</SimonSays>
+
+## Bun
+<br/>
+<SimonSays title="The future, but with slight issues.">
+Bun performs in a different league from the rest. It's not using Node.js, it's using Bun, which is another runtime for JavaScript. It only has Mac and Linux support right now, and there are some particulars about JavaScript that it handles differently, meaning dependencies might break.
+
+If you don't need Windows support for your JS this is my top pick.
+
+Important note: you can still compile your frontend in your CI/CD workflows using Linux/Mac runners and then transfer the artifacts to a Windows runner, you just can't run Bun on Windows, but you can transfer the finished built project to Windows to actually build the Tauri app.
+</SimonSays>
+
+## Pnpm
+<br/>
+<SimonSays title="The best of the rest.">
+This doesn't perform as well as Bun but it's still considered blazingly fast, faster than both Yarn and Npm. It's really powerful but it comes with the caveat that some platforms don't support it. You can run pnpm anywhere, but if you build your project on some CI/CD platforms pnpm wont be preinstalled, which can cause issues for you.
+
+Use it if you can, but if you're working for a client it might be better to give them a Yarn based project just to make things a bit easier to use and more stable.
+</SimonSays>
+
+## Yarn
+<br/>
+<SimonSays title="A solid choice, just not a cool one.">
+It's a good alterantive, nothing really bad to say here as long as you don't start using some of the more advanced options available to it, like using weird versions and what not, that'll just give you a headache. But it uses the default npm based workspace setup and is really stable.
+
+I tend to use this if the project is something I'm handing over to others.
+</SimonSays>
+
+## Npm
+<br/>
+<SimonSays title="Please, just, no, don't...">
+Ok so where to begin... Well for starters you have to pass an extra `--` in order to pass arguments and you have to run your scripts by using `run` every single time. That's just annoying.
+
+But the most annoying part of all is its performance. It's really, really slow. Every single project you have will have its own node_modules that's completely separate from all others, in a bad way. It wastes space and is inefficient.
+
+Under no circumstances use npm, it's a bad choice.
 </SimonSays>
