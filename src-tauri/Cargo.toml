@@ -1,6 +1,6 @@
 [package]
 name = "tauri-by-simon"
-version = "0.1.6"
+version = "0.1.7"
 description = "A Tauri App"
 authors = ["Simon Hyll <hyllsimon@gmail.com>"]
 license = ""
@@ -9,7 +9,20 @@ default-run = "tauri-by-simon"
 edition = "2021"
 rust-version = "1.74"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.dev.package."*"]
+opt-level = 3
+
+[profile.release]
+codegen-units = 1
+lto = true
+panic = "abort"
+incremental = false
+opt-level = 3
+strip = true
+rpath = false
+debug = false
+debug-assertions = false
+overflow-checks = false
 
 [build-dependencies]
 tauri-build = { version = "1.5.1", features = [] }
@@ -24,7 +37,4 @@ tauri = { version = "1.5.4", features = [
 ] }
 
 [features]
-# this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
-# If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
-# DO NOT REMOVE!!
 custom-protocol = ["tauri/custom-protocol"]
