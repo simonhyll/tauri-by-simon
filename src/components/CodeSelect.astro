@@ -17,6 +17,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
 </code-select>
 
 <script>
+  const options = ["select", "typescript", "rust"];
   class CodeSelect extends HTMLElement {
     /** Key in `localStorage` to store color theme preference at. */
     #key = "code-select";
@@ -29,6 +30,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
       if (select) {
         select.addEventListener("change", (e) => {
           if (e.currentTarget instanceof HTMLSelectElement) {
+            if (!options.includes(e.currentTarget.value)) return;
             this.#onCodeChange(e.currentTarget.value);
           }
         });
@@ -36,6 +38,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
       const observer = new MutationObserver((mutationList, _) => {
         if (mutationList.find((val) => val.attributeName === "code")) {
           const code = document.documentElement.getAttribute("code") as string;
+          if (!options.includes(code)) return;
           const select = self.querySelector("select");
           if (select) select.value = code;
           self.#storeCode(code);
@@ -46,6 +49,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
 
     /** Update select menu UI, document theme, and local storage state. */
     #onCodeChange(code: string): void {
+      if (!options.includes(code)) return;
       this.#storeCode(code);
       const select = this.querySelector("select");
       if (select) select.value = code;
@@ -54,6 +58,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
 
     /** Store the user’s preference in `localStorage`. */
     #storeCode(code: string): void {
+      if (!options.includes(code)) return;
       if (typeof localStorage !== "undefined") {
         if (code !== "Select") {
           localStorage.setItem(this.#key, code);
@@ -67,7 +72,7 @@ import Select from "@astrojs/starlight/components/Select.astro";
     #loadCodeLanguage(): string {
       const code =
         typeof localStorage !== "undefined" && localStorage.getItem(this.#key);
-      if (!code) return "Select";
+      if (!code) return "select";
       return code;
     }
   }

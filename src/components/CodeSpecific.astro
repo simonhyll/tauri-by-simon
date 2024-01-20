@@ -46,6 +46,7 @@ import SimonSays from "./SimonSays.astro";
 </style>
 
 <script is:inline>
+  const options = ["select", "typescript", "rust"];
   const codeSelects = document.getElementsByTagName("code-specific-select");
   const codeTypescripts = document.getElementsByTagName(
     "code-specific-typescript"
@@ -60,6 +61,7 @@ import SimonSays from "./SimonSays.astro";
     });
     if (!codeMutated) return;
     selectedCode = document.documentElement.getAttribute("code");
+    if (!options.includes(selectedCode)) return;
     if (selectedCode === "select" || !selectedCode) {
       for (const element of codeSelects) {
         element.classList.remove("hidden");
