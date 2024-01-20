@@ -46,13 +46,13 @@ export default defineConfig({
 		{ tag: 'meta', attrs: { property: 'og:url', content: 'https://tauri.by.simon.hyll.nu' } },
 		{ tag: 'meta', attrs: { property: 'og:title', content: 'Tauri by Simon' } },
 		{ tag: 'meta', attrs: { property: 'og:description', content: 'My unofficial opinionated articles on using Tauri' } },
-		{ tag: 'meta', attrs: { property: 'og:image', content: 'https://www.yourwebsite.com/image-url.jpg' } },
+		{ tag: 'meta', attrs: { property: 'og:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
 		// Twitter Card meta tags
 		{ tag: 'meta', attrs: { property: 'twitter:card', content: 'summary_large_image' } },
 		{ tag: 'meta', attrs: { property: 'twitter:url', content: 'https://tauri.by.simon.hyll.nu' } },
 		{ tag: 'meta', attrs: { property: 'twitter:title', content: 'Tauri by Simon' } },
 		{ tag: 'meta', attrs: { property: 'twitter:description', content: 'My unofficial opinionated articles on using Tauri' } },
-		{ tag: 'meta', attrs: { property: 'twitter:image', content: 'https://tauri.by.simon.hyll.nu/icon.png' } },
+		{ tag: 'meta', attrs: { property: 'twitter:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
 		],
 		sidebar: [
 			{
