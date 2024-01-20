@@ -65,10 +65,6 @@ p {
     color: var(--sl-color-white) !important;
 }
 
-.site-title span {
-    display: none;
-}
-
 .hidden {
     display: none !important;
 }
