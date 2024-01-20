@@ -1,0 +1,101 @@
+---
+import SimonSays from "./SimonSays.astro";
+---
+
+<code-specific-select class="hidden">
+  <slot name="default" />
+  <br />
+  <SimonSays title="Pick a language">
+    <span
+      >Some parts of the website can show solutions in different languages.
+      Select the one you'd prefer seeing, it will mostly affect frontend related
+      code so preferably pick the language used in your frontend.</span
+    >
+    <span
+      >You can change this anytime next to the dark/light theme selector.</span
+    >
+    <button
+      onclick="document.documentElement.setAttribute('code', 'typescript')"
+      >TypeScript</button
+    >
+    <button onclick="document.documentElement.setAttribute('code', 'rust')"
+      >Rust</button
+    >
+  </SimonSays>
+</code-specific-select>
+<code-specific-typescript class="hidden">
+  <slot name="typescript" />
+</code-specific-typescript>
+<code-specific-rust class="hidden">
+  <slot name="rust" />
+</code-specific-rust>
+
+<style is:inline>
+  code-specific-select {
+    display: block;
+    margin-top: 1.5rem;
+  }
+  code-specific-typescript {
+    display: block;
+    margin-top: 1.5rem;
+  }
+  code-specific-rust {
+    display: block;
+    margin-top: 1.5rem;
+  }
+</style>
+
+<script is:inline>
+  const codeSelects = document.getElementsByTagName("code-specific-select");
+  const codeTypescripts = document.getElementsByTagName(
+    "code-specific-typescript"
+  );
+  const codeRusts = document.getElementsByTagName("code-specific-rust");
+  let selectedCode = document.documentElement.getAttribute("code");
+  onCodeChange([{ attributeName: "code" }]);
+
+  function onCodeChange(mutationList, _) {
+    const codeMutated = Array.from(mutationList).find((value) => {
+      return value.attributeName === "code";
+    });
+    if (!codeMutated) return;
+    selectedCode = document.documentElement.getAttribute("code");
+    if (selectedCode === "select" || !selectedCode) {
+      for (const element of codeSelects) {
+        element.classList.remove("hidden");
+      }
+      for (const element of codeTypescripts) {
+        element.classList.add("hidden");
+      }
+      for (const element of codeRusts) {
+        element.classList.add("hidden");
+      }
+    }
+
+    if (selectedCode === "typescript" || !selectedCode) {
+      for (const element of codeSelects) {
+        element.classList.add("hidden");
+      }
+      for (const element of codeTypescripts) {
+        element.classList.remove("hidden");
+      }
+      for (const element of codeRusts) {
+        element.classList.add("hidden");
+      }
+    }
+
+    if (selectedCode === "rust" || !selectedCode) {
+      for (const element of codeSelects) {
+        element.classList.add("hidden");
+      }
+      for (const element of codeTypescripts) {
+        element.classList.add("hidden");
+      }
+      for (const element of codeRusts) {
+        element.classList.remove("hidden");
+      }
+    }
+  }
+  const observer = new MutationObserver(onCodeChange);
+  observer.observe(document.documentElement, { attributes: true });
+</script>

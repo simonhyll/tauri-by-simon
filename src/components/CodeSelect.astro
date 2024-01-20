@@ -1,0 +1,137 @@
+---
+import Select from "@astrojs/starlight/components/Select.astro";
+---
+
+<code-select>
+  <Select
+    icon="open-book"
+    label={"Select"}
+    value="select"
+    options={[
+      { label: "Select", selected: true, value: "select" },
+      { label: "TypeScript", selected: false, value: "typescript" },
+      { label: "Rust", selected: false, value: "rust" },
+    ]}
+    width="6.25em"
+  />
+</code-select>
+
+<script>
+  class CodeSelect extends HTMLElement {
+    /** Key in `localStorage` to store color theme preference at. */
+    #key = "code-select";
+
+    constructor() {
+      super();
+      const self = this;
+      this.#onCodeChange(this.#loadCodeLanguage());
+      const select = this.querySelector("select");
+      if (select) {
+        select.addEventListener("change", (e) => {
+          if (e.currentTarget instanceof HTMLSelectElement) {
+            this.#onCodeChange(e.currentTarget.value);
+          }
+        });
+      }
+      const observer = new MutationObserver((mutationList, _) => {
+        if (mutationList.find((val) => val.attributeName === "code")) {
+          const code = document.documentElement.getAttribute("code") as string;
+          const select = self.querySelector("select");
+          if (select) select.value = code;
+          self.#storeCode(code);
+        }
+      });
+      observer.observe(document.documentElement, { attributes: true });
+    }
+
+    /** Update select menu UI, document theme, and local storage state. */
+    #onCodeChange(code: string): void {
+      this.#storeCode(code);
+      const select = this.querySelector("select");
+      if (select) select.value = code;
+      document.documentElement.setAttribute("code", code);
+    }
+
+    /** Store the user’s preference in `localStorage`. */
+    #storeCode(code: string): void {
+      if (typeof localStorage !== "undefined") {
+        if (code !== "Select") {
+          localStorage.setItem(this.#key, code);
+        } else {
+          localStorage.removeItem(this.#key);
+        }
+      }
+    }
+
+    /** Load the user’s preference from `localStorage`. */
+    #loadCodeLanguage(): string {
+      const code =
+        typeof localStorage !== "undefined" && localStorage.getItem(this.#key);
+      if (!code) return "Select";
+      return code;
+    }
+  }
+
+  customElements.define("code-select", CodeSelect);
+</script>
+
+<style>
+  character-select {
+    display: contents;
+  }
+  .header {
+    gap: var(--sl-nav-gap);
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .right-group,
+  .social-icons {
+    gap: 1rem;
+    align-items: center;
+  }
+  .social-icons::after {
+    content: "";
+    height: 2rem;
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+  }
+
+  @media (min-width: 50rem) {
+    :global(:root[data-has-sidebar]) {
+      --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+    }
+    :global(:root:not([data-has-toc])) {
+      --__toc-width: 0rem;
+    }
+    .header {
+      --__sidebar-width: max(
+        0rem,
+        var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x)
+      );
+      --__main-column-fr: calc(
+        (
+            100% + var(--__sidebar-pad, 0rem) -
+              var(--__toc-width, var(--sl-sidebar-width)) -
+              (2 * var(--__toc-width, var(--sl-nav-pad-x))) -
+              var(--sl-content-inline-start, 0rem) - var(--sl-content-width)
+          ) / 2
+      );
+      display: grid;
+      grid-template-columns:
+        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        minmax(
+          calc(
+            var(--__sidebar-width) +
+              max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))
+          ),
+          auto
+        )
+        /* 2 (search box): all free space that is available. */
+        1fr
+        /* 3 (right items): use the space that these need. */
+        auto;
+      align-content: center;
+    }
+  }
+</style>

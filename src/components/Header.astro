@@ -1,9 +1,38 @@
 ---
 import type { Props } from "@astrojs/starlight/props";
 import Default from "@astrojs/starlight/components/Header.astro";
+
+import config from "virtual:starlight/user-config";
+
+import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
+import Search from "@astrojs/starlight/components/Search.astro";
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import CodeSelect from "./CodeSelect.astro";
+
+const shouldRenderSearch =
+  config.pagefind ||
+  config.components.Search !== "@astrojs/starlight/components/Search.astro";
 ---
 
-<Default {...Astro.props}><slot /></Default>
+<!-- 
+<Default {...Astro.props}><slot /></Default> -->
+<div class="header sl-flex">
+  <div class="sl-flex">
+    <SiteTitle {...Astro.props} />
+  </div>
+  <div class="sl-flex">
+    {shouldRenderSearch && <Search {...Astro.props} />}
+  </div>
+  <div class="sl-hidden md:sl-flex right-group">
+    <div class="sl-flex social-icons">
+      <SocialIcons {...Astro.props} />
+    </div>
+    <ThemeSelect {...Astro.props} />
+    <CodeSelect />
+  </div>
+</div>
 
 <script>
   const prevent = (e: any) => {
@@ -21,13 +50,69 @@ import Default from "@astrojs/starlight/components/Header.astro";
   }
 </script>
 
-<style is:global>
-  header,
-  header * {
+<style>
+  .header {
+    gap: var(--sl-nav-gap);
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .header,
+  .header * {
     user-select: none;
   }
-  header img,
-  header span {
+  .header img,
+  .header span {
     pointer-events: none;
+  }
+
+  .right-group,
+  .social-icons {
+    gap: 1rem;
+    align-items: center;
+  }
+  .social-icons::after {
+    content: "";
+    height: 2rem;
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+  }
+
+  @media (min-width: 50rem) {
+    :global(:root[data-has-sidebar]) {
+      --__sidebar-pad: calc(2 * var(--sl-nav-pad-x));
+    }
+    :global(:root:not([data-has-toc])) {
+      --__toc-width: 0rem;
+    }
+    .header {
+      --__sidebar-width: max(
+        0rem,
+        var(--sl-content-inline-start, 0rem) - var(--sl-nav-pad-x)
+      );
+      --__main-column-fr: calc(
+        (
+            100% + var(--__sidebar-pad, 0rem) -
+              var(--__toc-width, var(--sl-sidebar-width)) -
+              (2 * var(--__toc-width, var(--sl-nav-pad-x))) -
+              var(--sl-content-inline-start, 0rem) - var(--sl-content-width)
+          ) / 2
+      );
+      display: grid;
+      grid-template-columns:
+        /* 1 (site title): runs up until the main content column’s left edge or the width of the title, whichever is the largest  */
+        minmax(
+          calc(
+            var(--__sidebar-width) +
+              max(0rem, var(--__main-column-fr) - var(--sl-nav-gap))
+          ),
+          auto
+        )
+        /* 2 (search box): all free space that is available. */
+        1fr
+        /* 3 (right items): use the space that these need. */
+        auto;
+      align-content: center;
+    }
   }
 </style>

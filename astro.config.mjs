@@ -34,6 +34,12 @@ export default defineConfig({
 			attrs: {
 				src: '/navigate.js'
 			}
+		}, {
+			tag: 'script',
+			attrs: {
+				src: '/loadSw.js',
+				async: true
+			}
 		},
 		// Open Graph / Facebook meta tags
 		{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
