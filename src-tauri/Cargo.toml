@@ -1,6 +1,6 @@
 [package]
 name = "tauri-by-simon"
-version = "0.1.25"
+version = "0.1.26"
 description = "My unofficial opinionated articles on using Tauri"
 authors = ["Simon Hyll <hyllsimon@gmail.com>"]
 license = ""
