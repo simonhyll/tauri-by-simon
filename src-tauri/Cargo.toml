@@ -1,7 +1,7 @@
 [package]
 name = "tauri-by-simon"
-version = "0.1.24"
-description = "A Tauri App"
+version = "0.1.25"
+description = "My unofficial opinionated articles on using Tauri"
 authors = ["Simon Hyll <hyllsimon@gmail.com>"]
 license = ""
 repository = "https://github.com/simonhyll/tauri-by-simon"

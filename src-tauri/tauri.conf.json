@@ -39,7 +39,7 @@
         "icons/icon.ico"
       ],
       "identifier": "nu.hyll.tauri-by-simon",
-      "longDescription": "",
+      "longDescription": "My unofficial opinionated articles on using Tauri",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -48,7 +48,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "My unofficial opinionated articles on using Tauri",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,

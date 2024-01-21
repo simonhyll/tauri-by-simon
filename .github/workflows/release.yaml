@@ -72,6 +72,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
 
+      - name: Set up Tauri CLI
+        run: echo "$(yarn global bin)" >> $GITHUB_PATH && yarn global add @tauri-apps/cli
+
       - name: Restore target
         id: cache-target-restore
         uses: actions/cache/restore@v4
@@ -98,7 +101,7 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
-          tauriScript: yarn tauri
+          tauriScript: tauri
           args: -c '{"build":{"beforeBuildCommand":""}}'
 
       - name: Save target
