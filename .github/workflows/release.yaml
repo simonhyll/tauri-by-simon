@@ -98,7 +98,6 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
-          tauriScript: bun run
 
       - name: Save target
         id: cache-target-save
