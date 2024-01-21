@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    environment:
+      name: github-releases
     steps:
       - uses: actions/checkout@v4
         with:
@@ -52,6 +54,8 @@ jobs:
       matrix:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
     runs-on: ${{ matrix.platform }}
+    environment:
+      name: github-releases
     steps:
       - uses: actions/checkout@v4
         with:
