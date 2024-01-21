@@ -6,14 +6,51 @@ on:
       - v*
 
 jobs:
-  publish-tauri:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Restore node_modules
+        id: cache-node-modules-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ./node_modules
+          key: node-modules
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile --production
+
+      - name: Save node_modules
+        id: cache-primes-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./node_modules
+          key: ${{ steps.cache-node-modules-restore.outputs.cache-primary-key }}
+
+      - name: Build frontend
+        run: bun run build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: ./dist/
+
+  deploy:
+    needs: build
     permissions:
       contents: write
     strategy:
       fail-fast: false
       matrix:
         platform: [macos-latest, ubuntu-20.04, windows-latest]
-
     runs-on: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v4
@@ -21,28 +58,26 @@ jobs:
           lfs: true
           fetch-depth: 0
 
+      - uses: actions/download-artifact@v4
+        with:
+          name: frontend
+          path: ./dist/
+
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup and run pnpm install
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-          run_install: |
-            - recursive: true
-              args: [--frozen-lockfile, --strict-peer-dependencies]
-            - args: [--global, gulp, prettier, typescript]
 
       - name: Install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Restore target
+        id: cache-target-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: ./src-tauri/target
+          key: target
 
       - name: Build and upload a GitHub release
         uses: tauri-apps/tauri-action@v0
@@ -63,3 +98,10 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
+
+      - name: Save target
+        id: cache-target-save
+        uses: actions/cache/save@v4
+        with:
+          path: ./src-tauri/target
+          key: ${{ steps.cache-target-restore.outputs.cache-primary-key }}
