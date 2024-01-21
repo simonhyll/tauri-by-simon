@@ -98,6 +98,7 @@ jobs:
           releaseDraft: false
           prerelease: false
           includeUpdaterJson: true
+          tauriScript: yarn tauri
           args: -c '{"build":{"beforeBuildCommand":""}}'
 
       - name: Save target
