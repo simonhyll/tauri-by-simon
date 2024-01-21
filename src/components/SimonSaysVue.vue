@@ -1,7 +1,7 @@
 <template>
   <div class="tip-box">
     <div class="tip-simon">
-      <img :src="imageSrc" />
+      <img :src="imageSrc" alt="SimonSays" />
     </div>
     <div class="tip-content">
       <span class="tip-header">{{ title }}</span>
