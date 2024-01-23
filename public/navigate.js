@@ -39,8 +39,18 @@ function chapterNavigation() {
   });
 };
 
+function preload() {
+  let previousButton = document.querySelector('a[rel="prev"]');
+  if (!previousButton) previousButton = { href: '/' }
+  let nextButton = document.querySelector('a[rel="next"]');
+  if (!nextButton) nextButton = { href: "/getting_started/" }
+  fetch(previousButton.href)
+  fetch(nextButton.href)
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   chapterNavigation()
+  preload()
 })
 
 window.onload = function () {
