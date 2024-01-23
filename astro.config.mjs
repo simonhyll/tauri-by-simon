@@ -30,7 +30,15 @@ export default defineConfig({
 			Sidebar: './src/components/Sidebar.astro',
 			SocialIcons: './src/components/SocialIcons.astro',
 		},
-		head: [{
+		head: [
+			// {
+			// 	tag: 'meta',
+			// 	attrs: {
+			// 		'http-equiv':"Content-Security-Policy",
+			// 	    content:"default-src 'self' tauri:// http://tauri.localhost https://tauri.localhost;frame-src github.com;frame-ancestors github.com;style-src 'unsafe-inline';script-src 'wasm-unsafe-eval';img-src 'self' asset: https://asset.localhost" 
+			// 	}
+			// },
+		{
 			tag: 'script',
 			attrs: {
 				src: '/navigate.js'
