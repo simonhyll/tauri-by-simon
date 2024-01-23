@@ -45,7 +45,9 @@ function preload() {
   let nextButton = document.querySelector('a[rel="next"]');
   if (!nextButton) nextButton = { href: "/getting_started/" }
   fetch(previousButton.href)
+  console.log('Preloading: ', previousButton.href)
   fetch(nextButton.href)
+  console.log('Preloading: ', nextButton.href)
 }
 
 window.addEventListener('DOMContentLoaded', () => {
