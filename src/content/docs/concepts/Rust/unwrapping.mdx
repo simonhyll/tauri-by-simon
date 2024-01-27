@@ -1,17 +1,13 @@
 ---
 title: Unwrapping
 description: Unwrapping should be few and far apart
+summary: |
+  It's a cardinal sin in Rust to `.unwrap` a `Result` or an `Option`. You should be using things like `if let Some(var)` or `if let Ok(var)` instead, or `match` if you're explicitly handling the `Err`. Otherwise `.unwrap` is just gonna potentially cause you at runtime errors that are hard to debug.
 sidebar:
   badge:
     text: WIP
     variant: tip
 ---
-
-import SimonSays from '../../../../components/SimonSays.astro'
-
-<SimonSays>
-It's a cardinal sin in Rust to `.unwrap` a `Result` or an `Option`. You should be using things like `if let Some(var)` or `if let Ok(var)` instead, or `match` if you're explicitly handling the `Err`. Otherwise `.unwrap` is just gonna potentially cause you at runtime errors that are hard to debug.
-</SimonSays>
 
 ## Unwrapping
 

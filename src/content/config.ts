@@ -17,7 +17,7 @@ export const collections = {
         // Make a built-in field required instead of optional.
         description: z.string(),
         // Add a new field to the schema.
-        summary: z.string().optional(),
+        summary: z.string(),
         // Add a new field to the schema.
         character: z.string().optional(),
         // Add a new field to the schema.

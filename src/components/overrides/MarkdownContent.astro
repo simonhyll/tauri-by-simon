@@ -23,7 +23,7 @@ const isLandingPage = !!Astro.params.slug;
 if (references) references = await Promise.all(references);
 ---
 
-<div class="sl-markdown-content">
+<Default {...Astro.props}>
   {
     isLandingPage ? (
       <AstroSays character={character} title={page.data.description}>
@@ -50,4 +50,4 @@ if (references) references = await Promise.all(references);
       </>
     ) : null
   }
-</div>
+</Default>

@@ -1,17 +1,15 @@
 ---
 title: Bundle Identifier
 description: Unique ID of your app.
+summary: |
+  When you develop a Tauri app you're gonna need your app to be uniquely identifiable for the purposes of e.g. folder creation. You can't use the default `com.tauri.dev` ID because it would be used by many thousands of other apps. It should be in a reverse domain id format, but you don't need to actually own a domain in order to use it. If you do have a domain though it's better to use that, especially if you are developing for a company.
 sidebar:
   badge:
     text: WIP
     variant: tip
 ---
 
-import SimonSays from '../../../../components/SimonSays.astro'
-
-<SimonSays>
-When you develop a Tauri app you're gonna need your app to be uniquely identifiable for the purposes of e.g. folder creation. You can't use the default `com.tauri.dev` ID because it would be used by many thousands of other apps. It should be in a reverse domain id format, but you don't need to actually own a domain in order to use it. If you do have a domain though it's better to use that, especially if you are developing for a company.
-</SimonSays>
+import SimonSays from '@components/SimonSays.astro'
 
 ## Reverse Domain Identifier
 
