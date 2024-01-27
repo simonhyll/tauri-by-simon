@@ -1,0 +1,96 @@
+---
+title: Diagrams
+description: Alternatives for rendering diagrams in Starlight.
+summary: |
+  These are the various methods I've investigated to get diagrams rendered nicely in Starlight.
+sidebar:
+  order: 2
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import SimonSays from '@components/SimonSays.astro'
+
+## Draw.io / Diagrams.net
+
+<SimonSays title="More manual but prettier results.">
+This approach relies on using a Draw.io plugin for your IDE in order to edit an SVG manually, then getting that SVG rendered on your page in a way that allows you to modify its appearance using CSS so that it adapts correctly to theme changes.
+</SimonSays>
+
+import { Image } from 'astro:assets';
+import drawioDark from "./diagram-dark.webp";
+import drawioLight from "./diagram-light.webp";
+
+<Image src={drawioDark} alt="A description of my image." style="width: 48%;height:auto;display:inline-block;" />
+<Image src={drawioLight} alt="A description of my image." style="width: 45%;height:auto;display:inline-block;" />
+
+### Install Draw.io
+
+First and foremost you'll need to install the plugin for your IDE. The two IDE's that I have used this with are VSCode and RustRover (IntelliJ).
+
+#### VSCode
+
+[Download the plugin here](https://marketplace.visualstudio.com/items?itemName=hediet.vscode-drawio)
+
+#### IntelliJ
+
+[Download the plugin here](https://plugins.jetbrains.com/plugin/15635-diagrams-net-integration)
+
+### Create a diagram
+
+In whichever IDE you're using create a new file called `hello-world.drawio.svg`. Edit it however you want.
+
+If you use a transparent fill for boxes you'll be making your life easier for later.
+
+### Create a CSS class
+
+In e.g. your theme stylesheet that you probably have in your project you can go ahead and add the following contents:
+
+```css
+
+.diagram {
+  width: 100%;
+  max-width: 100%;
+}
+
+.diagram > svg {
+  width: 100%;
+}
+
+.diagram path:not([stroke=none]) {
+  stroke: var(--sl-color-gray-5);
+  fill: var(--sl-color-gray-6)
+}
+
+.diagram rect:not([stroke=none]) {
+  stroke: var(--sl-color-gray-5);
+  fill: var(--sl-color-gray-6);
+}
+
+.diagram div {
+  color: var(--sl-color-white) !important;
+}
+
+.diagram text {
+  fill: var(--sl-color-white);
+}
+```
+
+This `.diagram` class is a bit opinionated on how it changes the appearance of your diagram, tweak it to fit your purposes.
+
+### Load the SVG into a page
+
+In one of your pages you can now load the SVG using something like this (I'm doing this in an MDX file):
+
+```html
+import SVG from './hello-world.drawio.svg?raw'
+
+<div set:html={SVG} class="diagram" />
+```
+
+## Mermaid.js
+
+<SimonSays title="Work in progress!">
+I'm investigating how to get this to work.
+</SimonSays>

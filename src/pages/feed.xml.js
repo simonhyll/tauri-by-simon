@@ -33,7 +33,7 @@ function getNewestCommitDate(file) {
     const match = output.match(regex);
 
     if (!match?.groups?.timestamp) {
-        throw new Error(`Failed to validate the timestamp for file "${file}"`);
+        return new Date();
     }
 
     const timestamp = Number(match.groups.timestamp);

@@ -29,6 +29,7 @@ const imageSrc = ref("/SimonSays.png");
   padding: 10px;
   overflow: hidden;
   border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 .tip-link {
   margin: 0 auto;

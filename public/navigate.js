@@ -1,11 +1,7 @@
-function chapterNavigation() {
-  let triggered = false
+async function chapterNavigation() {
   let navigating = false
   document.addEventListener("keydown", function (e) {
-    if (triggered) return
     if (navigating) return
-    triggered = true
-    setTimeout(() => { triggered = false }, 100)
     if (e.altKey || e.ctrlKey || e.metaKey) {
       return;
     }
@@ -39,7 +35,7 @@ function chapterNavigation() {
   });
 };
 
-function preload() {
+async function preload() {
   let previousButton = document.querySelector('a[rel="prev"]');
   if (!previousButton) previousButton = { href: '/' }
   let nextButton = document.querySelector('a[rel="next"]');

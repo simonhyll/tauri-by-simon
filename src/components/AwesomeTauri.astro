@@ -1,0 +1,11 @@
+---
+import {createMarkdownProcessor} from '@astrojs/markdown-remark';
+
+const md = await createMarkdownProcessor()
+const url =
+  "https://raw.githubusercontent.com/tauri-apps/awesome-tauri/dev/README.md";
+const res = await fetch(url);
+const content = await md.render(await res.text())
+---
+
+<Fragment set:html={content.code }></Fragment>

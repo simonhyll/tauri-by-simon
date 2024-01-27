@@ -1,0 +1,53 @@
+---
+import Default from "@astrojs/starlight/components/MarkdownContent.astro";
+import type { Props } from "@astrojs/starlight/props";
+import AstroSays from "@components/SimonSays.astro";
+import { getEntryBySlug } from "astro:content";
+const page = (await getEntryBySlug(
+  "docs",
+  Astro.params.slug ? Astro.params.slug : "index"
+)) as any;
+const summary = page.data.summary
+  ? page.data.summary.split("\n\n").filter((line: string) => line !== "")
+  : [];
+const character = page.data.character ?? null;
+let references =
+  page.data.references?.map(async (ref: string) => {
+    const refPage = await getEntryBySlug("docs", ref);
+    return {
+      href: "/" + ref,
+      title: refPage?.data.title + ": " + refPage?.data.description,
+    };
+  }) ?? null;
+const isLandingPage = !!Astro.params.slug;
+if (references) references = await Promise.all(references);
+---
+
+<div class="sl-markdown-content">
+  {
+    isLandingPage ? (
+      <AstroSays character={character} title={page.data.description}>
+        {summary.map((line: string) => (
+          <p>{line}</p>
+        ))}
+      </AstroSays>
+    ) : (
+      ""
+    )
+  }
+  <slot />
+  {
+    references ? (
+      <>
+        <h2>References</h2>
+        <ul>
+          {references.map((reference: any) => (
+            <li>
+              <a href={reference.href}>{reference.title}</a>
+            </li>
+          ))}
+        </ul>
+      </>
+    ) : null
+  }
+</div>

@@ -4,7 +4,6 @@ import vue from "@astrojs/vue";
 
 export default defineConfig({
 	site: 'https://tauri.by.simon.hyll.nu',
-	trailingSlash: 'always',
 	trailingSlash: 'ignore',
 	integrations: [vue(),
 	starlight({
@@ -25,6 +24,7 @@ export default defineConfig({
 		favicon: '/icon.png',
 		customCss: ['./src/styles/theme.css'],
 		components: {
+			MarkdownContent: './src/components/overrides/MarkdownContent.astro',
 			Footer: './src/components/Footer.astro',
 			Header: './src/components/Header.astro',
 			Sidebar: './src/components/Sidebar.astro',
