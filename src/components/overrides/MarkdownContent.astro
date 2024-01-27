@@ -16,7 +16,8 @@ let references =
     const refPage = await getEntryBySlug("docs", ref);
     return {
       href: "/" + ref,
-      title: refPage?.data.title + ": " + refPage?.data.description,
+      title: refPage?.data.title,
+      description: refPage?.data.description,
     };
   }) ?? null;
 const isLandingPage = !!Astro.params.slug;
@@ -44,6 +45,7 @@ if (references) references = await Promise.all(references);
           {references.map((reference: any) => (
             <li>
               <a href={reference.href}>{reference.title}</a>
+              {reference.description}
             </li>
           ))}
         </ul>
