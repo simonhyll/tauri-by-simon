@@ -4,9 +4,25 @@ import vue from "@assets/frameworks/placeholder.png";
 
 export const frameworks: Framework[] = [
   {
+    name: "Nuxt",
+    icon: vue.src,
+    score: 100,
+    slug: "frontend/nuxt",
+    criteria: { language: Languages.TypeScript, isMetaFramework: true },
+    mesh: null,
+  },
+  {
+    name: "Astro",
+    icon: vue.src,
+    score: 80,
+    slug: "frontend/astro",
+    criteria: { language: Languages.TypeScript },
+    mesh: null,
+  },
+  {
     name: "Leptos",
     icon: vue.src,
-    score: 2,
+    score: 50,
     slug: "frontend/leptos",
     criteria: { language: Languages.Rust },
     mesh: null,
@@ -14,7 +30,7 @@ export const frameworks: Framework[] = [
   {
     name: "Sycamore",
     icon: vue.src,
-    score: 1,
+    score: 40,
     slug: "frontend/sycamore",
     criteria: { language: Languages.Rust },
     mesh: null,
@@ -22,17 +38,9 @@ export const frameworks: Framework[] = [
   {
     name: "Vue",
     icon: vue.src,
-    score: 1,
+    score: 80,
     slug: "frontend/vue",
     criteria: { language: Languages.TypeScript },
-    mesh: null,
-  },
-  {
-    name: "Nuxt",
-    icon: vue.src,
-    score: 100,
-    slug: "frontend/nuxt",
-    criteria: { language: Languages.TypeScript, isMetaFramework: true },
     mesh: null,
   },
 ];

@@ -13,29 +13,40 @@
         Yes
       </button>
     </div>
-    <template v-if="!pickForMe" v-for="framework in compatibleFrameworks">
-      <div
-        class="framework"
-        v-if="framework.criteria"
-        @click="navigate(framework.slug)"
+    <div class="frameworks">
+      <template v-if="!pickForMe" v-for="framework in compatibleFrameworks">
+        <div
+          class="framework"
+          v-if="framework.criteria"
+          @click="navigate(framework.slug)"
+        >
+          <img :src="framework.icon" />
+          <span>{{ framework.name }}</span>
+        </div>
+      </template>
+      <template v-else>
+        <div
+          class="framework"
+          v-if="highestScoreItem"
+          @click="navigate(highestScoreItem.slug)"
+        >
+          <img :src="highestScoreItem.icon" />
+          <span>{{ highestScoreItem.name }}</span>
+        </div>
+      </template>
+    </div>
+    <div class="actions">
+      <button class="my-button" @click="askAgain($event)">Ask again</button>
+      <button class="my-button" @click="reset($event)">Reset</button>
+      <button
+        v-if="compatibleFrameworks.length > 1"
+        class="my-button pick-for-me"
+        :class="{ active: pickForMe }"
+        @click="clickPickForMe"
       >
-        <img :src="framework.icon" />
-        <span>{{ framework.name }}</span>
-      </div>
-    </template>
-    <template v-else>
-      <div
-        class="framework"
-        v-if="highestScoreItem"
-        @click="navigate(highestScoreItem.slug)"
-      >
-        <img :src="highestScoreItem.icon" />
-        <span>{{ highestScoreItem.name }}</span>
-      </div>
-    </template>
-    <button v-if="compatibleFrameworks.length > 1" @click="clickPickForMe">
-      Pick for me
-    </button>
+        Pick for me
+      </button>
+    </div>
   </div>
 </template>
 
@@ -52,14 +63,12 @@ let singleAnswer = ref(false);
 let outOfQuestions = ref(false);
 let index = 0;
 let currentQuestion: Ref<Question> = ref(questions[index]);
-let selectedOptions: Criteria = reactive({});
+let selectedOptions: Ref<Criteria> = ref({});
+
 const navigate = (slug: string) => {
   window.location.href = "/" + slug;
 };
 const compareCriteria = (left: Criteria, right: Criteria) => {
-  console.log(selectedOptions);
-  console.log(left);
-  console.log(right);
   return Object.keys(left).every((key: string) => {
     const optionValue = left[key];
     const frameworkCriteriaValue = right[key];
@@ -75,7 +84,7 @@ const nextCompatibleQuestion = () => {
   }
   while (
     index <= questions.length - 1 &&
-    !compareCriteria(selectedOptions, questions[index].criteria)
+    !compareCriteria(selectedOptions.value, questions[index].criteria)
   ) {
     index += 1;
     if (index > questions.length - 1) {
@@ -86,7 +95,7 @@ const nextCompatibleQuestion = () => {
   return true;
 };
 const pickOption = (event: MouseEvent, option: QuestionOption) => {
-  selectedOptions = Object.assign(selectedOptions, option.effect);
+  selectedOptions.value = Object.assign(selectedOptions.value, option.effect);
   if (compatibleFrameworks.value.length === 1) {
     singleAnswer.value = true;
     return;
@@ -95,8 +104,8 @@ const pickOption = (event: MouseEvent, option: QuestionOption) => {
 };
 const compatibleFrameworks = computed(() => {
   return frameworks.filter((framework) => {
-    return Object.keys(selectedOptions).every((key: string) => {
-      const optionValue = selectedOptions[key];
+    return Object.keys(selectedOptions.value).every((key: string) => {
+      const optionValue = selectedOptions.value[key];
       const frameworkCriteriaValue = framework.criteria[key];
       if (frameworkCriteriaValue === undefined) return true;
       return (
@@ -105,8 +114,20 @@ const compatibleFrameworks = computed(() => {
     });
   });
 });
-const clickPickForMe = () => {
+const clickPickForMe = (event: MouseEvent) => {
   pickForMe.value = !pickForMe.value;
+};
+const reset = (event: MouseEvent) => {
+  index = -1;
+  if (nextCompatibleQuestion()) currentQuestion.value = questions[index];
+  outOfQuestions.value = false;
+  selectedOptions.value = {};
+  singleAnswer.value = false;
+};
+const askAgain = (event: MouseEvent) => {
+  index = -1;
+  if (nextCompatibleQuestion()) currentQuestion.value = questions[index];
+  outOfQuestions.value = false;
 };
 const highestScoreItem = computed(() => {
   return compatibleFrameworks.value.reduce(
@@ -119,6 +140,28 @@ const highestScoreItem = computed(() => {
 <style>
 .framework-picker {
   margin: 0.5cm auto 0 auto;
+}
+.my-button {
+  background-color: var(--sl-color-accent);
+  border: 1px solid var(--sl-color-accent-high);
+  margin: 0 auto;
+  display: block;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.actions {
+  width: fit-content;
+  margin: auto;
+  display: block;
+}
+.actions button {
+  display: inline-block;
+  margin: 0.5rem;
+}
+.pick-for-me.active {
+  background-color: var(--success);
+  border: 1px solid var(--success-border);
 }
 .question {
   width: 100%;
@@ -149,10 +192,21 @@ const highestScoreItem = computed(() => {
 .question button.yes {
   background-color: green;
 }
+.frameworks {
+  grid-template-columns: repeat(
+    3,
+    1fr
+  ); /* Example: 3 columns with equal width */
+  grid-auto-flow: row; /* Items flow in rows (downward) */
+  gap: 10px; /* Gap between grid items */
+}
 .framework {
+  grid-column: 2 / 3; /* Starts at column 2 and ends at column 3 */
+  grid-row: 1 / 2; /* Starts at row 1 and ends at row 2 */
   cursor: pointer;
   display: inline-block;
-  width: 2.85cm;
+  min-width: 2.8cm;
+  width: 20%;
   margin: 1rem;
   padding: 1rem;
   border-radius: 0.5rem;
