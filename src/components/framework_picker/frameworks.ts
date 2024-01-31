@@ -14,7 +14,7 @@ export const frameworks: Framework[] = [
     name: "Sycamore",
     icon: vue.src,
     slug: "frontend/sycamore",
-    criteria: { language: Languages.Rust, isMetaFramework: true },
+    criteria: { language: Languages.Rust },
     mesh: null,
   },
   {
