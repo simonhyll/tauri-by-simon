@@ -137,7 +137,7 @@ const highestScoreItem = computed(() => {
 });
 </script>
 
-<style>
+<style scoped>
 .framework-picker {
   margin: 0.5cm auto 0 auto;
 }
