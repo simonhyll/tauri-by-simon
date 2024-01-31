@@ -6,6 +6,7 @@ export const frameworks: Framework[] = [
   {
     name: "Leptos",
     icon: vue.src,
+    score: 2,
     slug: "frontend/leptos",
     criteria: { language: Languages.Rust },
     mesh: null,
@@ -13,6 +14,7 @@ export const frameworks: Framework[] = [
   {
     name: "Sycamore",
     icon: vue.src,
+    score: 1,
     slug: "frontend/sycamore",
     criteria: { language: Languages.Rust },
     mesh: null,
@@ -20,6 +22,7 @@ export const frameworks: Framework[] = [
   {
     name: "Vue",
     icon: vue.src,
+    score: 1,
     slug: "frontend/vue",
     criteria: { language: Languages.TypeScript },
     mesh: null,
@@ -27,6 +30,7 @@ export const frameworks: Framework[] = [
   {
     name: "Nuxt",
     icon: vue.src,
+    score: 100,
     slug: "frontend/nuxt",
     criteria: { language: Languages.TypeScript, isMetaFramework: true },
     mesh: null,

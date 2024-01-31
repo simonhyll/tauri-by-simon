@@ -13,6 +13,7 @@ export interface Framework {
   name: string;
   icon: string;
   slug: string;
+  score: number;
   criteria: Criteria;
   mesh: THREE.Mesh<
     THREE.BoxGeometry,

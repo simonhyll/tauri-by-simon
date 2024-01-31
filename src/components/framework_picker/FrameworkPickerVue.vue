@@ -13,7 +13,7 @@
         Yes
       </button>
     </div>
-    <template v-for="framework in compatibleFrameworks">
+    <template v-if="!pickForMe" v-for="framework in compatibleFrameworks">
       <div
         class="framework"
         v-if="framework.criteria"
@@ -23,6 +23,19 @@
         <span>{{ framework.name }}</span>
       </div>
     </template>
+    <template v-else>
+      <div
+        class="framework"
+        v-if="highestScoreItem"
+        @click="navigate(highestScoreItem.slug)"
+      >
+        <img :src="highestScoreItem.icon" />
+        <span>{{ highestScoreItem.name }}</span>
+      </div>
+    </template>
+    <button v-if="compatibleFrameworks.length > 1" @click="clickPickForMe">
+      Pick for me
+    </button>
   </div>
 </template>
 
@@ -34,6 +47,7 @@ import { Languages } from "./types.ts";
 import { questions } from "./questions.ts";
 import { frameworks } from "./frameworks.ts";
 
+let pickForMe = ref(false);
 let singleAnswer = ref(false);
 let outOfQuestions = ref(false);
 let index = 0;
@@ -90,6 +104,15 @@ const compatibleFrameworks = computed(() => {
       );
     });
   });
+});
+const clickPickForMe = () => {
+  pickForMe.value = !pickForMe.value;
+};
+const highestScoreItem = computed(() => {
+  return compatibleFrameworks.value.reduce(
+    (prev, current) => (prev.score > current.score ? prev : current),
+    {}
+  );
 });
 </script>
 
