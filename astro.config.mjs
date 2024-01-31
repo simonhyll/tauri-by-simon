@@ -25,10 +25,10 @@ export default defineConfig({
 		customCss: ['./src/styles/theme.css'],
 		components: {
 			MarkdownContent: './src/components/overrides/MarkdownContent.astro',
-			Footer: './src/components/Footer.astro',
-			Header: './src/components/Header.astro',
-			Sidebar: './src/components/Sidebar.astro',
-			SocialIcons: './src/components/SocialIcons.astro',
+			Footer: './src/components/overrides/Footer.astro',
+			Header: './src/components/overrides/Header.astro',
+			Sidebar: './src/components/overrides/Sidebar.astro',
+			SocialIcons: './src/components/overrides/SocialIcons.astro',
 		},
 		head: [
 			// {
@@ -38,30 +38,30 @@ export default defineConfig({
 			// 	    content:"default-src 'self' tauri:// http://tauri.localhost https://tauri.localhost;frame-src github.com;frame-ancestors github.com;style-src 'unsafe-inline';script-src 'wasm-unsafe-eval';img-src 'self' asset: https://asset.localhost" 
 			// 	}
 			// },
-		{
-			tag: 'script',
-			attrs: {
-				src: '/navigate.js'
-			}
-		}, {
-			tag: 'script',
-			attrs: {
-				src: '/loadSw.js',
-				async: true
-			}
-		},
-		// Open Graph / Facebook meta tags
-		{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
-		{ tag: 'meta', attrs: { property: 'og:url', content: 'https://tauri.by.simon.hyll.nu' } },
-		{ tag: 'meta', attrs: { property: 'og:title', content: 'Tauri by Simon' } },
-		{ tag: 'meta', attrs: { property: 'og:description', content: 'My unofficial opinionated articles on using Tauri' } },
-		{ tag: 'meta', attrs: { property: 'og:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
-		// Twitter Card meta tags
-		{ tag: 'meta', attrs: { property: 'twitter:card', content: 'summary_large_image' } },
-		{ tag: 'meta', attrs: { property: 'twitter:url', content: 'https://tauri.by.simon.hyll.nu' } },
-		{ tag: 'meta', attrs: { property: 'twitter:title', content: 'Tauri by Simon' } },
-		{ tag: 'meta', attrs: { property: 'twitter:description', content: 'My unofficial opinionated articles on using Tauri' } },
-		{ tag: 'meta', attrs: { property: 'twitter:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
+			{
+				tag: 'script',
+				attrs: {
+					src: '/navigate.js'
+				}
+			}, {
+				tag: 'script',
+				attrs: {
+					src: '/loadSw.js',
+					async: true
+				}
+			},
+			// Open Graph / Facebook meta tags
+			{ tag: 'meta', attrs: { property: 'og:type', content: 'website' } },
+			{ tag: 'meta', attrs: { property: 'og:url', content: 'https://tauri.by.simon.hyll.nu' } },
+			{ tag: 'meta', attrs: { property: 'og:title', content: 'Tauri by Simon' } },
+			{ tag: 'meta', attrs: { property: 'og:description', content: 'My unofficial opinionated articles on using Tauri' } },
+			{ tag: 'meta', attrs: { property: 'og:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
+			// Twitter Card meta tags
+			{ tag: 'meta', attrs: { property: 'twitter:card', content: 'summary_large_image' } },
+			{ tag: 'meta', attrs: { property: 'twitter:url', content: 'https://tauri.by.simon.hyll.nu' } },
+			{ tag: 'meta', attrs: { property: 'twitter:title', content: 'Tauri by Simon' } },
+			{ tag: 'meta', attrs: { property: 'twitter:description', content: 'My unofficial opinionated articles on using Tauri' } },
+			{ tag: 'meta', attrs: { property: 'twitter:image', content: 'https://tauri.by.simon.hyll.nu/social.png' } },
 		],
 		sidebar: [
 			{
