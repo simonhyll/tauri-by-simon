@@ -5,11 +5,18 @@ export const questions: Question[] = [
   {
     title: "Will you use Rust for the frontend?",
     description: `Only say yes if you're either in it to learn Rust
-      or are confident in your own Rust skills. I'm serious, don't
-      use a Rust frontend unless you understand the implications.`,
+        or are confident in your own Rust skills. I'm serious, don't
+        use a Rust frontend unless you understand the implications.`,
     criteria: {},
     yes: { rationale: "", effect: { language: Languages.Rust } },
-    no: { rationale: "", effect: { language: Languages.TypeScript } },
+    no: { rationale: "", effect: {} },
+  },
+  {
+    title: "Will you use TypeScript for the frontend?",
+    description: `Say yes if you are gonna use JavaScript as well.`,
+    criteria: {},
+    yes: { rationale: "", effect: { language: Languages.TypeScript } },
+    no: { rationale: "", effect: {} },
   },
   {
     title: "Are you sure you wanna use Rust in the frontend?",
