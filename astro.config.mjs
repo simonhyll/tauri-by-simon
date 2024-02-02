@@ -72,6 +72,13 @@ export default defineConfig({
 				}
 			},
 			{
+				label: 'Setup',
+				collapsed: true,
+				autogenerate: {
+					directory: 'setup'
+				}
+			},
+			{
 				label: 'Frontend',
 				collapsed: true,
 				autogenerate: {

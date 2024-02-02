@@ -1,4 +1,5 @@
 ---
+import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import Default from "@astrojs/starlight/components/MarkdownContent.astro";
 import type { Props } from "@astrojs/starlight/props";
 import AstroSays from "@components/SimonSays.astro";
@@ -22,15 +23,15 @@ let references =
   }) ?? null;
 const isLandingPage = !!Astro.params.slug;
 if (references) references = await Promise.all(references);
+const procesor = await createMarkdownProcessor();
+const content = await procesor.render(summary.join("\n\n"));
 ---
 
 <Default {...Astro.props}>
   {
     isLandingPage ? (
       <AstroSays character={character} title={page.data.description}>
-        {summary.map((line: string) => (
-          <p>{line}</p>
-        ))}
+        <Fragment set:html={content.code} />
       </AstroSays>
     ) : (
       ""
