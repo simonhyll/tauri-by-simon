@@ -21,6 +21,10 @@ references:
 tauri::Builder::default()
   .register_uri_scheme_protocol("myscheme", |app, req| {
     // Handle the HTTP request, then construct a response.
-    tauri::http::ResponseBuilder::new().body(Vec::new())
+    // PSEUDO CODE, WILL UPDATE LATER
+    let response = match req.path() {
+      "/greet" => greet()
+    }
+    tauri::http::ResponseBuilder::new().body(response)
   });
 ```

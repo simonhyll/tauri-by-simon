@@ -1,0 +1,43 @@
+---
+title: Proxy
+description: Using a URI scheme protocol in Tauri to proxy requests.
+summary: |
+  In this article we'll explore the possiblity of using a custom URI scheme protocol in Tauri to proxy requests. And as an added bonus we'll also look at how you can add a ServiceWorker to effectively reroute any request to your own handlers.
+
+  As always, this feature **only works in your apps webviews** as it does not get registered to the system, just to your webviews.
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+references:
+  - https://docs.rs/tauri/latest/tauri/struct.Builder.html#method.register_uri_scheme_protocol
+  - https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API
+---
+
+## Reqwest
+
+When you're dealing with HTTP requests in Rust the most popular library used is [reqwest](https://crates.io/crates/reqwest).
+
+```toml
+[dependencies]
+reqwest = "=0.11"
+```
+
+## Register the schema
+
+```rust
+// Unix: myscheme://some/path
+// Windows: https://myscheme.localhost/some/path
+tauri::Builder::default()
+  .register_uri_scheme_protocol("myscheme", |app, req| {
+    // PSEUDO CODE, WILL UPDATE LATER
+    let response = reqwest::get(format!("https://server/{}", req.path()));
+    tauri::http::ResponseBuilder::new().body(response.bytes())
+  });
+```
+
+## BONUS: ServiceWorker
+
+Using a ServiceWorker in the frontend portion of the project you can reroute any requests sent out from your app to your schema handler.
+
+Why would you do it? Admittedly it's a fairly niche functionality, but I've used it for an extension system in a web capable project. I can set up requests to my remotely running API server, then user the ServiceWorker to reroute those requests to my scheme handler only when running in the Tauri app version, which instead of fetching the extension from the API can check locally for the extensions zip archive to retrieve assets.
