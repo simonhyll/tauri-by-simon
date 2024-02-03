@@ -1,0 +1,14 @@
+---
+title: URI Scheme Protocol
+description: Ways in which a custom URI scheme protocol can be used in Tauri.
+summary: |
+  A custom uri scheme protocol is kinda like running a localhost REST API, but better since you're not exposing the server to the security threats that come with hosting something on localhost, nor the port assignment annoyance.
+
+  Keep in mind that the protocol you register is **only accessible within the webview**. It doesn't get registered in the system and nothing outside the webview window it was registered with will be able to use it.
+sidebar:
+  label: Overview
+---
+
+import OverviewCards from '@components/OverviewCards.astro';
+
+<OverviewCards />

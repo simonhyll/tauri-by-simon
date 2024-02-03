@@ -14,6 +14,13 @@ const summary = page.data.summary
 const character = page.data.character ?? null;
 let references =
   page.data.references?.map(async (ref: string) => {
+    if (!ref.startsWith("/")) {
+      return {
+        href: ref,
+        title: ref,
+        description: "",
+      };
+    }
     const refPage = await getEntryBySlug("docs", ref);
     return {
       href: "/" + ref,
