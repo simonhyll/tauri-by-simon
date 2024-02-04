@@ -1,0 +1,65 @@
+---
+title: Android
+description: Setting up your Mac for Android development with Tauri.
+summary: summary
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+references:
+  - https://beta.tauri.app/guides/prerequisites/
+---
+
+## Step 1: Set up the Android SDK
+
+### Option 1: Android Studio
+
+I know what you're thinking, "why the heck do I need to install an IDE to build for Android??" And while I might point you to both Mac and iOS that both depend on Xcode, the real reason option 1 and the recommended approach is getting Android Studio is because it's a more standardised approach and debugging your Android project regardless of what other IDE you're using is simply going to be easier using the dedicated IDE straight from Google.
+
+1. Install [Android Studio](https://developer.android.com/studio)
+2. Add the following to `~/.zshrc`: 
+```bash
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export NDK_HOME="$ANDROID_HOME/ndk/25.0.8775105"
+```
+3. Add the Android targets using rustup:
+```bash
+rustup target add aarch64-linux-android armv7-linux-androideabi i686-linux-android x86_64-linux-android
+```
+
+### Option 2: Standalone SDK
+
+WIP
+
+## Step 2: Get a device
+
+### Option 1: Create a virtual device
+
+WIP
+
+```bash
+adb devices
+```
+
+### Option 2: Use a physical device
+
+WIP
+
+```bash
+adb devices
+```
+
+## Hello World!
+
+```bash
+# Create a basic app by spamming enter
+pnpm create tauri-app --beta
+# Install dependencies
+cd tauri-app
+pnpm install
+# Initialize the Android project
+pnpm tauri android init
+# Run the app
+pnpm tauri android dev
+```
