@@ -1,0 +1,96 @@
+---
+title: Ubuntu
+description: Setting up Ubuntu for Tauri development.
+summary: |
+  In this article we'll take a look at the sort of setting up you need to do for
+  basic desktop targeted development with Tauri.
+sidebar:
+  badge:
+    text: v2-beta
+    variant: success
+references:
+  - https://beta.tauri.app/guides/prerequisites/
+  - https://crontab.guru/
+  - https://rustup.rs/
+---
+
+## System dependencies
+
+Tauri relies a lot on system dependencies, it's largely why the bundle size can be kept so small in comparison to some other frameworks *cough cough Electron cough*.
+
+Your end users will require some of these to use your app but don't worry, the installers Tauri creates take care of ensuring your user has them installed.
+
+```bash
+sudo apt update
+sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential \
+  curl \
+  wget \
+  file \
+  libssl-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
+```
+
+## Rust
+
+Simply run this command and it will install `rustup`. Follow the prompts and remember to restart your terminal once it's done.
+
+```bash
+# Do you trust me? Just run this magic command!
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+```
+
+```bash
+# Don't trust me? Come on I thought we were pals!
+# Download the script
+curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf > rustup.sh
+# Read the script
+less ./rustup.sh
+# Satisfied? Good, now run it!
+cat ./rustup.sh | sh
+```
+
+### Changing between stable and nightly
+
+```bash
+# Change to stable
+rustup default stable
+# Change to nightly
+rustup default nightly
+```
+
+### Optional: Auto update Rust
+
+I tend to set up a simple cronjob to keep Rust up to date. While a project might have a minimum supported reason for whatever reason there's not really any good reason for you to not be using the very latest version available.
+
+Use [crontab.guru](https://crontab.guru/) to figure out cronjob scheduling.
+
+```bash
+sudo crontab -e
+# For stable, once a week is enough
+0 0 * * 0 rustup update
+# For nightly, once per, well, night, is plenty
+0 0 * * * rustup update
+```
+
+## Hello World!
+
+To verify that your system is set up correctly you should run a basic bootstrapped project.
+
+This by the way is the way I tend to help people with their issues, running these commands
+to set up a fresh new project, try compiling it to verify Tauri isn't fundamentally broken,
+then add whatever code is needed to test your code. So if you ever have to make a reproduction
+of a problem this is the basic setup you should do as well.
+
+I'll be using `pnpm` here but you can adapt this to whatever method you want (that Tauri supports).
+
+```bash
+# Run create-tauri-app
+# Just spam enter to get all defaults
+pnpm create tauri-app --beta
+# Install dependencies
+pnpm install
+# Run the app
+pnpm tauri dev
+```
