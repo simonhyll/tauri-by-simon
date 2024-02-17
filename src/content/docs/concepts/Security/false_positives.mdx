@@ -47,3 +47,13 @@ As of the time of writing, to my knowledge, the `.msi` version of your app won't
 Other than that there's not much you can do. It's an upstream issue with the projects Tauri uses, so there's not much Tauri can do about it either. What you can remember with this is that it's not an issue with Tauri per se, it's an issue with the installer projects used, you're gonna face these sorts of issues regardless of what other app framework you look at.
 
 Check out the NSIS information on the subject here: [NSIS False Positives](https://nsis.sourceforge.io/NSIS_False_Positives)
+
+### Ad-hoc signing for MacOS
+
+If you are facing false positive issues on a Mac you can use something called ad-hoc signing on your app to get around the need for a paid certificate from Apple. Do note that this certificate doesn't come with the same security guarantees for your users and doesn't allow you to submit your app to the AppStore, but for any project that you distribute yourself that you just want people to be able to install and use as-is without the fancy signing security benefits, you can instead opt for ad-hoc signing, which is more of a developer tool that gets rid of the warning from the OS.
+
+```bash
+codesign -s - /path/to/YourApp.app
+```
+
+There's no option currently in `tauri-action` or Tauri in general to use this sort of signing.

@@ -45,6 +45,8 @@ npx nuxi init \
 
 ## Sample Configuration
 
+There's a security advisory up for using `envPrefix`. If you manage your secrets correctly and only build in release mode wherever secrets are located then you can keep using it, but the recommended approach to avoid leaking secrets is to define them individually. Note that 
+
 ```js
 // nuxt.config.ts
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -54,10 +56,16 @@ export default defineNuxtConfig({
   vite: {
     // Better support for Tauri CLI output
     clearScreen: false,
-    // Enable environment variables
-    // Additional environment variables can be found at
-    // https://tauri.app/2/reference/environment-variables/
-    envPrefix: ['VITE_', 'TAURI_'],
+    // https://github.com/tauri-apps/tauri/security/advisories/GHSA-2rcp-jvr4-r259
+    define: {
+      TAURI_PLATFORM: JSON.stringify(process.env.TAURI_PLATFORM),
+      TAURI_ARCH: JSON.stringify(process.env.TAURI_ARCH),
+      TAURI_FAMILY: JSON.stringify(process.env.TAURI_FAMILY),
+      TAURI_PLATFORM_VERSION: JSON.stringify(process.env.TAURI_PLATFORM_VERSION),
+      TAURI_PLATFORM_TYPE: JSON.stringify(process.env.TAURI_PLATFORM_TYPE),
+      TAURI_DEBUG: JSON.stringify(process.env.TAURI_DEBUG),
+    },
+    // Dev server configurations
     server: {
       // Tauri requires a consistent port
       strictPort: true,

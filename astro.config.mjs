@@ -5,6 +5,9 @@ import vue from "@astrojs/vue";
 export default defineConfig({
 	site: 'https://tauri.by.simon.hyll.nu',
 	trailingSlash: 'ignore',
+	markdown: {
+		remarkPlugins: []
+	},
 	integrations: [vue(),
 	starlight({
 		title: 'Tauri by Simon',
