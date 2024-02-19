@@ -1,0 +1,68 @@
+---
+title: TrayIcon
+description: How to make a system tray icon in Tauri.
+summary: |
+  These are usually found for apps that rely on any kind of ongoing background process, not just to help keep them alive but to give the user a simple location to e.g. kill the app.
+sidebar:
+  label: Overview
+  badge:
+    text: WIP
+    variant: tip
+---
+
+import OverviewCards from '@components/OverviewCards.astro';
+
+<OverviewCards />
+
+```rust
+// tray.rs
+use tauri::{
+  menu::MenuId,
+  tray::{ClickType, TrayIconEvent},
+  AppHandle,
+  Manager,
+};
+
+pub fn setup(app: AppHandle) {
+  let menu = tauri::menu::MenuBuilder::new(&app)
+    .item(&tauri::menu::MenuItem::with_id(
+      &app,
+      "quit",
+      "Quit",
+      true,
+      None::<&str>,
+    )?)
+    .build()?;
+
+  let tray = tauri::tray::TrayIconBuilder::with_id("main_tray")
+    .menu(&menu)
+    .build(&app)?;
+
+  tray.on_menu_event(move |app, event| {
+    match event.id.0.as_str() {
+      "quit" => {
+        let handle = app.app_handle();
+        handle.exit(0);
+      },
+      _ => {},
+    }
+  });
+
+  tray
+    .set_icon(Some(tauri::Icon::Raw(
+      include_bytes!("../icons/icon.png").to_vec(),
+    )))
+    .unwrap();
+
+  tray.on_tray_icon_event(move |tray_icon, event| {
+    let handle = app.app_handle();
+    match event.click_type {
+      ClickType::Left => {},
+      ClickType::Right => {},
+      ClickType::Double => {},
+    }
+  });
+  Ok(())
+}
+
+```
