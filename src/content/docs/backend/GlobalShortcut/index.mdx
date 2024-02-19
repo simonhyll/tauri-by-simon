@@ -1,0 +1,61 @@
+---
+title: GlobalShortcut
+description: How to make a global keyboard shortcut.
+summary: summary
+sidebar:
+  label: Overview
+  badge:
+    text: WIP
+    variant: tip
+---
+
+> This will have to be updated once a known PR is merged with breaking changes
+
+```bash
+cargo add tauri-plugin-global-shortcut@2.0.0-beta.0
+```
+
+```rust
+// global_shortcut.rs
+use tauri::{App, Manager, WindowEvent};
+use tauri_plugin_global_shortcut::{Code, GlobalShortcutExt, Modifiers};
+
+pub(crate) fn setup(app: &App) -> crate::Result<()> {
+  // A shortcut using Alt + Shift + A to open the main window of the app
+  let shortcut_main_window = tauri_plugin_global_shortcut::Shortcut::new(
+    Some(Modifiers::ALT | Modifiers::SHIFT),
+    Code::KeyA,
+  );
+  // The shortcut ID
+  let shortcut_main_window_id = shortcut_main_window.id();
+  // Only works on Desktop, register the plugin here
+  #[cfg(desktop)]
+  app.handle().plugin(
+    tauri_plugin_global_shortcut::Builder::with_handler(move |app, key| {
+      if key.id() == shortcut_main_window_id {
+        // Get the main window
+        let main_window = app.handle().get_webview_window("main").unwrap();
+        // If it's already visible, hide it
+        if main_window.is_visible().unwrap() {
+          let _ = main_window.hide();
+          return;
+        }
+        // Otherwise show it and give it focus
+        let _ = main_window.show();
+        let _ = main_window.set_focus();
+      }
+    })
+    .build(),
+  )?;
+  // Register the shortcut
+  app
+    .handle()
+    .global_shortcut()
+    .register(shortcut_main_window)?;
+  Ok(())
+}
+```
+
+import OverviewCards from '@components/OverviewCards.astro';
+
+<OverviewCards />

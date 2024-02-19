@@ -1,0 +1,48 @@
+---
+title: Window
+description: How to pop open a window for your TrayIcon.
+summary: |
+  The context menu for a tray icon can't be very fun, it's just a plain boring context menu. To remedy that we'll take the left click event and pop open a new window.
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+---
+
+First set up your project based on [TrayIcon Overview](/backend/trayicon/).
+
+Develop and register a window based on [Window Overview](/backend/window/).
+
+
+```rust
+// tray.rs
+
+// UNTESTED BECAUSE I AM LAZY ATM :)
+// More at the pseudo code stage atm
+
+pub fn setup(app: AppHandle) {
+  // Register a tray icon event handler
+  tray.on_tray_icon_event(move |tray_icon, event| {
+    // Get an app handle
+    let handle = app.app_handle();
+    match event.click_type {
+      ClickType::Left => {
+        // Get the tray window you've previously registered
+        let tray_window = handle.get_webview_window("tray_window").unwrap();
+        // If it's visible, hide it and exit
+        if tray_window.is_visible() {
+          tray_window.hide();
+          return
+        }
+        // If it's hidden, show it and set its position
+        tray_window.show();
+        tray_window.set_focus();
+        tray_window.set_position(LogicalPosition {x: event.x, y: event.y})
+      },
+      ClickType::Right => {},
+      ClickType::Double => {},
+    }
+  });
+  Ok(())
+}
+```
