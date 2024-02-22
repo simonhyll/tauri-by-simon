@@ -42,7 +42,9 @@ Yes. Not from Tauri, but it could be a true positive. Don't trust your NPM and C
 
 ### What can I do to fix it?
 
-As of the time of writing, to my knowledge, the `.msi` version of your app won't trigger false positives. So you can rely on using that installer instead of the NSIS installer. Other than that all you can really do is sign the app and/or submit it to antivirus vendors to get them to whitelist your app. Sometimes just rebuilding the app a couple times can also make Windows Defender stop flagging it as a virus, it's the weirdest thing.
+Using the `.msi` installer has been reported to raise fewer false positives than that `.exe` installer. It still raises warnings, just not as much. So that might be a first step to try. Other than that, the only reliable way to get rid of the issue is to sign your application and submit it to antivirus providers for further testing.
+
+Sometimes just rebuilding the app a couple times can also make Windows Defender stop flagging it as a virus, it's the weirdest thing.
 
 Other than that there's not much you can do. It's an upstream issue with the projects Tauri uses, so there's not much Tauri can do about it either. What you can remember with this is that it's not an issue with Tauri per se, it's an issue with the installer projects used, you're gonna face these sorts of issues regardless of what other app framework you look at.
 
