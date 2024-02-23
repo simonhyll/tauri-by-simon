@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/content/docs/awesome.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/awesome.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/samples/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/samples/index.mdx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +83,7 @@
       <option name="presentableId" value="Default" />
       <updated>1708637341588</updated>
       <workItem from="1708637342631" duration="5000" />
-      <workItem from="1708637374360" duration="12390000" />
+      <workItem from="1708637374360" duration="13180000" />
     </task>
     <servers />
   </component>
