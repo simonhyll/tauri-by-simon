@@ -49,10 +49,10 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                 const clear = this.querySelector<HTMLButtonElement>('button.pagefind-ui__search-clear')!;
                 const inputs = Array.from(this.children).filter((el) => el.classList.contains('card-grid'));
                 const headings = Array.from(this.children).filter(
-                    (el) => (el instanceof HTMLHeadingElement || el instanceof HTMLParagraphElement) && !el.classList.contains("ignore-search")
+                    (el) => (el instanceof HTMLHeadingElement || el instanceof HTMLParagraphElement) && !(el.nextSibling instanceof HTMLHeadingElement)
                 );
                 const ignoreHeadings = Array.from(this.children).filter(
-                    (el) => (el instanceof HTMLHeadingElement || el instanceof HTMLParagraphElement) && el.classList.contains("ignore-search")
+                    (el) => (el instanceof HTMLHeadingElement || el instanceof HTMLParagraphElement) && el.nextSibling instanceof HTMLHeadingElement
                 );
 
                 // Prevent page reload
@@ -122,8 +122,10 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
 
                             // Show warning if none found
                             if (total === 0) {
+                                inputs[i].classList.add('hidden');
                                 headings[i].classList.add('hidden');
                             } else {
+                                inputs[i].classList.remove('hidden');
                                 headings[i].classList.remove('hidden');
                             }
                         });
@@ -224,5 +226,8 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
     .pagefind-ui__suppressed {
         opacity: 0;
         pointer-events: none;
+    }
+    .hidden {
+        display: none !important;
     }
 </style>

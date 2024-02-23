@@ -5,7 +5,7 @@ async function chapterNavigation() {
     if (e.altKey || e.ctrlKey || e.metaKey) {
       return;
     }
-    if (window.search && window.search.hasFocus()) {
+    if (window.search && document.activeElement === window.search) {
       return;
     }
 
