@@ -6,8 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="cae45f68-77bb-404c-af3c-259260057f50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/awesome.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/awesome.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/astro.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/astro.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bun.lockb" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lockb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sponsors.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SidebarProgress.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/overrides/Sidebar.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/overrides/Sidebar.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/getting_started/support.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/getting_started/support.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Linux/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Linux/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Mac/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Mac/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Windows/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Windows/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/index.mdx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,10 +32,10 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "5582b0fc",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;5582b0fc&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2cjuWUj01aDS32gWUFQZExhzRmb" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -37,26 +46,32 @@
     <option name="openDirectoriesWithSingleClick" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "Shell Script.Unnamed.executor": "Run",
-    "git-widget-placeholder": "main",
-    "idea.background.frame": "/Users/simon.hyll/EDF/simonhyll/tauri-by-simon/src/assets/icon.png,15,plain,center",
-    "last_opened_file_path": "/Users/simon.hyll/EDF/simonhyll/tauri-by-simon",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Users/simon.hyll/EDF/simonhyll/tauri-by-simon/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;Shell Script.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;idea.background.frame&quot;: &quot;/Users/simon.hyll/EDF/simonhyll/tauri-by-simon/src/assets/icon.png,15,plain,center&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/simon.hyll/EDF/simonhyll/tauri-by-simon/src/content/docs/testing&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/simon.hyll/EDF/simonhyll/tauri-by-simon/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/content/docs/testing" />
+      <recent name="$PROJECT_DIR$/src/content/docs/setup/Planning" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="ShConfigurationType" nameIsGenerated="true">
       <option name="SCRIPT_TEXT" value="bun run dev" />
@@ -83,7 +98,7 @@
       <option name="presentableId" value="Default" />
       <updated>1708637341588</updated>
       <workItem from="1708637342631" duration="5000" />
-      <workItem from="1708637374360" duration="13180000" />
+      <workItem from="1708637374360" duration="19303000" />
     </task>
     <servers />
   </component>

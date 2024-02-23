@@ -25,7 +25,7 @@ export default defineConfig({
 			src: './src/assets/logo_small.png'
 		},
 		favicon: '/icon.png',
-		customCss: ['./src/styles/theme.css'],
+		customCss: ['./src/styles/theme.scss'],
 		components: {
 			MarkdownContent: './src/components/overrides/MarkdownContent.astro',
 			Footer: './src/components/overrides/Footer.astro',
@@ -118,17 +118,17 @@ export default defineConfig({
 				}
 			},
 			{
-				label: 'Samples',
-				collapsed: true,
-				autogenerate: {
-					directory: 'samples'
-				}
-			},
-			{
 				label: 'Best Practices',
 				collapsed: true,
 				autogenerate: {
 					directory: 'best_practices'
+				}
+			},
+			{
+				label: 'Samples',
+				collapsed: true,
+				autogenerate: {
+					directory: 'samples'
 				}
 			},
 			{

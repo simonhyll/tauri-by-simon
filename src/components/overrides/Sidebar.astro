@@ -1,9 +1,15 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
-import Default from "@astrojs/starlight/components/Sidebar.astro";
-import Sponsors from "@components/Sponsors.astro";
+import type { Props } from '../props';
+
+import MobileMenuFooter from 'virtual:starlight/components/MobileMenuFooter';
+import SidebarSublist from './SidebarSublist.astro';
+import SidebarProgress from '@components/SidebarProgress.astro'
+const { sidebar } = Astro.props;
 ---
 
-<Default {...Astro.props}><slot /></Default>
+<SidebarSublist sublist={sidebar} />
+<div class="md:sl-hidden">
+    <MobileMenuFooter {...Astro.props} />
+</div>
 
-<Sponsors />
+<!-- <SidebarProgress /> -->
