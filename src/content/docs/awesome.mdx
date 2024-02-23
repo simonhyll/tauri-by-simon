@@ -17,6 +17,9 @@ import HeroBackground from "../../components/HeroBackground.astro";
 import Awesome from '@components/AwesomeTauri.astro'
 import Search from '@components/CardGridSearch.astro'
 
-<Search>
-    <Awesome />
+<Search placeholder="Search plugins and integrations for Tauri...">
+    ## Plugins
+    <Awesome section="plugins" />
+    ## Integrations
+    <Awesome section="integrations" />
 </Search>
