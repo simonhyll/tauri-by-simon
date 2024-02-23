@@ -9,6 +9,7 @@ interface Props {
     placeholder?: string;
 }
 const { placeholder = 'Search features and community resources...' } = Astro.props;
+const { notFound = 'That projects awesomeness could not be contained in the list. :(' } = Astro.props;
 
 // TODO: Expose placeholder and title to i18n
 ---
@@ -36,6 +37,7 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
             <button class="pagefind-ui__search-clear pagefind-ui__suppressed">clear</button>
         </form>
     </div>
+    <span class="not-found-text hidden">{notFound}</span>
     <slot />
 </card-search>
 
@@ -48,6 +50,7 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                 const form = this.querySelector<HTMLFormElement>('form.pagefind-ui__form')!;
                 const searchBar = this.querySelector<HTMLInputElement>('input.pagefind-ui__search-input')!;
                 const clear = this.querySelector<HTMLButtonElement>('button.pagefind-ui__search-clear')!;
+                const notFound = this.querySelector<HTMLButtonElement>('span.not-found-text')!;
                 const inputs = Array.from(this.children).filter((el) => el.classList.contains('card-grid'));
                 const headings = Array.from(this.children).filter(
                     (el) => (el instanceof HTMLHeadingElement || el instanceof HTMLParagraphElement) && !(el.nextSibling instanceof HTMLHeadingElement)
@@ -109,6 +112,7 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                         window.history.pushState({path: newUrl}, '', newUrl);
                     }
 
+                    let hiddenInputs = 0
                     inputs.forEach((elements, i) => {
                         const cards = Array.from(elements.children);
                         let total = cards.length;
@@ -127,9 +131,8 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                                 total--;
                                 htmlElement.style.display = 'none';
                             }
-
-                            // Show warning if none found
                             if (total === 0) {
+                                hiddenInputs += 1
                                 inputs[i].classList.add('hidden');
                                 headings[i].classList.add('hidden');
                             } else {
@@ -138,6 +141,12 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                             }
                         });
                     });
+                    if (hiddenInputs === inputs.length) {
+                        // TODO: Show nothing found text
+                        notFound.classList.remove('hidden')
+                    } else {
+                        notFound.classList.add('hidden')
+                    }
                 }
                 // Get search value from URL
                 if (urlSearch.get('search')) {
@@ -243,5 +252,13 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
     }
     .hidden {
         display: none !important;
+    }
+    .not-found-text {
+        font-style: italic;
+        color: var(--sl-color-text);
+        font-size: larger;
+        text-align: center;
+        width: 100%;
+        display: block;
     }
 </style>
