@@ -32,6 +32,7 @@ export default defineConfig({
 			Header: './src/components/overrides/Header.astro',
 			Sidebar: './src/components/overrides/Sidebar.astro',
 			SocialIcons: './src/components/overrides/SocialIcons.astro',
+			SiteTitle: './src/components/overrides/SiteTitle.astro',
 		},
 		head: [
 			// {
