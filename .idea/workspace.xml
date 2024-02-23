@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cae45f68-77bb-404c-af3c-259260057f50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/navigate.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/navigate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/CardGridSearch.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CardGridSearch.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/awesome.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/awesome.mdx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +89,7 @@
       <updated>1708637341588</updated>
       <workItem from="1708637342631" duration="5000" />
       <workItem from="1708637374360" duration="19303000" />
-      <workItem from="1708710074041" duration="4123000" />
+      <workItem from="1708710074041" duration="5433000" />
     </task>
     <servers />
   </component>

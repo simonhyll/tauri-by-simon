@@ -44,6 +44,7 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
         constructor() {
             super();
             window.addEventListener('DOMContentLoaded', () => {
+                const urlSearch = new URLSearchParams(window.location.search)
                 const form = this.querySelector<HTMLFormElement>('form.pagefind-ui__form')!;
                 const searchBar = this.querySelector<HTMLInputElement>('input.pagefind-ui__search-input')!;
                 const clear = this.querySelector<HTMLButtonElement>('button.pagefind-ui__search-clear')!;
@@ -91,6 +92,7 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                  */
                 function searchFilter() {
                     const query = searchBar.value.toUpperCase();
+                    urlSearch.set('search', searchBar.value)
                     if (query) {
                         for (const header of ignoreHeadings) {
                             header.classList.add('hidden')
@@ -99,6 +101,12 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                         for (const header of ignoreHeadings) {
                             header.classList.remove('hidden')
                         }
+                    }
+                    if (history.pushState) {
+                        const newUrl = query
+                            ? window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlSearch.toString()
+                            : window.location.protocol + "//" + window.location.host + window.location.pathname;
+                        window.history.pushState({path: newUrl}, '', newUrl);
                     }
 
                     inputs.forEach((elements, i) => {
@@ -131,6 +139,10 @@ const { placeholder = 'Search features and community resources...' } = Astro.pro
                         });
                     });
                 }
+                // Get search value from URL
+                if (urlSearch.get('search'))
+                    searchBar.value = urlSearch.get('search')
+                searchFilter()
             });
         }
     }
