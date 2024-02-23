@@ -6,17 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cae45f68-77bb-404c-af3c-259260057f50" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/astro.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/astro.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bun.lockb" beforeDir="false" afterPath="$PROJECT_DIR$/bun.lockb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Sponsors.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SidebarProgress.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/overrides/Sidebar.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/overrides/Sidebar.astro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/getting_started/support.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/getting_started/support.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Linux/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Linux/index.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Mac/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Mac/index.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/Windows/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/Windows/index.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/content/docs/setup/index.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/setup/index.mdx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/styles/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/styles/theme.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/AwesomeTauri.astro" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/content/docs/awesome.mdx" beforeDir="false" afterPath="$PROJECT_DIR$/src/content/docs/awesome.mdx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +90,7 @@
       <updated>1708637341588</updated>
       <workItem from="1708637342631" duration="5000" />
       <workItem from="1708637374360" duration="19303000" />
+      <workItem from="1708710074041" duration="1598000" />
     </task>
     <servers />
   </component>
