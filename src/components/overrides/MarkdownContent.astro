@@ -2,7 +2,7 @@
 import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import Default from "@astrojs/starlight/components/MarkdownContent.astro";
 import type { Props } from "@astrojs/starlight/props";
-import AstroSays from "@components/SimonSays.astro";
+import SimonSays from "@components/SimonSays.astro";
 import { getEntryBySlug } from "astro:content";
 const page = (await getEntryBySlug(
   "docs",
@@ -28,7 +28,7 @@ let references =
       description: refPage?.data.description,
     };
   }) ?? null;
-const isLandingPage = !!Astro.params.slug;
+const isLandingPage = !Astro.params.slug;
 if (references) references = await Promise.all(references);
 const procesor = await createMarkdownProcessor();
 const content = await procesor.render(summary.join("\n\n"));
@@ -36,10 +36,10 @@ const content = await procesor.render(summary.join("\n\n"));
 
 <Default {...Astro.props}>
   {
-    isLandingPage ? (
-      <AstroSays character={character} title={page.data.description}>
+    !isLandingPage && character !== 'none' ? (
+      <SimonSays character={character} title={page.data.description}>
         <Fragment set:html={content.code} />
-      </AstroSays>
+      </SimonSays>
     ) : (
       ""
     )
