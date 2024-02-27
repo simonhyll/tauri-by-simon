@@ -5,6 +5,9 @@ summary: |
   The following version of the Rust Book was generated with the help of scraping
   the official versions content and submitting it to the gpt-4 model by OpenAI.
 
+  Tip: use your browsers screen reader on this page and you have yourself an audiobook.
+  It's how I'm using it.
+
   It cost me about $15 to generate, enjoy!
 sidebar:
   badge:
