@@ -1,12 +1,16 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import vue from "@astrojs/vue";
+import { rehypeHeadingIds } from '@astrojs/markdown-remark';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 export default defineConfig({
 	site: 'https://tauri.by.simon.hyll.nu',
 	trailingSlash: 'ignore',
 	markdown: {
-		remarkPlugins: []
+		remarkPlugins: [],
+		rehypePlugins: [
+			rehypeHeadingIds, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]
 	},
 	integrations: [vue(),
 	starlight({
