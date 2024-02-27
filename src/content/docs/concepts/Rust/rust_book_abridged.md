@@ -5,9 +5,6 @@ summary: |
   The following version of the Rust Book was generated with the help of scraping
   the official versions content and submitting it to the gpt-4 model by OpenAI.
 
-  Tip: use your browsers screen reader on this page and you have yourself an audiobook.
-  It's how I'm using it.
-
   It cost me about $15 to generate, enjoy!
 sidebar:
   badge:
@@ -656,7 +653,7 @@ Error handling in your code should induce a panic when it ends up in a bad state
 
 A good way to handle errors is by creating custom types for validation. This makes it easy to ensure validations are met when developing new instances of a type. A thorough understanding of generics, which the "Option" and "Result" enums of the standard library use, is needed to effectively use them in your code.
 
-## Chapter 1 Part 0: Generics
+## Chapter 10 Part 0: Generics
 
 In Rust, generics are tools that help reduce code duplication by acting as placeholders for concrete types or properties. Generics can be used in functions, structs, and enum definitions to handle multiple data types in a versatile way. An instance of using generics can be seen with the Rust functions vec<T>, HashMap<K, V>, and Result<T, E>, which take parameters of different types.
 
@@ -668,7 +665,7 @@ An example of how generics can eliminate code duplication is by abstracting a fu
 
 Another example of generics can be used to eliminate code duplication when finding the largest item in slices of different types, such as i32 and char.
 
-## Chapter 1 Part 1: Syntax
+## Chapter 10 Part 1: Syntax
 
 Generic Data Types:
 
@@ -694,7 +691,7 @@ Performance of Code Using Generics:
 
 Rust makes use of a technique called monomorphization during compile-time to make sure code using generics does not incur any runtime cost. Monomorphization is the process of turning generic code into specific code by filling in the concrete types used when compiled. As a result, we pay no runtime cost for using generics and we will get speed and performance as if we had written code with specific types in the first place.
 
-## Chapter 1 Part 2: Traits
+## Chapter 10 Part 2: Traits
 
 Traits in Rust are a way to share behavior across multiple types. They define a set of methods that can be called on a type that implements them.
 
@@ -718,7 +715,7 @@ Trait bounds can also be used to conditionally implement methods, termed 'blanke
 
 Using traits and trait bounds with generic type parameters not only reduces code redundancy but also ensures that the type behaves as expected. This shifts potential runtime error to compile time, ensuring that the code works before it is even capable of execution, thus improving performance.
 
-## Chapter 1 Part 3: Lifetime syntax
+## Chapter 10 Part 3: Lifetime syntax
 
 In Rust, 'lifetime' involves the duration a variable is valid for use, hence, it influences how borrowing of variables function. The word 'lifetime' in Rust is denoted by an apostrophe symbol like so: 'a, 'b, or 'c. The compiler uses lifetimes to ensure that all references are valid.
 
@@ -760,7 +757,7 @@ In terms of structs, each reference within the struct needs a lifetime parameter
 
 In summary, the lifetime concept in Rust is about establishing a relationship between variables' accessibility within their scope, preventing memory safety issues, and dangling pointers by enforcing strict borrowing and lifetime rules. Lifetime elision allows Rust to infer lifetimes when they have predictable patterns.
 
-## Chapter 2 Part 0: Testing
+## Chapter 11 Part 0: Testing
 
 Automated Testing is crucial in ensuring your program's correctness. It verifies that the code operates exactly as intended, outside of what a type system can guarantee. For instance, consider a simple function like `add_two`, which adds 2 to any passed integer. While Rust's type system confirms that inputs are integers and flags errors like passing a `String` value, only a test can ensure the function does the exact job it's supposed to. The actual task of your function, such as returning the parameter plus 2, cannot be detected by type checking only.
 
@@ -770,7 +767,7 @@ The art and science of writing good tests is comprehensive. While Rust provides 
 
 Maintaining an arsenal of well-written tests that can be run at any time is a valuable tool for any Rust programmer.
 
-## Chapter 2 Part 1: Writing tests
+## Chapter 11 Part 1: Writing tests
 
 When writing a Rust program, it is essential to implement tests to ensure the functions in your code are working as expected. Rust provides a number of testing features.
 
@@ -810,7 +807,7 @@ To use these testing features effectively, all types involved in the assertions 
 
 By grouping tests together into units and using these macros and annotations, you can create clear and effective tests that help verify the correctness of your Rust code.
 
-## Chapter 2 Part 2: Running tests
+## Chapter 11 Part 2: Running tests
 
 Here is a condensed explanation, focusing on the theory:
 
@@ -826,7 +823,7 @@ By default, Rust's test library captures any standard output for successful test
 
 You can ignore certain time-consuming tests by annotating them with an "ignore" attribute. You can manually request to run only the ignored tests with "cargo test -- --ignored" or all tests, ignored or not, using "cargo test -- --include-ignored". This way, you can control which tests run and how fast your results are obtained.
 
-## Chapter 2 Part 3: Test organization
+## Chapter 11 Part 3: Test organization
 
 In Rust, tests are divided into two main categories: unit tests and integration tests.
 
@@ -850,7 +847,7 @@ For binary crates that do not expose functions that other crates can use but are
 
 To sum up, testing in Rust with the use of unit and integration tests ensures your code works as expected.
 
-## Chapter 3 Part 0: An io project
+## Chapter 12 Part 0: An io project
 
 In this study, we will delve into a project that encompasses a diverse set of skills learned from Rust programming. The task will involve creating a command line tool inspired by the utility 'grep', renowned for searching strings in a file. As a language acclaimed for its speed, safety, cross-platform support, and single binary output format, Rust is ideal for building command line tools.
 
@@ -862,7 +859,7 @@ In the process, you'll also be introduced briefly to iteratos, closure and trait
 
 This chapter helps equip you with the necessary skills needed to understand a real-world project - in this case, a comprehensive and speedy version of the 'grep' named 'ripgrep' created by a Rust community member, Andrew Gallant.
 
-## Chapter 3 Part 1: Accepting command line arguments
+## Chapter 12 Part 1: Accepting command line arguments
 
 Accepting command line arguments in Rust involves creating a new project, where the first task is to make it accept two command line arguments: file path and a string to search. Rust's standard library provides the `std::env::args` function that enables your program to read the values of command line arguments that are passed to it. This function returns an iterator of the command line arguments passed.
 
@@ -872,7 +869,7 @@ To collect the command line arguments into a collection for example a vector, yo
 
 Arguments include the name of the binary executed as the first value (index 0). The rest of the arguments follow. These arguments can be saved into variables for easy access and manipulation in the program. However, please note `std::env::args` can panic if any argument passed contains invalid Unicode, for such situation, `std::env::args_os` function is recommended instead which returns values of `OsString` type.
 
-## Chapter 3 Part 2: Reading a file
+## Chapter 12 Part 2: Reading a file
 
 The text is discussing how to read a file in Rust Programming Language. The chosen style includes a step-by-step guide making it easier to understand the exact process to do so with a test file named `poem.txt`.
 
@@ -886,7 +883,7 @@ The users can execute the program by passing any arbitrary string as the first c
 
 However, it pointed out the flaws of the method used. The `main` function was handling too many responsibilities and there were also some unhandled errors. It urged a refactoring approach for such growing programs. Refactoring ensures any error or flaw in a function is corrected as the program is being developed rather than waiting till it grows making it more difficult to debug and correct. It's always easier with smaller codes.
 
-## Chapter 3 Part 3: Improving error handling and modularity
+## Chapter 12 Part 3: Improving error handling and modularity
 
 The Rust program you've provided demonstrates important aspects of the Rust language, including error handling, reading from files, and using Structs and their associated functions. Here's a summarized breakdown of what the program is doing while avoiding specific code examples:
 
@@ -924,7 +921,7 @@ This practice aligns with Rust's philosophy of avoiding crashes whenever possibl
 
 In practice, the separation of concerns is usually maintained by having parts of your code which handle the main logic and those that deal with error handling separately. In this case, successful execution might involve set-up configuration and running the main function, whilst error handling comes from checking the values returned from these functions and dealing with any that indicate an error.
 
-## Chapter 3 Part 4: Testing the librarys functionality
+## Chapter 12 Part 4: Testing the librarys functionality
 
 The "Test-Driven Development" method you are using includes the following steps:
 
@@ -945,7 +942,7 @@ In order to have the "search" function work properly, you will need to create a 
 
 The "run" function uses the "search" function. It prints each line returned from "search" based on the given query and content.
 
-## Chapter 3 Part 5: Working with environment variables
+## Chapter 12 Part 5: Working with environment variables
 
 When enhancing the 'minigrep' program with an option for case-insensitive searching, setting this as an environment variable means users can activate this option across their terminal sessions by setting the variable once.
 
@@ -969,7 +966,7 @@ An interesting feature of the program is that it can be controlled with an envir
 
 Consider trying controlling case sensitivity through either a command-line argument or an environment variable for further experiment. Decide which should take precedence if both are set. The std::env module contains many more features for dealing with environment variables.
 
-## Chapter 3 Part 6: Writing to stderr instead of stdout
+## Chapter 12 Part 6: Writing to stderr instead of stdout
 
 Writing error messages to standard error instead of standard output:
 
@@ -993,7 +990,7 @@ Summary:
 
 You've gone through how to perform common I/O operations in Rust using command line arguments, files, environment variables, and the eprintln! macro for printing errors. This knowledge prepares you to write command line applications that are well organized, store data effectively in the right data structures, handle errors well, and are well tested. Following this, the use of closures and iterators in Rust are addressed which show Rust's functional programming influences.
 
-## Chapter 4 Part 0: Functional features
+## Chapter 13 Part 0: Functional features
 
 Functional programming is a significant influence on Rust, emphasizing the use of functions as values which can be passed in arguments, returned from other functions, or assigned to variables for later execution.
 
@@ -1007,7 +1004,7 @@ These features play well into Rust's goals, as they are highly efficient. Perfor
 
 Understanding and mastering the use of closures and iterators is fundamental to writing idiomatic, high-performance Rust code, hence the emphasis on them in learning the language.
 
-## Chapter 4 Part 1: Closures
+## Chapter 13 Part 1: Closures
 
 Closures in Rust are anonymous functions that can be stored in a variable or passed as arguments to other functions. They can capture values from the scope they're created in which allows for a great deal of flexibility such as code reuse and custom behavior.
 
@@ -1023,7 +1020,7 @@ One key feature of closures is their type inference capability. Unlike `fn` func
 
 The `move` keyword can be used to force the closure
 
-## Chapter 4 Part 2: Iterators
+## Chapter 13 Part 2: Iterators
 
 The iterator pattern is a common way to interact with a series of items in a sequence, managing the logic of traversing through and ending the sequence.
 
@@ -1037,7 +1034,7 @@ Rust features `map` and `filter` iterator adaptors, where `map` allows any opera
 
 Methods such as `collect` consume the iterator, in the sense that they use up the iterator to produce some kind of collection.
 
-## Chapter 4 Part 3: Improving our io project
+## Chapter 13 Part 3: Improving our io project
 
 The concept of iterators is often utilized to make code more fluid and less cumbersome. An iterator is an abstraction that allows you to process a sequence of elements in a collection. In the context of the Rust programming language, the iterator design pattern allows you to navigate through a sequence of elements in a collection such as an array or a vector.
 
@@ -1068,7 +1065,7 @@ The `Config::build` function builds your configuration based on these arguments 
 
 Remember, Rust gives you the full power to choose: you have full control over how low-level or how high-level your program should be. Even if you decide to use high-level abstractions, Rust guarantees that there won't be any hidden costs that might slow down your code.
 
-## Chapter 4 Part 4: Performance
+## Chapter 13 Part 4: Performance
 
 In terms of performance, either loops or iterators can be used in Rust. They perform similarly in many situations, with minimal differences in most common use cases. A test comparing the two found the iterator to be ever so slightly faster, but both were optimized to a point where you could not hand-write the lower-level code any better.
 
@@ -1080,7 +1077,7 @@ In real-world examples, such as in an audio decoder's mathematical algorithm, th
 
 In summary, the inspired features of closures and iterators from functional programming languages aid in simplifying Rust's complex ideas into low-level performance code, making it more efficient. Moreover, when it comes to performance, the gap when using loops or iterators is negligible, promoting a more expressive and lean approach to developing your projects.
 
-## Chapter 5 Part 0: More about cargo
+## Chapter 14 Part 0: More about cargo
 
 "Cargo" and "Crates.io" are integral to Rust's ecosystem. Cargo is Rust's build system that enables compiling, running, and testing your code with advanced features.
 
@@ -1096,7 +1093,7 @@ In summary, the inspired features of closures and iterators from functional prog
 
 To utilize all of Cargo’s features, refer to the Rust's official documentation.
 
-## Chapter 5 Part 1: Release profiles
+## Chapter 14 Part 1: Release profiles
 
 Release profiles in Rust are customizable profiles with different configurations, providing more control over code compiling options. Cargo, Rust's package manager, has two primary profiles: the "dev" profile for development, and the "release" profile for release builds.
 
@@ -1108,7 +1105,7 @@ You can override these settings. For instance, by adding `[profile.dev] opt-leve
 
 To get the complete list of customization options and defaults, the official Rust documentation is the go-to reference.
 
-## Chapter 5 Part 2: Publishing to crates io
+## Chapter 14 Part 2: Publishing to crates io
 
 Publishing a crate to Crates.io requires several steps. You will first need to set up an account on Crates.io and get an API token. Then, you can prepare your crate for publishing by adding necessary metadata such as a unique name, version, a short description, and licensing information in the [package] section of the crate's Cargo.toml file.
 
@@ -1124,7 +1121,7 @@ To make your published package more user-friendly, use documentation comments to
 
 Remember, offering a convenient public API and useful documentation are crucial to making your crate user-friendly and promoting its usage within the Rust community.
 
-## Chapter 5 Part 3: Cargo workspaces
+## Chapter 14 Part 3: Cargo workspaces
 
 Cargo Workspaces are a feature offered by Rust language that help manage multiple related packages being developed concurrently. For instance, when your project evolves to a point where a library crate starts to get extensive, you might want to divide your package into multiple library crates. This is where workspace comes in handy.
 
@@ -1143,7 +1140,7 @@ There's only one `target` directory at the top level of a workspace where the co
 
 To manage dependencies, just include dependencies in the package's `Cargo.toml` file. If you want to use a dependency in another crate, it must be listed as a dependency in that crate's `Cargo.toml` file.---
 
-## Chapter 5 Part 4: Installing binaries
+## Chapter 14 Part 4: Installing binaries
 
 "Cargo install" is a command that allows Rust developers to install and utilize binary crates locally, without the need to replace system packages. It is designed as a handy means to install tools shared on 'crates.io'. However, it's important to remember that only packages with binary targets can be installed. A binary target refers to the runnable program that a crate can create if it possesses an "src/main.rs" file or any other file specified as a binary. This is different from a library target which, while not runnable on its own, can be incorporated into other programs.
 
@@ -1151,7 +1148,7 @@ Typically, the README file of a crate will specify whether the crate is a librar
 
 An example of an application that can be installed using the cargo install command is 'ripgrep', a Rust-based implementation of the 'grep' tool which is used for searching files. The installation location and name of the installed binary are provided in the output, and as long as the installation directory is a part of your $PATH, you can begin to use the newly installed program right away.
 
-## Chapter 5 Part 5: Extending cargo
+## Chapter 14 Part 5: Extending cargo
 
 Cargo, the Rust package manager, is designed in a way that it can be extended with new subcommands. Custom commands do not require modifying Cargo and they work seamlessly as if they were part of the built-in tools of Cargo.
 
@@ -1161,7 +1158,7 @@ This feature of Cargo to use "cargo install" for extension installation and then
 
 Rust's ecosystem's strength also relies on the sharing of code using Cargo and crates.io. Though Rust's standard library maintains a standard of being small and stable, crates offer an easy choice for sharing, using, and improving code independent of the language's timeline. The encouragement here is to share code useful to you as it is highly likely that it could be beneficial for someone else too.
 
-## Chapter 6 Part 0: Smart pointers
+## Chapter 15 Part 0: Smart pointers
 
 Smart Pointers are variables that contain an address in memory, pointing at some other data. They differ from the common reference pointers of Rust by having additional metadata and capabilities. While references simply borrow data, many smart pointers own the data they point to.
 
@@ -1179,7 +1176,7 @@ Some common smart pointers in the Rust standard library include:
 
 Smart pointers also adhere to the 'interior mutability' pattern, whereby an immutable type exposes an API for mutating an interior value. Understanding 'reference cycles' and how they can leak memory (and thus how to prevent such leaks) is also crucial when dealing with smart pointers.
 
-## Chapter 6 Part 1: Box
+## Chapter 15 Part 1: Box
 
 "Box<T>" in Rust programming language is a straightforward variety of a smart pointer that allows for storing data on the heap. It is ideally used in situations where the type size can't be known at compile-time or when wanting to transfer ownership of a large amount of data to prevent copying. It can also be used when you desire to own a value and it just implements a particular trait rather than being of a specific type.
 
@@ -1189,7 +1186,7 @@ Keep in mind that the "Box<T>" type implements the "Deref" trait allowing "Box<T
 
 In summary, boxes allow you to store data on the heap and transfer ownership, maintain known size for recursive types and hence play a central role in building efficient Rust programs.
 
-## Chapter 6 Part 2: Deref
+## Chapter 15 Part 2: Deref
 
 In Rust, the `Deref` trait allows you to customize the behavior of the dereference operator (`*`). By implementing `Deref` in such a way that a smart pointer can be treated like a regular reference, you can write code that operates on references and use that code with smart pointers too.
 
@@ -1199,7 +1196,7 @@ The `DerefMut` trait, on the other hand, provides the ability to override the `*
 
 However, Rust does maintain strict borrowing rules in deref coercion: immutable references will never coerce to mutable references. This is because converting an immutable reference to a mutable reference could potentially violate these borrowing rules.
 
-## Chapter 6 Part 3: Drop
+## Chapter 15 Part 3: Drop
 
 In Rust programming, the `Drop` trait allows you to specify what should happen when a value goes out of scope. This is particularly useful when working with smart pointers, as it allows for cleanup of resources such as files or network connections.
 
@@ -1211,7 +1208,7 @@ There are cases however, where you may want to force a value to be cleaned up be
 
 Rust's automatic cleanup prevents you from attempting to clean up the same value twice, often referred to as a "double free" error. The ownership system in Rust ensures drop gets called only once, when the value is no longer used. This, in combination with the `Drop` trait, adds to Rust's memory safety features, as you don't have to remember to manually clean up and you avoid errors caused by early or double cleanup.
 
-## Chapter 6 Part 4: Rc
+## Chapter 15 Part 4: Rc
 
 Rust's `Rc<T>`, short for reference counting, is a smart pointer that is used when a single value may have multiple owners. This comes into play when you're dealing with complex data structures, like graphs, where multiple edges might point to the same node. In these scenarios, `Rc<T>` counts the number of references to a value, allowing for the value to be cleaned up only when there are zero references remaining.
 
@@ -1225,7 +1222,7 @@ Remember, `Rc<T>` is only effective for use in single-threaded scenarios. When d
 
 Throughout this process, you can also monitor the changing reference count by using the `Rc::strong_count` function. Importantly, remember that the `Rc<T>` type also allows for the concept of `weak_count`, which you could use when you want to ensure that values remain valid as long as any of their owners still exist.
 
-## Chapter 6 Part 5: Interior mutability
+## Chapter 15 Part 5: Interior mutability
 
 Interior mutability in Rust allows you to mutate data even when there are immutable references to that data. The interior mutability pattern uses `unsafe` code inside a data structure to circumvent Rust’s usual rules that govern mutation and borrowing. This strategy is typically adopted only when you can ensure that the borrowing rules willIn Rust, RefCell<T> is a type which represents a mutable memory location with dynamically-checked borrowing rules. It allows mutable borrowing while satisfying the borrowing checker by ensuring that at runtime, you can only have either many immutable references or one mutable reference. It's a type that enforces the borrowing rules at runtime instead of compile time.
 
@@ -1239,7 +1236,7 @@ It's crucial to note that if you break the borrowing rules, you will get a runti
 
 While RefCell<T> offers more flexibility and avoids some compile-time checks, it also comes with the cost of slower performance compared to achieving the same result via compile-time checks or borrowing. Hence, it's a trade-off between safety and code performance.
 
-## Chapter 6 Part 6: Reference cycles
+## Chapter 15 Part 6: Reference cycles
 
 Rust's memory safety guarantees make it challenging, but not impossible, to inadvertently create memory that is never cleaned up, referred to as a memory leak. This is not covered in Rust's standard guarantees, hence memory leaks are considered memory safe in Rust.
 
@@ -1253,7 +1250,7 @@ Another solution is reorganising your data structures so that some references ex
 
 The `Rc::clone` increases the `strong_count` of an `Rc<T>` instance, and an `Rc<T>` instance is only cleaned up if its `strong_count` is 0. You can also create a weak reference to the value within an `Rc<T>` instance by calling `R
 
-## Chapter 7 Part 0: Concurrency
+## Chapter 16 Part 0: Concurrency
 
 Fearless Concurrency:
 
@@ -1267,7 +1264,7 @@ Rust favors a flexible approach to handling concurrency issues rather than forci
 
 Therefore, Rust provides a range of tools to model problems in a manner that is best suited to your specific needs and constraints. Rust explains how to create threads for running code pieces simultaneously, uses message-passing and shared-state concurrency, and expands Rust's concurrency assurance to custom types and standard library types through Sync and Send traits.
 
-## Chapter 7 Part 1: Threads
+## Chapter 16 Part 1: Threads
 
 Threads in Rust allow for concurrent operation within a given program. Threads are independent segments of a program that can run simultaneously. This can improve performance but also adds complexity due to potential issues such as race conditions, deadlocks, and bugs that occur only in certain scenarios and are hard to reproduce.
 
@@ -1281,7 +1278,7 @@ To use data from the main thread in the child thread, the closure of the child t
 
 In conclusion, concurrently running code with threads can enhance program performance, but it also requires careful handling and structuring of the code to avoid potential issues. Rust provides tools and enforces rules that help manage this complexity and potential pitfalls associated with multithreading.
 
-## Chapter 7 Part 2: Message passing
+## Chapter 16 Part 2: Message passing
 
 The Rust programming language leverages an approach known as message passing to ensure safe concurrency. This is done using channels provided in Rust’s standard library, where threads or actors can communicate by sending each other messages containing data.
 
@@ -1293,7 +1290,7 @@ Furthermore, a channel can have multiple sending ends but only one receiving end
 
 In summary, Rust programming language's ability to condense content down to bare essentials while focusing on the theory makes it a powerful clothing tool, especially in resource-restricted systems-constrained environments. Therefore, Rust is an excellent choice for developing efficient, concurrent, and safer software.
 
-## Chapter 7 Part 3: Shared state
+## Chapter 16 Part 3: Shared state
 
 Shared-state concurrency allows for multiple threads to access the same shared data. To facilitate this, Rust uses a Mutex (Mutual Exclusion), which ensures that only one thread can access certain data at any given time. To access the data the thread must signal that it wants access by asking to acquire the mutex's lock. This locking system guards the data. It is important to attempt to acquire the lock before using the data and unlock the data after using it so other threads can acquire the lock.
 
@@ -1304,7 +1301,7 @@ Both Mutex<T> and Rc<T> provide interior mutability, where you have an immutable
 Important to note is "Send" and "Sync" traits in Rust. "Send" marker trait indicates ownership can be transferred between threads while "Sync" marker trait indicates that it is safe for the type to be referenced from multiple threads.
 In a nutshell, these are the primary mechanisms by which Rust achieves thread safety and concurrency.
 
-## Chapter 7 Part 4: Extensible concurrency sync and send
+## Chapter 16 Part 4: Extensible concurrency sync and send
 
 Concurrency in the Rust language is largely enabled by features from the standard library, not the very language itself. This flexibility allows developers to create or utilize custom concurrency features beyond what the language or the standard library provides.
 
@@ -1320,7 +1317,7 @@ There are advanced concurrency tools offered within crates outside the standard 
 
 The Rust standard library offers safe concurrency solutions like channels for message passing and smart pointer types that can be safely used in concurrent contexts. With Rust, code that compiles will safely run on multiple threads, reducing the common fear around concurrent programming.
 
-## Chapter 8 Part 0: Oop
+## Chapter 17 Part 0: Oop
 
 Rust's position within the domain of Object-Oriented Programming (OOP) is ambiguous as it meets certain criteria but not others. This programming paradigm, incepted in the 1960s with the Simula language and later coined by Alan Kay, is based on 'objects' and data sharing through message passing.
 
@@ -1328,7 +1325,7 @@ Rust exhibits some of these OOP characteristics, however, its interpretation is 
 
 By evaluating the way OOP concepts map onto the Rust language, understanding how to implement such design patterns, and grasping the give-and-take relationship between such patterns and Rust's own strengths, you could comprehend Rust's dynamic positioning within the OOP space.
 
-## Chapter 8 Part 1: What is oo
+## Chapter 17 Part 1: What is oo
 
 Object-Oriented Programming (OOP) characteristics generally include objects, encapsulation and inheritance. In Rust, these are interpreted and implemented differently from traditional OOP languages.
 
@@ -1342,7 +1339,7 @@ Polymorphism in Rust is achieved through the general concept of being able to wo
 
 In summary, while Rust does have some traits common to an OOP language, it applies them uniquely, focusing on lending these principles in a safer, more controlled, and more flexible manner.
 
-## Chapter 8 Part 2: Trait objects
+## Chapter 17 Part 2: Trait objects
 
 In Rust, we can use trait objects to allow for values of different types. The typical vector limitation is that they can store elements of only one type. However, we can create a struct with a field that can hold any type implementing a specified trait, acting as a stand-in for any concrete type that implements that trait.
 
@@ -1354,7 +1351,7 @@ In this context, Rust uses the `dyn` keyword to flag using trait objects. Also, 
 
 Ultimately, trait objects provide a level of abstraction and flexibility in Rust programming, enabling the same code to work with multiple types. This can minimize code duplication and support generic, reusable actions. However, this flexibility comes at the performance cost of dynamic dispatch. Thus, trait objects are best used when you have multiple types that need to share common behavior in a context that does not require high performance.
 
-## Chapter 8 Part 3: Oo design patterns
+## Chapter 17 Part 3: Oo design patterns
 
 The specific code you've shared appears to be about implementing a state pattern in Rust through the use of trait objects. This is an object-oriented design pattern that models state-dependent behavior.
 
@@ -1388,7 +1385,7 @@ In summary, the code manipulates the `state` of `Post` in a manner that provides
 
 However, recall that this high-level design in Rust is at the expense of greater complexity in the code, as detailed control over how memory is handled exposes more to the programmer, compared to languages that abstract away memory management.
 
-## Chapter 9 Part 0: Patterns
+## Chapter 18 Part 0: Patterns
 
 "Patterns and Matching" encompasses how Rust uses patterns, which are special syntaxes, for matching against the structure of types.
 
@@ -1398,7 +1395,7 @@ Patterns become operative when the compared value matches the pattern. If the va
 
 Hence, understanding patterns provides a clearer way of expressing many concepts. This involves recognizing where patterns are valid, discerning refutable and irrefutable patterns, and knowing the various pattern syntaxes.
 
-## Chapter 9 Part 1: All the places for patterns
+## Chapter 18 Part 1: All the places for patterns
 
 Patterns are a critical concept in Rust that can be used in different areas such as:
 
@@ -1416,7 +1413,7 @@ Patterns are a critical concept in Rust that can be used in different areas such
 
 Patterns can be either irrefutable (always match) or refutable (won't always match). `let` statements, function parameters, `for` loops and `while let` conditionals require irrefutable patterns, while `if let` and `match` arms can handle refutable patterns.
 
-## Chapter 9 Part 2: Refutability
+## Chapter 18 Part 2: Refutability
 
 Patterns can be refutable or irrefutable. An irrefutable pattern is one that will always match. On the other hand, a refutable pattern may fail to match based on the value passed. A good example to understand this is the statement "let x = 5;" with 'x' being an irrefutable pattern as it matches anything while the pattern 'Some(x)' can be refutable because if the variable doesn't have some value, the pattern will not match.
 
@@ -1428,7 +1425,7 @@ If a refutable pattern is used where it Rust requires an irrefutable one, you ca
 
 Finally, in the context of 'match' arms, all the arms except the last one must use refutable patterns. The last arm should match any remaining values with an irrefutable pattern. Although you can use an irrefutable pattern in a 'match' with just one arm, this is seldom useful and a 'let' statement would serve the purpose better.
 
-## Chapter 9 Part 3: Pattern syntax
+## Chapter 18 Part 3: Pattern syntax
 
 Rust employs a powerful concept known as pattern matching, which allows for branching based on complex conditions. Patterns are how Rust enables structured data to be deconstructed and used in a very readable manner. To use patterns, you can use the `match` statement as well as several other language constructs.
 
@@ -1471,7 +1468,7 @@ In Rust, the `match` expression, destructuring syntax, and pattern matching prov
 
 By understanding and mastering these techniques, we can further express complex ideas, control code flow, and maintain the safety and performance the Rust language provides.
 
-## Chapter 10 Part 0: Advanced features
+## Chapter 19 Part 0: Advanced features
 
 This section breaks down the advanced features of Rust programming language that aren't commonly used but are vital in specific scenarios. It will act as a guide for when you encounter these features in your Rust journey.
 
@@ -1487,7 +1484,7 @@ This section breaks down the advanced features of Rust programming language that
 
 Remember, although these features may not be frequently utilized, understanding them expands your Rust fluency and prepares you for diverse programming tasks.
 
-## Chapter 10 Part 1: Unsafe rust
+## Chapter 19 Part 1: Unsafe rust
 
 Unsafe Rust is essentially a sub-language inside Rust which doesn't offer memory safety guarantees. This comes in handy while performing certain processes which Rust's compiler might reject, safe or not. As a developer, you ensure safety while using unsafe codes.
 
@@ -1507,7 +1504,7 @@ Another safe abstraction provided by unsafe code is its ability to call external
 
 In essence, unsafe code allows you to bend Rust's rules, but only inside the unsafe block. Bear in mind, achieving safety goals in unsafe code is developer's responsibility.
 
-## Chapter 10 Part 3: Advanced traits
+## Chapter 19 Part 3: Advanced traits
 
 In the Rust programming language, advanced traits allow you to further customize your code through a variety of methods.
 
@@ -1525,7 +1522,7 @@ It's remarkable that there are no methods of the inner type available directly o
 
 Although using newtype can be quite helpful when dealing with traits, it also possesses significant usability in more advanced interactions with Rust's type system where traits aren't involved.
 
-## Chapter 10 Part 4: Advanced types
+## Chapter 19 Part 4: Advanced types
 
 In Rust, we have the concept of "Advanced Types" which is crucial for the competence in the language.
 
@@ -1539,7 +1536,7 @@ We have what's known as Dynamically Sized Types; we write the code using values 
 
 In functions, Rust implicitly adds a bound on the Sized trait to every generic function, meaning that by default, generic functions will work only on types that have a known size at compile time. This can be relaxed by using a "?Sized" trait bound; this means "T may or may not be Sized."
 
-## Chapter 10 Part 5: Advanced functions and closures
+## Chapter 19 Part 5: Advanced functions and closures
 
 Advanced Functions and Closures
 
@@ -1559,7 +1556,7 @@ Closures in Rust are a little tricky when it comes to returning them from a func
 
 In conclusion, understanding the details of functions and closures in Rust is vital as you advance in learning the language. It helps you write cleaner, more reusable code, capable of doing more complex tasks in a simple way.
 
-## Chapter 10 Part 6: Macros
+## Chapter 19 Part 6: Macros
 
 Macros in Rust refer to features like declarative macros with `macro_rules!` and three kinds of procedural macros including custom `#[derive]` macros, attribute-like macros, and function-like macros. Macros are used for writing code that writes other code, known as metaprogramming.
 
@@ -1575,7 +1572,7 @@ Attribute-like macros allow you to create new attributes and they can be applied
 
 Function-like macros are similar to `macro_rules!` macros, in that they can take an unknown number of arguments, but they rely on manipulating a `TokenStream` using Rust code to define their functionality.
 
-## Chapter 2 Part 0: Final project a web server
+## Chapter 20 Part 0: Final project a web server
 
 The final project involves creating a multithreaded web server that displays a "hello" message. Here are the steps we will undertake:
 
@@ -1591,7 +1588,7 @@ The final project involves creating a multithreaded web server that displays a "
 
 However, it is worth mentioning that this approach may not be the best way to build a web server with Rust. More efficient ways are available within community-published, production-ready crates on crates.io. The aim of this project is to enable learning the underlying concepts and techniques, which is possible due to Rust being a systems programming language that lets us choose the level of abstraction to work with. While more comprehensive server and thread pool implementations exist, building them from scratch serves as a learning exercise.
 
-## Chapter 2 Part 1: Single threaded
+## Chapter 20 Part 1: Single threaded
 
 Creating a single-threaded web server starts with having an understanding of some protocols. The two main protocols involved in web servers are HTTP (Hypertext Transfer Protocol) and TCP (Transmission Control Protocol). Both protocols are request-response formats. A client initiates a request and a server listens to the request and provides a response. TCP is the lower-level protocol that outlines how information gets from one server to another. HTTP builds on top of TCP by defining the content of the requests and responses.
 
@@ -1607,7 +1604,7 @@ When building a web server, you start by making your server listen to a TCP conn
 
 Currently, the server can only process one request at a time due to its single-threaded nature. However, this scenario can be enhanced to handle multiple requests simultaneously by employing a multithreaded approach.
 
-## Chapter 2 Part 2: Multithreaded
+## Chapter 20 Part 2: Multithreaded
 
 The Rust programming language allows for the creation of multithreaded servers, which can handle multiple requests concurrently, significantly increasing server throughput. This is an improvement from a single-threaded server, which processes each request in turn, causing server delays if it receives a request that takes a long time to process.
 
@@ -1655,7 +1652,7 @@ To ensure that a worker receives a job and executes it, you would need to use a 
 
 The thread pool concept in Rust allows you to manage multiple threads and effectively execute connections asynchronously. However, the number of threads created is finite, defined by the initial thread pool size, this prevents overloading of the system due to numerous requests.
 
-## Chapter 2 Part 3: Graceful shutdown and cleanup
+## Chapter 20 Part 3: Graceful shutdown and cleanup
 
 The code provided creates a simple web server that asynchronously handles requests with a thread pool, designed to accept only two requests before shutting down for demonstration purposes. The main elements involved in the system are:
 
