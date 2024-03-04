@@ -136,6 +136,13 @@ export default defineConfig({
 				}
 			},
 			{
+				label: 'Labs',
+				collapsed: true,
+				autogenerate: {
+					directory: 'labs'
+				}
+			},
+			{
 				label: 'Concepts',
 				collapsed: true,
 				autogenerate: {

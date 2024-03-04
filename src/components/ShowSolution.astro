@@ -1,0 +1,59 @@
+---
+
+---
+
+<show-solution class="show-solution">
+  <button>Show solution</button>
+  <div class="hidden">
+    <slot />
+  </div>
+</show-solution>
+
+<script>
+  class ShowSolution extends HTMLElement {
+    #contentDiv: HTMLDivElement | null = null;
+    constructor() {
+      super();
+      const button = this.querySelector("button");
+      this.#contentDiv = this.querySelector("div");
+      button?.addEventListener("click", this.#toggle);
+    }
+    #toggle = () => {
+      if (this.#contentDiv?.classList.contains("hidden")) {
+        this.#contentDiv.classList.remove("hidden");
+      } else {
+        this.#contentDiv?.classList.add("hidden");
+      }
+    };
+  }
+  customElements.define("show-solution", ShowSolution);
+</script>
+
+<style>
+  .show-solution {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .show-solution button {
+    width: 100%;
+    background-color: var(--sl-color-gray-6);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  .show-solution button:hover {
+    background-color: var(--sl-color-gray-5);
+    border: 1px solid var(--sl-color-gray-4);
+  }
+  .show-solution button:active {
+    background-color: var(--sl-color-gray-4);
+    border: 1px solid var(--sl-color-gray-3);
+  }
+</style>
+
+<style is:global>
+  .hidden {
+    display: none !important;
+  }
+</style>

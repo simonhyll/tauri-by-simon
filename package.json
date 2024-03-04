@@ -11,7 +11,7 @@
   "dependencies": {
     "@astrojs/check": "^0.3.4",
     "@astrojs/rss": "^4.0.2",
-    "@astrojs/starlight": "^0.19.1",
+    "@astrojs/starlight": "^0.21.0",
     "@astrojs/vue": "^4.0.8",
     "@tauri-apps/cli": "^1.5.9",
     "@types/jsdom": "^21.1.6",
