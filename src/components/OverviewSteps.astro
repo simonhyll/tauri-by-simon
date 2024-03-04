@@ -1,0 +1,29 @@
+---
+import { getEntryBySlug } from "astro:content";
+let { level } = Astro.props;
+const page = (await getEntryBySlug("docs", Astro.params.slug as string)) as any;
+const folder = page.slug;
+import { LinkCard, Steps } from "@astrojs/starlight/components";
+import { getCollection } from "astro:content";
+const articles = (await getCollection("docs"))
+  .filter((val) => val.slug.startsWith(folder))
+  .filter((val) => val.data.sidebar.label !== "Overview")
+  .filter((val) => val.slug != folder)
+  .sort((a: any, b: any) => a.data.sidebar.order - b.data.sidebar.order);
+---
+
+<Steps>
+  <ol>
+    {
+      articles.map((article, index) => (
+        <li>
+          <LinkCard
+            title={article.data.title}
+            description={article.data.description}
+            href={"/" + article.slug}
+          />
+        </li>
+      ))
+    }
+  </ol>
+</Steps>
