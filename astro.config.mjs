@@ -10,7 +10,7 @@ export default defineConfig({
 	markdown: {
 		remarkPlugins: [],
 		rehypePlugins: [
-			rehypeHeadingIds, [rehypeAutolinkHeadings, { behavior: 'wrap' }]]
+			rehypeHeadingIds, [rehypeAutolinkHeadings, { behavior: 'wrap', properties: { ariaHidden: true, tabIndex: -1, class: 'heading-link' } }]]
 	},
 	integrations: [vue(),
 	starlight({

@@ -33,6 +33,24 @@
   --success-border: #5bcd57;
 }
 
+/* Heading link styling */
+.heading-link::after {
+  content: "#";
+  padding-inline-start: 0.25em;
+  opacity: 0;
+  transition: var(--tauri-transition-speed);
+}
+
+.heading-link:hover::after {
+  color: var(--sl-color-text-accent);
+  opacity: 1;
+}
+
+.heading-link {
+  text-decoration: none;
+  color: var(--sl-color-white) !important;
+}
+
 html {
   overflow: auto;
   height: 100%;
