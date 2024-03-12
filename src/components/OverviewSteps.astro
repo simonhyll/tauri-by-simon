@@ -1,8 +1,8 @@
 ---
 import { getEntryBySlug } from "astro:content";
-let { level } = Astro.props;
+let { root } = Astro.props;
 const page = (await getEntryBySlug("docs", Astro.params.slug as string)) as any;
-const folder = page.slug;
+const folder = root ?? page.slug;
 import { LinkCard, Steps } from "@astrojs/starlight/components";
 import { getCollection } from "astro:content";
 const articles = (await getCollection("docs"))
