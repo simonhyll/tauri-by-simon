@@ -26,11 +26,10 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-      - uses: oven-sh/setup-bun@v1
       - name: Install dependencies
-        run: bun install
+        run: pnpm install
       - name: Build
-        run: bun run build
+        run: pnpm build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

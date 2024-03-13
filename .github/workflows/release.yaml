@@ -15,11 +15,6 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
-
-      - uses: oven-sh/setup-bun@v1
-        with:
-          bun-version: latest
-
       - name: Restore node_modules
         id: cache-node-modules-restore
         uses: actions/cache/restore@v4
@@ -28,7 +23,7 @@ jobs:
           key: node-modules
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile --production
+        run: pnpm install
 
       - name: Save node_modules
         id: cache-primes-save
@@ -38,7 +33,7 @@ jobs:
           key: ${{ steps.cache-node-modules-restore.outputs.cache-primary-key }}
 
       - name: Build frontend
-        run: bun run build
+        run: pnpm build
 
       - uses: actions/upload-artifact@v4
         with:
