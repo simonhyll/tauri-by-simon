@@ -138,40 +138,9 @@ export default defineConfig({
 			{
 				label: 'Labs',
 				collapsed: true,
-				items: [
-					{
-						label: 'Overview',
-						link: 'labs'
-					},
-					{
-						label: 'Features',
-						collapsed: true,
-						autogenerate: {
-							directory: 'labs/features'
-						}
-					},
-					{
-						label: 'ChatGPT',
-						collapsed: true,
-						autogenerate: {
-							directory: 'labs/chatgpt'
-						}
-					},
-					{
-						label: 'DevOps',
-						collapsed: true,
-						autogenerate: {
-							directory: 'labs/devops'
-						}
-					},
-					{
-						label: 'Project Management',
-						collapsed: true,
-						autogenerate: {
-							directory: 'labs/project-management'
-						}
-					},
-				],
+				autogenerate: {
+					directory: 'labs'
+				}
 			},
 			{
 				label: 'Concepts',
