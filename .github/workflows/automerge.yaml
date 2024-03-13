@@ -50,3 +50,5 @@ jobs:
           MERGE_RETRIES: 0
           MERGE_REQUIRED_APPROVALS: 1
           MERGE_DELETE_BRANCH: "true"
+          UPDATE_LABELS: ":robot: Automerge"
+          UPDATE_METHOD: "rebase"
