@@ -11,6 +11,9 @@ jobs:
     environment:
       name: github-releases
     steps:
+      - uses: pnpm/action-setup@v3
+        with:
+          version: latest
       - uses: actions/checkout@v4
         with:
           lfs: true
@@ -21,7 +24,6 @@ jobs:
         with:
           path: ./node_modules
           key: node-modules
-
       - name: Install dependencies
         run: pnpm install
 
