@@ -8,6 +8,9 @@ dependencies:
   '@astrojs/check':
     specifier: ^0.3.4
     version: 0.3.4(typescript@5.4.2)
+  '@astrojs/markdown-remark':
+    specifier: ^4.3.0
+    version: 4.3.0
   '@astrojs/rss':
     specifier: ^4.0.5
     version: 4.0.5
@@ -5965,7 +5968,7 @@ packages:
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.3
-      mdast-util-to-hast: 13.0.2
+      mdast-util-to-hast: 13.1.0
       unified: 11.0.4
       vfile: 6.0.1
     dev: false
