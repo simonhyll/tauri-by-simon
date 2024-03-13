@@ -27,8 +27,8 @@ dependencies:
     specifier: ^21.1.6
     version: 21.1.6
   '@types/three':
-    specifier: ^0.160.0
-    version: 0.160.0
+    specifier: ^0.162.0
+    version: 0.162.0
   astro:
     specifier: ^4.5.2
     version: 4.5.2(sass@1.71.1)(typescript@5.4.2)
@@ -48,8 +48,8 @@ dependencies:
     specifier: ^0.32.6
     version: 0.32.6
   three:
-    specifier: ^0.160.1
-    version: 0.160.1
+    specifier: ^0.162.0
+    version: 0.162.0
   typescript:
     specifier: ^5.4.2
     version: 5.4.2
@@ -2172,6 +2172,10 @@ packages:
       '@tauri-apps/cli-win32-x64-msvc': 1.5.11
     dev: false
 
+  /@tweenjs/tween.js@23.1.1:
+    resolution: {integrity: sha512-ZpboH7pCPPeyBWKf8c7TJswtCEQObFo3bOBYalm99NzZarATALYCo5OhbCa/n4RQyJyHfhkdx+hNrdL5ByFYDw==}
+    dev: false
+
   /@types/acorn@4.0.6:
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
     dependencies:
@@ -2297,9 +2301,10 @@ packages:
     resolution: {integrity: sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==}
     dev: false
 
-  /@types/three@0.160.0:
-    resolution: {integrity: sha512-jWlbUBovicUKaOYxzgkLlhkiEQJkhCVvg4W2IYD2trqD2om3VK4DGLpHH5zQHNr7RweZK/5re/4IVhbhvxbV9w==}
+  /@types/three@0.162.0:
+    resolution: {integrity: sha512-0j5yZcVukVIhrhSIC7+LmBPkkMoMuEJ1AfYBZfgNytdYqYREMuiyXWhYOMeZLBElTEAlJIZn7r2W3vqTIgjWlg==}
     dependencies:
+      '@tweenjs/tween.js': 23.1.1
       '@types/stats.js': 0.17.3
       '@types/webxr': 0.5.14
       fflate: 0.6.10
@@ -6602,8 +6607,8 @@ packages:
       source-map-support: 0.5.21
     dev: false
 
-  /three@0.160.1:
-    resolution: {integrity: sha512-Bgl2wPJypDOZ1stAxwfWAcJ0WQf7QzlptsxkjYiURPz+n5k4RBDLsq+6f9Y75TYxn6aHLcWz+JNmwTOXWrQTBQ==}
+  /three@0.162.0:
+    resolution: {integrity: sha512-xfCYj4RnlozReCmUd+XQzj6/5OjDNHBy5nT6rVwrOKGENAvpXe2z1jL+DZYaMu4/9pNsjH/4Os/VvS9IrH7IOQ==}
     dev: false
 
   /to-fast-properties@2.0.0:
