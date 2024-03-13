@@ -3008,7 +3008,7 @@ dependencies = [
 
 [[package]]
 name = "tauri-by-simon"
-version = "0.1.28"
+version = "0.1.32"
 dependencies = [
  "serde",
  "serde_json",
