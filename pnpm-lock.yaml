@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@astrojs/check':
-    specifier: ^0.3.4
-    version: 0.3.4(typescript@5.4.2)
+    specifier: ^0.5.8
+    version: 0.5.8(typescript@5.4.2)
   '@astrojs/markdown-remark':
     specifier: ^4.3.0
     version: 4.3.0
@@ -82,8 +82,8 @@ packages:
       leven: 3.1.0
     dev: false
 
-  /@astrojs/check@0.3.4(typescript@5.4.2):
-    resolution: {integrity: sha512-Wi4KwW38J3GCd/U6LH2UuU4uc4P/K1WYaqhoKm2o7rVoGhQfO+RWrSO26rUPRXYbmae8JugAgpCmsHC8bt5RlA==}
+  /@astrojs/check@0.5.8(typescript@5.4.2):
+    resolution: {integrity: sha512-O3lPUIwhlRtya8KcUDfB0+vBPgj/qVoNvTUhYTTDx0uEsHBbssO5RSFezw6KVBxps6zIR8+YAyOoRKPBhMB7KQ==}
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
