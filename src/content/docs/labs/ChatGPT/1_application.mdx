@@ -207,7 +207,7 @@ git checkout chatgpt_1_0
 
 ## Questions
 
-### How can we improve our solution?
+##### How can we improve our solution?
 This lab doesn't show off nearly all the capabilities we have at our disposal for making the perfect project. There are things both in the code itself and outside it that we could do to improve it. Figure out what some of those are!
 <ShowSolution text="Show answer">
 - **Native token prompt:** We could receive the token from a native window instead of from the FE.
@@ -217,14 +217,14 @@ This lab doesn't show off nearly all the capabilities we have at our disposal fo
 - **Documentation:** We haven't documented any parts of our project. We could both create a `docs/` folder with e.g. a Starlight based site and add docstrings with examples to our code.
 </ShowSolution>
 
-### What is Tauri providing us with that we don't have in a PWA?
+##### What is Tauri providing us with that we don't have in a PWA?
 While a PWA (persistent web app) shares a lot of similarities with a Tauri app, there are features that Tauri provides that you wouldn't have access to in a basic PWA. Lets take a moment to appreciate what it is that Tauri has to offer!
 <ShowSolution text="Show answer">
 - **Added security:**
 - **Native performance:**
 </ShowSolution>
 
-### What are some potential security issues?
+##### What are some potential security issues?
 While we haven't actively tried to make an insecure solution there are some potential risks involved with how we've developed this little lab. Which ones did you spot?
 <ShowSolution text="Show answer">
 - **Token handling:** Currently we are relying on submitting the token to the BE via the FE. We could use Egui to pop open a native window for receiving the secret, eliminating the risk of a compromised FE harming the user.
@@ -232,7 +232,7 @@ While we haven't actively tried to make an insecure solution there are some pote
 - **Malicious JavaScript:** We haven't touched upon CSP nor used the Isolation Pattern to mitigate risk, additionally we've exposed the token to the FE meaning nothing prevents it from intercepting the token and sending it off to some remote location.
 </ShowSolution>
 
-### How would you attack this project?
+##### How would you attack this project?
 The best defense is a strong offense. It's a good practice to take some time to think about how you might go about attacking your own solutions. Don't just consider potential attacks against your users, you are also very much a potential target to attack. Can you figure out some ways of defending against the attacks?
 <ShowSolution text="Show answer">
 - **Cross-site scripting:**
