@@ -17,15 +17,24 @@ text = text ?? "Show solution";
     constructor() {
       super();
       this.#button = this.querySelector("button");
-      this.#contentDiv = this.querySelector("div");
       this.#button?.addEventListener("click", this.#toggle);
+      this.#contentDiv = this.querySelector("div");
     }
     #toggle = () => {
-      if (this.#contentDiv?.classList.contains("hidden")) {
-        this.#contentDiv.classList.remove("hidden");
-      } else {
-        this.#contentDiv?.classList.add("hidden");
-      }
+      if (this.#button)
+        if (this.#contentDiv?.classList.contains("hidden")) {
+          this.#contentDiv.classList.remove("hidden");
+          this.#button.innerText = this.#button.innerText.replace(
+            "Show",
+            "Hide"
+          );
+        } else {
+          this.#contentDiv?.classList.add("hidden");
+          this.#button.innerText = this.#button.innerText.replace(
+            "Hide",
+            "Show"
+          );
+        }
     };
   }
   customElements.define("show-solution", ShowSolution);

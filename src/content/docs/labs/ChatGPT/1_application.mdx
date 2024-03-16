@@ -26,7 +26,7 @@ git checkout chatgpt_1_0
 ```
 
 <Steps>
-1. **Create a project**
+1. <h5>Create a project</h5>
 
     For this project we're going to be using Nuxt, a framework that CTA doesn't support. So, we're going to have to create it manually. It's much simpler than you might think thanks to the `tauri init` command.
 
@@ -40,7 +40,7 @@ git checkout chatgpt_1_0
     # Initialize a git repo if you want
     mv nuxt-app chatgpt-lab
     cd chatgpt-lab
-    pnpm add @tauri-apps/cli@next
+    pnpm add -D @tauri-apps/cli@next
     pnpm tauri init
     # call it "chatgpt-lab"
     # call the window "ChatGPT"
@@ -53,7 +53,7 @@ git checkout chatgpt_1_0
 
     <img src={img_1.src} />
     </ShowSolution>
-2. **Configure the frontend**
+2. <h5>Configure the frontend</h5>
 
     When developing Tauri apps there are certain demands on the project your frontend creates, such as that it's a statically compiled frontend. To make sure your Nuxt project is compatible with Tauri and follows best practices follow <a href="https://beta.tauri.app/guides/frontend/nuxt/" target="_blank">the official guide.</a>
 
@@ -99,7 +99,7 @@ git checkout chatgpt_1_0
 
     ```
     </ShowSolution>
-3. **Add the Tauri JS API**
+3. <h5>Add the Tauri JS API</h5>
 
     While it's possible to develop Tauri apps without adding this package it's heavily encouraged for JavaScript projects to use it. An alternative is to get the full api exposed at all times in the `window` variable using `"withGlobalTauri": true` in `tauri.conf.json`, but it causes a bit of bloat and isn't as nice.
 
@@ -125,7 +125,7 @@ git checkout chatgpt_1_0
         "vue": "^3.4.21",
     ```
     </ShowSolution>
-4. **Develop a basic frontend**
+4. <h5>Develop a basic frontend</h5>
 
     This is where you can let your artistic side out and go nuts. If you don't want to make the frontend yourself feel free to just use the solution below.
 
@@ -135,7 +135,7 @@ git checkout chatgpt_1_0
     ```sh frame="none"
     ```
     </ShowSolution>
-5. **Set up logging**
+5. <h5>Set up logging</h5>
 
     To get some nicer looking logging going in the terminal as well as get the logs to propagate to the frontend we're gonna add the `tauri-plugin-log` crate to our project, which is essentially a wrapper around the more well known `log` crate.
     <ShowSolution>
@@ -143,57 +143,66 @@ git checkout chatgpt_1_0
     ```sh frame="none"
     ```
     </ShowSolution>
-6. **Add the Tauri commands**
+6. <h5>Add the Tauri commands</h5>
 
     To begin with we're just going to be adding the placeholders for the basic Tauri commands we want to have. We're not going to be going into the specifics of error handling here, so just use the standards `std::result::Result` and don't return the error to the frontend. Make sure you pass some faked values back from these functions so you actually get a proper setup going. For this lab I've chosen the following commands:
 
     - `async fn connect(app: AppHandle, token: String) -> Result<(), ()>`: Stores the token in the BE so that we can use it when we query the ChatGPT API.
-    - `async fn prompt(app: AppHandle, msg: String) -> Result<String, ()>`: Sends a message to the ChatGPT API. This will also set up an emitter for events carrying payloads from the API response, so we can listen to them in the FE.
+    - `async fn prompt(app: AppHandle, msg: String) -> Result<String, ()>`: Sends a message to the ChatGPT API. This will also set up an emitter for `message` events carrying payloads from the API response, so we can listen to them in the FE.
     <ShowSolution>
     TODO: Develop this part
     ```sh frame="none"
     ```
     </ShowSolution>
-7. **Connect the FE with the BE**
+7. <h5>Connect the FE with the BE</h5>
 
     Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
-    <ShowSolution>
-    TODO: Develop this part
-    ```sh frame="none"
-    ```
-    </ShowSolution>
-7. **Store messages in a State**
 
-    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    - Make your token input send its value to the BE: `invoke('connect', {'token': 'abc123'})`
+    - Make the messaging form submit its value to the BE: `invoke('prompt': {'msg': 'Hello!'})`
+    - Create an event listener that listens to message payloads from the BE: `const unlisten = listen('message')`
     <ShowSolution>
     TODO: Develop this part
     ```sh frame="none"
     ```
     </ShowSolution>
-7. **Create a ChatGPT API client**
+8. <h5>Store data in a State</h5>
 
-    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
-    <ShowSolution>
-    TODO: Develop this part
-    ```sh frame="none"
-    ```
-    </ShowSolution>
-7. **Create a ChatGPT API client**
+    Tauri has concept called "states", something you'll find in most frameworks out there. They're a form of singleton value that is accessible throughout your entire app for the entirety of its runtime. Note that they don't persist after the app exits, something that can be manually implemented but we won't be going into how to do that here.
 
-    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    We'll be creating a `ChatGPT` struct here that stores all our messages as well as the API token. In a real application you'd want to store the messages on the filesystem instead of in-memory, but this will do just fine for the lab.
     <ShowSolution>
     TODO: Develop this part
     ```sh frame="none"
     ```
     </ShowSolution>
-7. **BONUS: Mobile support**
+9. <h5>Get yourself a ChatGPT API token</h5>
 
-    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    If you don't have one already now is the time to get yourself a ChatGPT API token. Log onto your ChatGPT account and create one now. Make sure you set a spending limit on it just in case, and use the cheaper models during development so you don't waste money.
     <ShowSolution>
     TODO: Develop this part
     ```sh frame="none"
     ```
     </ShowSolution>
+10. <h5>Create a ChatGPT API client</h5>
+
+    Now that we have somewhere to store our data and a token for the API we'll be setting up a client that we can use for sending our requests.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+11. <h5>Prompt the API</h5>
+
+    Now that we have somewhere to store our data and a token for the API we'll be setting up a client that we can use for sending our requests.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+1. <h5>BONUS: Mobile support</h5>
+
+    Thanks to the way we've developed this application it's very easy to add mobile support to it. Simply run `pnpm tauri android init` and `pnpm tauri ios init` depending on which target you want to start working on. These commands will set up new projects in `gen/android` and `gen/ios` as well as sanity check your dev environment setup. Note that choosing to `.gitignore` the `gen/` folder is a project specific decision, in general if you don't have advanced requirements it's best to ignore it and rely on developing plugins instead of directly modifying the projects, though direct modification can in rare cases be necessary.
 </Steps>
 
 ## Questions
@@ -223,7 +232,7 @@ While we haven't actively tried to make an insecure solution there are some pote
 - **Malicious JavaScript:** We haven't touched upon CSP nor used the Isolation Pattern to mitigate risk, additionally we've exposed the token to the FE meaning nothing prevents it from intercepting the token and sending it off to some remote location.
 </ShowSolution>
 
-### How would you attack this solution?
+### How would you attack this project?
 The best defense is a strong offense. It's a good practice to take some time to think about how you might go about attacking your own solutions. Don't just consider potential attacks against your users, you are also very much a potential target to attack. Can you figure out some ways of defending against the attacks?
 <ShowSolution text="Show answer">
 - **Cross-site scripting:**
