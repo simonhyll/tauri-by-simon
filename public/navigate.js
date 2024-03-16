@@ -40,9 +40,9 @@ async function preload() {
   if (!previousButton) previousButton = { href: '/' }
   let nextButton = document.querySelector('a[rel="next"]');
   if (!nextButton) nextButton = { href: "/getting_started/" }
-  fetch(previousButton.href)
+  // fetch(previousButton.href)
   console.log('Preloading: ', previousButton.href)
-  fetch(nextButton.href)
+  // fetch(nextButton.href)
   console.log('Preloading: ', nextButton.href)
 }
 

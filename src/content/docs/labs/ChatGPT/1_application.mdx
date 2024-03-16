@@ -7,31 +7,227 @@ sidebar:
   order: 1
   label: 1. Application
   badge:
-    text: Planned
-    variant: caution
-
+    text: WIP
+    variant: tip
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 import ShowSolution from '@components/ShowSolution.astro'
+import { Image } from 'astro:assets';
+import img_1 from "./_1_application/1.png";
+
+To make use of the catchup mechanic clone the labs repository and fetch all tags. You'll then be able to checkout a tagged commit per step in each track using the format `git checkout TRACK_PART_STEP`. Checking out a step takes you to the solved version of the step. Checking out the branch takes you to the finished version.
+
+```bash frame="none"
+git clone https://github.com/simonhyll/tauri-by-simon-labs labs
+cd labs
+git fetch origin --tags
+git checkout chatgpt_1_0
+```
 
 <Steps>
 1. **Create a project**
 
-    Tauri has a project called "Create Tauri App", or CTA for short.
+    For this project we're going to be using Nuxt, a framework that CTA doesn't support. So, we're going to have to create it manually. It's much simpler than you might think thanks to the `tauri init` command.
+
+    If you feel confident you're certainly allowed to use something else, but it's just a lab, I recommend you just go with what I recommend so you can easily copy-paste my solutions.
+
+    Simply create a new Nuxt project and run `tauri init` in it. Try running it when you're done with `tauri dev`.
     <ShowSolution>
     ```sh frame="none"
-    # Spam click Enter to select all defaults
-    pnpm create tauri-app --beta
+    npx nuxi init
+    # Pick pnpm
+    # Initialize a git repo if you want
+    mv nuxt-app chatgpt-lab
+    cd chatgpt-lab
+    pnpm add @tauri-apps/cli@next
+    pnpm tauri init
+    # call it "chatgpt-lab"
+    # call the window "ChatGPT"
+    # Use the default ../dist
+    # Use the default http://localhost:3000
+    # Change to pnpm dev
+    # Change to pnpm generate
+    pnpm tauri dev
+    ```
+
+    <img src={img_1.src} />
+    </ShowSolution>
+2. **Configure the frontend**
+
+    When developing Tauri apps there are certain demands on the project your frontend creates, such as that it's a statically compiled frontend. To make sure your Nuxt project is compatible with Tauri and follows best practices follow <a href="https://beta.tauri.app/guides/frontend/nuxt/" target="_blank">the official guide.</a>
+
+    Note that even if we could run the previous step without these configurations it's when you actually build the app that you may notice things breaking if your configurations haven't been set up right. This is true for most frameworks. Always try compiling your app in production mode early on and run it before you develop your app for several months only to realize it doesn't work at a fundamental level (based on a true story).
+    <ShowSolution text="Show diff">
+    ```diff frame="none"
+    diff --git a/chatgpt/nuxt.config.ts b/chatgpt/nuxt.config.ts
+    index 8851e77..e68fe3a 100644
+    --- a/chatgpt/nuxt.config.ts
+    +++ b/chatgpt/nuxt.config.ts
+    @@ -1,4 +1,28 @@
+    -// https://nuxt.com/docs/api/configuration/nuxt-config
+    export default defineNuxtConfig({
+    -  devtools: { enabled: true }
+    -})
+    +  // (optional) Enable the Nuxt devtools
+    +  devtools: { enabled: true },
+    +  // Enable SSG
+    +  ssr: false,
+    +  vite: {
+    +    // Better support for Tauri CLI output
+    +    clearScreen: false,
+    +    // Enable environment variables
+    +    // Additional environment variables can be found at
+    +    // https://tauri.app/2/reference/environment-variables/
+    +    envPrefix: ["VITE_", "TAURI_"],
+    +    server: {
+    +      // Tauri requires a consistent port
+    +      strictPort: true,
+    +      // Enables the development server to be discoverable by other devices for mobile development
+    +      host: "0.0.0.0",
+    +      hmr: {
+    +        // Use websocket for mobile hot reloading
+    +        protocol: "ws",
+    +        // Make sure it's available on the network
+    +        host: "0.0.0.0",
+    +        // Use a specific port for hmr
+    +        port: 5183,
+    +      },
+    +    },
+    +  },
+    +});
+
     ```
     </ShowSolution>
-2. **Run the project**
+3. **Add the Tauri JS API**
 
-    Use the Tauri Command-Line Interface (CLI) to run the project.
+    While it's possible to develop Tauri apps without adding this package it's heavily encouraged for JavaScript projects to use it. An alternative is to get the full api exposed at all times in the `window` variable using `"withGlobalTauri": true` in `tauri.conf.json`, but it causes a bit of bloat and isn't as nice.
+
+    The most simplified explanation of what the JS API is is a set of premade Tauri commands you can use. You don't *need* to have it, but there's also little point in not making use of it.
     <ShowSolution>
     ```sh frame="none"
-    pnpm install
-    pnpm run dev
+    pnpm add @tauri-apps/api@next
+    ```
+    </ShowSolution>
+    <ShowSolution text="Show diff">
+    ```diff frame="none"
+    diff --git a/chatgpt/package.json b/chatgpt/package.json
+    index f417166..e193d9f 100644
+    --- a/chatgpt/package.json
+    +++ b/chatgpt/package.json
+    @@ -10,6 +10,7 @@
+        "postinstall": "nuxt prepare"
+      },
+      "dependencies": {
+    +    "@tauri-apps/api": "2.0.0-beta.5",
+        "@tauri-apps/cli": "2.0.0-beta.9",
+        "nuxt": "^3.10.3",
+        "vue": "^3.4.21",
+    ```
+    </ShowSolution>
+4. **Develop a basic frontend**
+
+    This is where you can let your artistic side out and go nuts. If you don't want to make the frontend yourself feel free to just use the solution below.
+
+    What you should have at the end of this step is a basic website capable of making use of the Tauri JS API. You should be showing some manner of HTML `<form>` for getting a `submit` event that you can use to send your message to the BE. Then you'll need some manner of `<ul><li><p>` or other appropriate set of elements that you can reactively create as you receive events with messages from the BE. Additionally there should be some manner of `<input>` somewhere that you can enter your API token into to send to the BE.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+5. **Set up logging**
+
+    To get some nicer looking logging going in the terminal as well as get the logs to propagate to the frontend we're gonna add the `tauri-plugin-log` crate to our project, which is essentially a wrapper around the more well known `log` crate.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+6. **Add the Tauri commands**
+
+    To begin with we're just going to be adding the placeholders for the basic Tauri commands we want to have. We're not going to be going into the specifics of error handling here, so just use the standards `std::result::Result` and don't return the error to the frontend. Make sure you pass some faked values back from these functions so you actually get a proper setup going. For this lab I've chosen the following commands:
+
+    - `async fn connect(app: AppHandle, token: String) -> Result<(), ()>`: Stores the token in the BE so that we can use it when we query the ChatGPT API.
+    - `async fn prompt(app: AppHandle, msg: String) -> Result<String, ()>`: Sends a message to the ChatGPT API. This will also set up an emitter for events carrying payloads from the API response, so we can listen to them in the FE.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+7. **Connect the FE with the BE**
+
+    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+7. **Store messages in a State**
+
+    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+7. **Create a ChatGPT API client**
+
+    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+7. **Create a ChatGPT API client**
+
+    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
+    ```
+    </ShowSolution>
+7. **BONUS: Mobile support**
+
+    Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
+    <ShowSolution>
+    TODO: Develop this part
+    ```sh frame="none"
     ```
     </ShowSolution>
 </Steps>
+
+## Questions
+
+### How can we improve our solution?
+This lab doesn't show off nearly all the capabilities we have at our disposal for making the perfect project. There are things both in the code itself and outside it that we could do to improve it. Figure out what some of those are!
+<ShowSolution text="Show answer">
+- **Native token prompt:** We could receive the token from a native window instead of from the FE.
+- **Error handling:** We could implement proper error handling instead of just ignoring them.
+- **Tracing:** We are currently not implementing any form of tracing with our solution, so we have no idea which parts the user is actually using, which errors they get or how they caused them.
+- **Test suite:** Our solution is currently completely untested. We could use TDD using `cargo test` and/or BDD using `cucumber-rs`.
+- **Documentation:** We haven't documented any parts of our project. We could both create a `docs/` folder with e.g. a Starlight based site and add docstrings with examples to our code.
+</ShowSolution>
+
+### What is Tauri providing us with that we don't have in a PWA?
+While a PWA (persistent web app) shares a lot of similarities with a Tauri app, there are features that Tauri provides that you wouldn't have access to in a basic PWA. Lets take a moment to appreciate what it is that Tauri has to offer!
+<ShowSolution text="Show answer">
+- **Added security:**
+- **Native performance:**
+</ShowSolution>
+
+### What are some potential security issues?
+While we haven't actively tried to make an insecure solution there are some potential risks involved with how we've developed this little lab. Which ones did you spot?
+<ShowSolution text="Show answer">
+- **Token handling:** Currently we are relying on submitting the token to the BE via the FE. We could use Egui to pop open a native window for receiving the secret, eliminating the risk of a compromised FE harming the user.
+- **Malfunctioning JavaScript:** We haven't implemented any checks and balances to prevent JavaScript from calling our commands a million times per second.
+- **Malicious JavaScript:** We haven't touched upon CSP nor used the Isolation Pattern to mitigate risk, additionally we've exposed the token to the FE meaning nothing prevents it from intercepting the token and sending it off to some remote location.
+</ShowSolution>
+
+### How would you attack this solution?
+The best defense is a strong offense. It's a good practice to take some time to think about how you might go about attacking your own solutions. Don't just consider potential attacks against your users, you are also very much a potential target to attack. Can you figure out some ways of defending against the attacks?
+<ShowSolution text="Show answer">
+- **Cross-site scripting:**
+- **Malicious dependencies:**
+- **Infect the webview:** 
+- **MITM (Man In The Middle):** 
+</ShowSolution>

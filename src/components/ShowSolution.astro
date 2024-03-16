@@ -1,9 +1,10 @@
 ---
-
+let { text } = Astro.props;
+text = text ?? "Show solution";
 ---
 
 <show-solution class="show-solution">
-  <button>Show solution</button>
+  <button>{text}</button>
   <div class="hidden">
     <slot />
   </div>
@@ -12,11 +13,12 @@
 <script>
   class ShowSolution extends HTMLElement {
     #contentDiv: HTMLDivElement | null = null;
+    #button: HTMLButtonElement | null = null;
     constructor() {
       super();
-      const button = this.querySelector("button");
+      this.#button = this.querySelector("button");
       this.#contentDiv = this.querySelector("div");
-      button?.addEventListener("click", this.#toggle);
+      this.#button?.addEventListener("click", this.#toggle);
     }
     #toggle = () => {
       if (this.#contentDiv?.classList.contains("hidden")) {
