@@ -64,6 +64,7 @@ const imageSrc = ref("/SimonSays.png");
   font-size: large;
   font-weight: bold;
   margin-bottom: 0px !important;
+  color: var(--sl-color-white);
 }
 .tip-simon > img {
   animation: floating 2s ease-in-out infinite;

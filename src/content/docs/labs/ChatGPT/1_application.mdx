@@ -51,6 +51,8 @@ git checkout chatgpt_1_0
     # Change to pnpm dev
     # Change to pnpm generate
     pnpm tauri dev
+    # Optional: Use Git LFS to handle formats you won't be code reviewing
+    git lfs track "*.png" "*.ico" "*.incs" "*.jpg" "*.jpeg"
     ```
 
     <img src={img_1.src} />
@@ -132,9 +134,81 @@ git checkout chatgpt_1_0
     This is where you can let your artistic side out and go nuts. If you don't want to make the frontend yourself feel free to just use the solution below.
 
     What you should have at the end of this step is a basic website capable of making use of the Tauri JS API. You should be showing some manner of HTML `<form>` for getting a `submit` event that you can use to send your message to the BE. Then you'll need some manner of `<ul><li><p>` or other appropriate set of elements that you can reactively create as you receive events with messages from the BE. Additionally there should be some manner of `<input>` somewhere that you can enter your API token into to send to the BE.
+
+    I'll be using <a href="https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3" target="_blank">Vuetify</a> since it has a lot of components we can use and I'm quite familiar with it.
     <ShowSolution>
-    TODO: Develop this part
+    Add dependencies.
     ```sh frame="none"
+    pnpm add -D vuetify vite-plugin-vuetify
+    pnpm add @mdi/font
+    ```
+    Update your Nuxt config.
+    ```js
+    // nuxt.config.ts
+    import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+    export default defineNuxtConfig({
+        //...
+        build: {
+            transpile: ['vuetify'],
+        },
+        modules: [
+            (_options, nuxt) => {
+                nuxt.hooks.hook('vite:extendConfig', (config) => {
+                    // @ts-expect-error
+                    config.plugins.push(vuetify({ autoImport: true }))
+                })
+            },
+        ],
+        vite: {
+            vue: {
+                template: {
+                    transformAssetUrls,
+                },
+            },
+            //...
+        },
+    })
+    ```
+    Add a plugin for loading Vuetify.
+    ```js
+    // plugins/vuetify.ts
+    import '@mdi/font/css/materialdesignicons.css'
+
+    import 'vuetify/styles'
+    import { createVuetify } from 'vuetify'
+
+    export default defineNuxtPlugin((app) => {
+        const vuetify = createVuetify({})
+        app.vueApp.use(vuetify)
+    })
+    ```
+    Now Vuetify and the material design icons are set up and available to use! You can find a list of all the <a href="https://vuetifyjs.com/en/components/all/" target="_blank">components at your disposal</a> here to develop your UI. Or you can simply keep reading and we'll set up something basic together.
+
+    Modify `app.vue` to use `NuxtLayout`.
+    ```vue
+    // app.vue
+    <template>
+        <NuxtLayout />
+    </template>
+    ```
+    Create a default layout.
+    ```vue
+    // layouts/default.vue
+    <template>
+        <v-app theme="dark">
+            <v-navigation-drawer />
+            <NuxtPage />
+        </v-app>
+    </template>
+    ```
+    Create a main page.
+    ```vue
+    // pages/index.vue
+    <template>
+        <v-main>
+            <h1>Hello World!</h1>
+        </v-main>
+    </template>
     ```
     </ShowSolution>
 5. <h5>Set up logging</h5>
@@ -232,6 +306,7 @@ While we haven't actively tried to make an insecure solution there are some pote
 - **Token handling:** Currently we are relying on submitting the token to the BE via the FE. We could use Egui to pop open a native window for receiving the secret, eliminating the risk of a compromised FE harming the user.
 - **Malfunctioning JavaScript:** We haven't implemented any checks and balances to prevent JavaScript from calling our commands a million times per second.
 - **Malicious JavaScript:** We haven't touched upon CSP nor used the Isolation Pattern to mitigate risk, additionally we've exposed the token to the FE meaning nothing prevents it from intercepting the token and sending it off to some remote location.
+- **Environment variable exposure:** We are using `envPrefix` in a way that's known to risk leaking secrets. It's a low risk issue since the situtation it happens in can only happen in poorly managed projects, but it's still better to expose specific environment variables to the FE rather than wildcarding them.
 </ShowSolution>
 
 ##### How would you attack this project?
