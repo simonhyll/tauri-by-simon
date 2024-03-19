@@ -135,7 +135,14 @@ git checkout chatgpt_1_0
 
     What you should have at the end of this step is a basic website capable of making use of the Tauri JS API. You should be showing some manner of HTML `<form>` for getting a `submit` event that you can use to send your message to the BE. Then you'll need some manner of `<ul><li><p>` or other appropriate set of elements that you can reactively create as you receive events with messages from the BE. Additionally there should be some manner of `<input>` somewhere that you can enter your API token into to send to the BE.
 
-    I'll be using <a href="https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3" target="_blank">Vuetify</a> since it has a lot of components we can use and I'm quite familiar with it.
+    I'll be using <a href="https://vuetifyjs.com/en/getting-started/installation/#using-nuxt-3" target="_blank">Vuetify</a> since it has a lot of components we can use and I'm quite familiar with it. If you don't want to copy-paste your way to the solution feel free to `git checkout chatgpt_1_4` now. I'll be having a couple extras, like selecting which model to use and markdown rendering, but don't feel like you need to overkill this, a minimal example could technically be a single HTML file with 10-20 lines of code.
+
+    You're done when you have the following features implemented:
+    - An `async saveToken` function with access to a `token: string` variable
+    - Some manner of `<input>` where users can enter the aforementioned token value
+    - An `async sendMessage` function with access to a `message: string` variable
+    - Some manner of `<input>` where users can enter the aforementioned message value
+    - Data reactivity for a `messages` array so that when new messages are pushed to it they show up in the FE, each message in the format `{from: string, text: string}`
     <ShowSolution>
     Add dependencies.
     ```sh frame="none"
@@ -215,19 +222,60 @@ git checkout chatgpt_1_0
 
     To get some nicer looking logging going in the terminal as well as get the logs to propagate to the frontend we're gonna add the `tauri-plugin-log` crate to our project, which is essentially a wrapper around the more well known `log` crate.
     <ShowSolution>
-    TODO: Develop this part
     ```sh frame="none"
+    pnpm add https://github.com/tauri-apps/tauri-plugin-log#v2
+    cd src-tauri
+    cargo add tauri-plugin-log --git https://github.com/tauri-apps/plugins-workspace --branch v2
+    cargo add log
     ```
+    At a global level attach the logging so you can see it in your devtools.
+
+    Register the plugin in `lib.rs`.
     </ShowSolution>
 6. <h5>Add the Tauri commands</h5>
 
-    To begin with we're just going to be adding the placeholders for the basic Tauri commands we want to have. We're not going to be going into the specifics of error handling here, so just use the standards `std::result::Result` and don't return the error to the frontend. Make sure you pass some faked values back from these functions so you actually get a proper setup going. For this lab I've chosen the following commands:
+    To begin with we're just going to be adding the placeholders for the basic Tauri commands we want to have. We're not going to be going into the specifics of error handling here, so just use the standard library's `std::result::Result` and don't return the error to the frontend. For this lab I've chosen the following commands:
 
+    - `struct Message {role: String, content: String}`: Represents a single message to/from the API.
+    - `async fn get_messages(app: AppHandle) -> Result<Vec<Message>, ()>`: Retrieves the current list of messages.
     - `async fn connect(app: AppHandle, token: String) -> Result<(), ()>`: Stores the token in the BE so that we can use it when we query the ChatGPT API.
-    - `async fn prompt(app: AppHandle, msg: String) -> Result<String, ()>`: Sends a message to the ChatGPT API. This will also set up an emitter for `message` events carrying payloads from the API response, so we can listen to them in the FE.
+    - `async fn prompt(app: AppHandle, message: String) -> Result<(), ()>`: Sends a message to the ChatGPT API. This will also set up an emitter for `message` events carrying payloads from the API response, so we can listen to them in the FE.
     <ShowSolution>
-    TODO: Develop this part
-    ```sh frame="none"
+    Set up the commands and register them in the app. We also need to make sure the `Manager` trait is in scope so we extend the capabilities of the `AppHandle` struct.
+    ```rust ins={6-16,30}
+    // src-tauri/src/lib.rs
+    use log::LevelFilter;
+    use tauri_plugin_log::{Target, TargetKind};
+    use tauri::{AppHandle, Manager};
+
+    #[tauri::command]
+    async fn prompt(app: AppHandle, msg: String) -> Result<(), ()> {
+        log::info!("Received message!");
+        Ok(())
+    }
+
+    #[tauri::command]
+    async fn connect(app: AppHandle, token: String) -> Result<(), ()> {
+        log::info!("Connecting!");
+        Ok(())
+    }
+
+    #[cfg_attr(mobile, tauri::mobile_entry_point)]
+    pub fn run() {
+        tauri::Builder::default()
+            .plugin(
+                tauri_plugin_log::Builder::new()
+                    .level(LevelFilter::Info)
+                    .targets([
+                        Target::new(TargetKind::Stdout),
+                        Target::new(TargetKind::Webview),
+                    ])
+                    .build(),
+            )
+            .invoke_handler(tauri::generate_handler![prompt, connect])
+            .run(tauri::generate_context!())
+            .expect("error while running tauri application");
+    }
     ```
     </ShowSolution>
 7. <h5>Connect the FE with the BE</h5>
@@ -235,7 +283,7 @@ git checkout chatgpt_1_0
     Now that we have a basic FE and BE going it's time to connect them so we can see what's going on.
 
     - Make your token input send its value to the BE: `invoke('connect', {'token': 'abc123'})`
-    - Make the messaging form submit its value to the BE: `invoke('prompt': {'msg': 'Hello!'})`
+    - Make the messaging form submit its value to the BE: `invoke('prompt': {'message': 'Hello!'})`
     - Create an event listener that listens to message payloads from the BE: `const unlisten = listen('message')`
     <ShowSolution>
     TODO: Develop this part
