@@ -37,7 +37,7 @@ jobs:
           key: ${{ steps.cache-node-modules-restore.outputs.cache-primary-key }}
 
       - name: Update sponsors
-        run: npm run build
+        run: pnpm sponsorkit
         env:
           SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
 
