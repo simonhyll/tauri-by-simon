@@ -28,5 +28,8 @@
     "typescript": "^5.4.2",
     "vue": "^3.4.21",
     "workbox-build": "^7.0.0"
+  },
+  "devDependencies": {
+    "sponsorkit": "^0.9.3"
   }
 }
