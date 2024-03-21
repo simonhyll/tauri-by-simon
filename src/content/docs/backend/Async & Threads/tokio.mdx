@@ -1,0 +1,62 @@
+---
+title: Tokio
+description: How to perform common tasks with Tokio in a Tauri app.
+summary: |
+  Tauri offers a Tokio runtime by default. Here are some common things you'll need to know how
+  to do in order to use Tokio effectively in Tauri.
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+---
+
+## Setup
+
+In most projects this part is unnecessary because you only need the capabilities from Tokio that Tauri re-exports in `tauri::async_runtime`. However, if you need more advanced functionalities from the broader Tokio ecosystem there's absolutely nothing wrong with adding it directly.
+
+```sh
+cargo add tokio
+```
+
+## Async Main Function
+
+:::caution
+Don't use `tokio::main` to create an `async fn main` for your Tauri app. The reason is very simple. You don't need it, Tauri already provides you with a Tokio Runtime, and all the macro does is generate a new main function for you that sets up a runtime before running the main function. Whatever you have that you think needs to run specifically in the main function I promise can run in the `.setup` function instead.
+:::
+
+```rust
+async fn setup(app: AppHandle) {
+  // Do your async setup here instead
+}
+
+fn main() {
+  Builder()
+  .setup(|app| {
+    tauri::async_runtime::block_on(setup(app.handle()));
+  })
+}
+```
+
+## Background Threads
+
+In order to spawn a background thread in Tauri all you have to do is use `tauri::async_runtime::spawn()`. This will schedule an async function to be executed by one of the Tokio runtimes worker threads.
+
+:::caution
+If your background thread isn't going to run cooperatively yielding somewhat frequently it might be better to use `std::thread::spawn` or Rayon for that task.
+:::
+
+```rust
+async fn my_daemon() {
+  loop {
+    println!("I run in the background!");
+    tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
+  }
+}
+
+fn main() {
+  Builder()
+  .setup(|app| {
+    tauri::async_runtime::spawn(my_daemon());
+  })
+}
+```

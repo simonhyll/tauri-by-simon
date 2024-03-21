@@ -1,0 +1,67 @@
+---
+title: Rayon
+description: How to set up Rayon in a Tauri app and play nicely with Tokio.
+summary: |
+  Here we'll look into how to make best use of Rayon in a Tauri app. And before you ask, the
+  reason you'd want to mix in Rayon when you already have Tokio in your Tauri app is because
+  Tokio runs concurrently, Rayon runs in parallel. Which oversimplified means that if you
+  run something big, heavy and blocking in Tokio you'll be preventing other work from
+  progressing since tasks run in a cooperative manner, while in Rayon all threads are assholes
+  that just care about themselves.
+
+  Tokio for I/O bound tasks.
+
+  Rayon for CPU bound tasks.
+sidebar:
+  badge:
+    text: WIP
+    variant: tip
+references:
+  - https://docs.rs/rayon/latest/rayon/
+---
+
+## Setup
+
+```sh
+cargo add rayon
+```
+
+You can also configure the threadpool for Rayon, though I wouldn't recommend it, you'll most likely make it better on your machine and worse for everyone else.
+
+```rust
+.setup(|app| {
+  rayon::ThreadPoolBuilder::default().build_global().unwrap();
+})
+```
+
+## Iterators
+
+Instead of using boring old synchronous iterators, lets make them parallel with Rayon. Just replace `.iter()` with `par_iter()` and presto, your synchronous task is now fully parallel.
+
+```rust
+use rayon::prelude::*;
+
+fn sum(inputs: Vec<i32>) -> i32 {
+  inputs.par_iter()
+        .map(|&i| i * i)
+        .sum()
+}
+
+fn main() {
+  println!("{}", sum(vec![1,2,3,4,5]));
+}
+```
+
+## ThreadPoolBuilder
+
+If you don't want to make use of the global threadpool you can make a temporary local threadpool for use in a specific task.
+
+```rust
+let pool = rayon::ThreadPoolBuilder::default().build().unwrap();
+let do_it = || {
+    print!("one ");
+    pool.install(||{});
+    print!("two ");
+};
+rayon::join(|| do_it(), || do_it());
+```
