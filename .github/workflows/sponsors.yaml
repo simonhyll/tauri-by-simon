@@ -40,6 +40,7 @@ jobs:
         run: pnpm sponsorkit
         env:
           SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORKIT_GITHUB_TOKEN }}
+          SPONSORKIT_GITHUB_LOGIN: simonhyll
 
       - name: Commit
         uses: EndBug/add-and-commit@v4
