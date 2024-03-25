@@ -23,7 +23,7 @@
     "jsdom": "^24.0.0",
     "rehype-autolink-headings": "^7.1.0",
     "sass": "^1.71.1",
-    "sharp": "^0.33.2",
+    "sharp": "^0.33.3",
     "three": "^0.162.0",
     "typescript": "^5.4.2",
     "vue": "^3.4.21",
