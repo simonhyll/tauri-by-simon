@@ -15,8 +15,8 @@ dependencies:
     specifier: ^4.0.5
     version: 4.0.5
   '@astrojs/starlight':
-    specifier: ^0.21.1
-    version: 0.21.1(astro@4.5.2)
+    specifier: ^0.21.2
+    version: 0.21.2(astro@4.5.2)
   '@astrojs/vue':
     specifier: ^4.0.8
     version: 4.0.8(@babel/core@7.24.0)(astro@4.5.2)(vite@5.1.6)(vue@3.4.21)
@@ -223,8 +223,8 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@astrojs/starlight@0.21.1(astro@4.5.2):
-    resolution: {integrity: sha512-nQ5EwKnB3eI8jxQrbgzZJJcyxeIiL3GzsAhl//1fE541MlD+PKy53v1PsYPi/RILdjt1Pg39rf1fkJC/rhXRgw==}
+  /@astrojs/starlight@0.21.2(astro@4.5.2):
+    resolution: {integrity: sha512-ziDfrbhBjw/+HwMITk6yz7SbkQKQJZY9GlaPHntSPq4kYs+b2ru3toIxj2l3T9LUFtUpNWHkj+C1wJTmfLZfaw==}
     peerDependencies:
       astro: ^4.2.7
     dependencies:
@@ -2487,7 +2487,7 @@ packages:
   /@types/sax@1.2.7:
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
     dependencies:
-      '@types/node': 17.0.45
+      '@types/node': 20.11.26
     dev: false
 
   /@types/stats.js@0.17.3:
