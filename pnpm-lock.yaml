@@ -21,8 +21,8 @@ dependencies:
     specifier: ^4.0.8
     version: 4.0.8(@babel/core@7.24.0)(astro@4.5.2)(vite@5.1.6)(vue@3.4.21)
   '@tauri-apps/api':
-    specifier: 2.0.0-beta.5
-    version: 2.0.0-beta.5
+    specifier: 2.0.0-beta.11
+    version: 2.0.0-beta.11
   '@tauri-apps/cli':
     specifier: ^1.5.11
     version: 1.5.11
@@ -2253,8 +2253,8 @@ packages:
       string.prototype.matchall: 4.0.10
     dev: false
 
-  /@tauri-apps/api@2.0.0-beta.5:
-    resolution: {integrity: sha512-lKRdV3adcNN8N+XLrnhGgWFrHsb7/I1VgweLjqTdOpEU7PKZcKvn1j3WOQGNNGSTD/RPSYBaGuXeE0Nk8eW3jw==}
+  /@tauri-apps/api@2.0.0-beta.11:
+    resolution: {integrity: sha512-wJRY+fBUm3KpqZDHMIz5HRv+1vlnvRJ/dFxiyY3NlINTx2qXqDou5qWYcP1CuZXsd39InWVPV3FAZvno/kGCkA==}
     engines: {node: '>= 18', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
     dev: false
 
