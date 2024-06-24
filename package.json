@@ -13,7 +13,7 @@
     "@astrojs/markdown-remark": "^4.3.0",
     "@astrojs/rss": "^4.0.5",
     "@astrojs/starlight": "^0.21.1",
-    "@astrojs/vue": "^4.0.8",
+    "@astrojs/vue": "^4.5.0",
     "@tauri-apps/api": "2.0.0-beta.5",
     "@tauri-apps/cli": "^1.5.11",
     "@types/jsdom": "^21.1.6",
